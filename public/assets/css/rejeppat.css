@@ -1,0 +1,510 @@
+/*
+ * Ajustements REJEPPAT
+ * Les libellés français du menu sont plus longs que ceux du template Farmland :
+ * on évite leur retour à la ligne et on réduit l'espacement des « pilules » de l'en-tête d'accueil.
+ */
+
+/* Charte REJEPPAT : les gris du template (fonds, bordures, textes secondaires) passent au vert du logo */
+:root {
+    --rej-green-50: #f1f8ec;
+    --rej-green-100: #e6f2de;
+    --rej-green-150: #dcecd2;
+    --rej-green-200: #c9e2bb;
+    --rej-green-muted: #6f8f72;
+    --rej-green-text: #4f6b52;
+    --rej-green-dark: #2e6b3a;
+    --rej-green-title: #174d2a;
+
+    --thm-gray-bg: #e6f2de;
+    --thm-gray-bg-rgb: 230, 242, 222;
+    --thm-gray-bg-2: #f1f8ec;
+    --thm-gray-bg-2-rgb: 241, 248, 236;
+    --thm-gray-bg-3: #dcecd2;
+    --thm-gray-bg-3-rgb: 220, 236, 210;
+    --thm-border-color-1: #d6e8cc;
+    --thm-border-color-2: #dcecd2;
+}
+
+/* Fonds gris clairs codés en dur */
+.accordion-box .block .acc-btn,
+.accordion-box .block .acc-btn.active {
+    background: var(--rej-green-50);
+}
+
+.accordion-box .block .acc-content {
+    background-color: var(--rej-green-50);
+}
+
+.progress-box .bar .bar-innner {
+    background-color: var(--rej-green-150);
+}
+
+.progress-box .bar .bar-fill {
+    background: linear-gradient(90deg, #53D58A 57.05%, rgba(83, 213, 138, 0) 82.76%), var(--rej-green-150);
+}
+
+.ui-datepicker td a {
+    background: var(--rej-green-100) !important;
+    border: 1px solid var(--rej-green-50) !important;
+}
+
+.ui-state-highlight,
+.ui-widget-content .ui-state-highlight,
+.ui-widget-header .ui-state-highlight {
+    border: 1px solid var(--rej-green-dark) !important;
+    background: var(--rej-green-dark) !important;
+}
+
+.login-form .forgot-password a::before {
+    background-color: var(--rej-green-200);
+}
+
+/* Fond de la carte (Contact) : le mode « luminosity » de l'iframe teinte la carte en vert */
+.map-style1 .google-map {
+    background-color: var(--rej-green-dark);
+}
+
+/* Bordures grises */
+.xs-sidebar-group .content-inner .logo {
+    border-bottom-color: var(--rej-green-200);
+}
+
+.checked-box1 input[type="checkbox"]+label span,
+.checked-box1 input[type="checkbox"]:checked+label span,
+.login-form__inner .checked-box1 input[type="checkbox"]+label span,
+.register-form__inner-content .checked-box2 input[type="checkbox"]+label span {
+    border-color: var(--rej-green-200);
+}
+
+.mobile-nav-search-box .search-form button,
+.single-shop-style1__quantity-input .bootstrap-touchspin .input-group-btn-vertical .btn,
+.product-quantity-box input.quantity-spinner.form-control,
+.product-quantity-box .bootstrap-touchspin .input-group-btn-vertical .btn {
+    border-color: var(--rej-green-200);
+}
+
+/* Textes gris secondaires (contraste conservé sur fond clair) */
+.side-content-newsletter-box .form-group input[type="email"],
+.mobile-nav-search-box .search-form input[type="text"],
+.main-menu .main-menu__list>li.dropdown>a:after,
+#main-slider-pagination .swiper-pagination-bullet:before,
+.single-shop-style1__content-text p,
+.single-shop-style1__quantity-price p del,
+.single-shop-style1__quantity-input input.quantity-spinner.form-control,
+.single-shop-style1__quantity-input .bootstrap-touchspin .input-group-btn-vertical .btn,
+.single-shop-style1__quantity-input .bootstrap-touchspin .input-group-btn-vertical .btn.bootstrap-touchspin-up:before,
+.product-details__sub-title,
+.product-details__price span {
+    color: var(--rej-green-muted);
+}
+
+.product-details__price span:before {
+    background-color: var(--rej-green-muted);
+}
+
+.map-style1__content .title p,
+.product-details-info-box .value-info li p,
+.single-team-style1__img-designation-inner span,
+.single-team-style1__content-top p {
+    color: var(--rej-green-text);
+}
+
+.main-menu .main-menu__list > li > a,
+.stricky-header .main-menu__list > li > a,
+.header-btn-style1 .btn-one .txt {
+    white-space: nowrap;
+}
+
+.main-menu.main-menu-style4 .main-menu__list > li > a,
+.stricky-header.main-menu-style4 .main-menu__list > li > a {
+    padding-left: 30px;
+    padding-right: 42px !important;
+}
+
+/* En-tête et slider d'accueil posés sur les photos : petits textes en noir ;
+   seul le grand titre du slider, vert sombre, garde un contour blanc transparent */
+.main-header-style4__top-left-content li .text p,
+.main-header-style4__top-left-content li .text p a,
+.main-header-style4__search-box a,
+.main-header-style4__cart-box a,
+.main-header-style4__content-contact-info-list li .content h4,
+.main-header-style4__content-contact-info-list li .content p,
+.main-header-style4__content-contact-info-list li .content p a {
+    color: #000000;
+    font-weight: 600;
+}
+
+.main-header-style4__top-left-content li:hover .text p a,
+.main-header-style4__search-box a:hover,
+.main-header-style4__cart-box a:hover,
+.main-header-style4__content-contact-info-list li:hover .content p a {
+    color: var(--rej-green-dark);
+}
+
+/* Couche noire transparente uniforme (15 %) sur les photos du slider */
+.main-slider-style4 .image-layer::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background-color: rgba(0, 0, 0, 0.15);
+    pointer-events: none;
+}
+
+/* Menu et flèches du slider en noir, comme les autres textes de l'en-tête */
+.main-menu.main-menu-style4 .main-menu__list > li > a {
+    color: #000000;
+    border-color: rgba(0, 0, 0, 0.35);
+}
+
+.main-menu.main-menu-style4 .main-menu__list > li.current > a,
+.main-menu.main-menu-style4 .main-menu__list > li:hover > a {
+    border-color: var(--thm-primary-color);
+}
+
+.main-slider-style4 .main-slider-nav__control {
+    color: #000000;
+    border-color: rgba(0, 0, 0, 0.35);
+}
+
+.main-slider-style4 .content-box .big-title h2 {
+    background: none;
+    -webkit-background-clip: border-box;
+    color: var(--rej-green-title);
+    -webkit-text-stroke: 12px rgba(255, 255, 255, 0.55);
+    paint-order: stroke fill;
+}
+
+.main-slider-style4 .content-box .sub-title h5,
+.main-slider-style4 .content-box .text-box p {
+    color: #000000;
+    font-weight: 600;
+}
+
+/* En-tête des pages internes : 7 entrées de menu au lieu de 6, le logo ne doit pas être écrasé */
+.header-logo-box-style1 {
+    flex-shrink: 0;
+}
+
+@media only screen and (min-width: 1200px) {
+    .main-menu.main-menu-style1 .main-menu__list > li + li {
+        margin-left: 28px;
+    }
+}
+
+/* Sous 1600px, le bouton « Demande de service » de droite laisse la place au menu
+   (le lien reste dans le sous-menu « Nos offres » et dans l'en-tête collant) */
+@media only screen and (max-width: 1599px) {
+    .main-header-style1__content-bottom-right > .header-btn-style1 {
+        display: none;
+    }
+}
+
+@media only screen and (max-width: 1999px) {
+    .main-header-style1__content-bottom-right > .header-address-style1 {
+        display: none;
+    }
+}
+
+/* Formulaires Contact et Demande de service : mêmes styles que #contact-form du template
+   (cet identifiant est réservé à l’envoi AJAX de custom.js, non utilisé ici) */
+#contact-form-rejeppat,
+#demande-service-form {
+    position: relative;
+    display: block;
+}
+
+#contact-form-rejeppat .row,
+#demande-service-form .row {
+    --bs-gutter-x: 20px;
+}
+
+#contact-form-rejeppat .input-box,
+#demande-service-form .input-box {
+    position: relative;
+    display: block;
+    margin-bottom: 20px;
+}
+
+#contact-form-rejeppat input[type="text"],
+#demande-service-form input[type="text"],
+#contact-form-rejeppat input[type="email"],
+#demande-service-form input[type="email"],
+#contact-form-rejeppat textarea,
+#demande-service-form textarea {
+    position: relative;
+    display: block;
+    border-radius: 25px;
+    border: 1px solid var(--rej-green-200);
+    background-color: var(--rej-green-50);
+    width: 100%;
+    height: 50px;
+    color: var(--thm-body-font-color);
+    font-size: 16px;
+    font-family: var(--thm-font);
+    font-weight: 500;
+    font-style: normal;
+    padding: 0px 25px 0px;
+    transition: all 500ms ease;
+}
+
+#contact-form-rejeppat textarea,
+#demande-service-form textarea {
+    height: 130px;
+    padding: 11px 40px 10px;
+    padding-right: 50px;
+}
+
+#contact-form-rejeppat input[type="text"]:focus,
+#demande-service-form input[type="text"]:focus,
+#contact-form-rejeppat input[type="email"]:focus,
+#demande-service-form input[type="email"]:focus,
+#contact-form-rejeppat textarea:focus,
+#demande-service-form textarea:focus {
+    border-color: var(--thm-border-color);
+}
+
+#contact-form-rejeppat input[type="text"]::-webkit-input-placeholder,
+#demande-service-form input[type="text"]::-webkit-input-placeholder,
+#contact-form-rejeppat input[type="text"]:-moz-placeholder,
+#demande-service-form input[type="text"]:-moz-placeholder,
+#contact-form-rejeppat input[type="text"]::-moz-placeholder,
+#demande-service-form input[type="text"]::-moz-placeholder,
+#contact-form-rejeppat input[type="text"]:-ms-input-placeholder,
+#demande-service-form input[type="text"]:-ms-input-placeholder,
+#contact-form-rejeppat input[type="email"]::-webkit-input-placeholder,
+#demande-service-form input[type="email"]::-webkit-input-placeholder,
+#contact-form-rejeppat input[type="email"]::-moz-placeholder,
+#demande-service-form input[type="email"]::-moz-placeholder,
+#contact-form-rejeppat input[type="email"]:-ms-input-placeholder,
+#demande-service-form input[type="email"]:-ms-input-placeholder,
+#contact-form-rejeppat textarea::-webkit-input-placeholder,
+#demande-service-form textarea::-webkit-input-placeholder,
+#contact-form-rejeppat textarea:-moz-placeholder,
+#demande-service-form textarea:-moz-placeholder,
+#contact-form-rejeppat textarea::-moz-placeholder,
+#demande-service-form textarea::-moz-placeholder,
+#contact-form-rejeppat textarea:-ms-input-placeholder,
+#demande-service-form textarea:-ms-input-placeholder {
+    color: var(--rej-green-muted);
+}
+
+#contact-form-rejeppat .nice-select,
+#demande-service-form .nice-select {
+    position: relative;
+    display: block;
+    border-radius: 25px;
+    border: 1px solid var(--rej-green-200);
+    background-color: var(--rej-green-50);
+    width: 100%;
+    height: 50px;
+    color: var(--thm-body-font-color);
+    font-size: 16px;
+    line-height: 48px;
+    font-family: var(--thm-font);
+    font-weight: 500;
+    font-style: normal;
+    padding: 0px 25px 0px;
+    transition: all 500ms ease;
+}
+
+#contact-form-rejeppat .nice-select::after,
+#demande-service-form .nice-select::after {
+    position: absolute;
+    top: 0px;
+    right: 25px;
+    content: "\e98e";
+    font-family: 'icomoon' !important;
+    color: var(--thm-body-font-color);
+    font-size: 13px;
+    margin: 0px;
+    font-weight: 400;
+    border: none !important;
+    transform: rotate(0deg) !important;
+    -webkit-transform-origin: 0% 0%;
+    -ms-transform-origin: 0% 0%;
+    transform-origin: 0% 0%;
+    height: 10px;
+    width: 10px;
+}
+
+#contact-form-rejeppat .nice-select .list,
+#demande-service-form .nice-select .list {
+    background-color: var(--thm-white);
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgb(0 0 0 / 10%);
+    padding: 0px 0px 0px;
+    margin-top: 0px;
+    -webkit-transform-origin: 100% 0;
+    -ms-transform-origin: 100% 0;
+    transform-origin: 100% 0;
+    -webkit-transform: scale(1.0) translateY(30px);
+    -ms-transform: scale(1.0) translateY(30px);
+    transform: scale(1.0) translateY(30px);
+    -webkit-transition: all 0.4s linear;
+    -o-transition: all 0.4s linear;
+    transition: all 0.4s linear;
+    height: 0;
+    width: 100%;
+    right: 0 !important;
+    left: auto !important;
+}
+
+#contact-form-rejeppat .nice-select.open .list,
+#demande-service-form .nice-select.open .list {
+    opacity: 1;
+    pointer-events: auto;
+    -webkit-transform: scale(1) translateY(0);
+    -ms-transform: scale(1) translateY(0);
+    transform: scale(1) translateY(0);
+    height: auto;
+}
+
+#contact-form-rejeppat .nice-select .option,
+#demande-service-form .nice-select .option {
+    color: var(--thm-black);
+    padding: 0px 20px 0px;
+    font-size: 15px;
+    line-height: 40px;
+    min-height: 40px;
+    border-bottom: none;
+    transition: background-color 0.5s ease;
+    transition: all 0.5s ease;
+}
+
+#contact-form-rejeppat .nice-select .option+.option,
+#demande-service-form .nice-select .option+.option {
+    border-top: 1px solid rgba(0, 0, 0, 0.10);
+}
+
+#contact-form-rejeppat .nice-select .option:hover,
+#demande-service-form .nice-select .option:hover,
+#contact-form-rejeppat .nice-select .option.focus,
+#demande-service-form .nice-select .option.focus,
+#contact-form-rejeppat .nice-select .option.selected.focus,
+#demande-service-form .nice-select .option.selected.focus {
+    color: var(--thm-black) !important;
+    background-color: var(--thm-primary-color);
+}
+
+#contact-form-rejeppat .checked-box1,
+#demande-service-form .checked-box1 {
+    margin-top: 7px;
+}
+
+#contact-form-rejeppat .checked-box1 label,
+#demande-service-form .checked-box1 label {
+    padding-left: 40px;
+    color: var(--thm-body-font-color);
+    font-size: 17px;
+    line-height: 26px;
+}
+
+#contact-form-rejeppat .checked-box1 input[type="checkbox"]+label span,
+#demande-service-form .checked-box1 input[type="checkbox"]+label span {
+    top: 2px;
+    width: 22px;
+    height: 22px;
+    border-radius: 5px;
+    border: 1px solid var(--rej-green-200);
+}
+
+#contact-form-rejeppat .checked-box1 input[type="checkbox"]+label span::before,
+#demande-service-form .checked-box1 input[type="checkbox"]+label span::before {
+    width: 10px;
+    height: 10px;
+    border-radius: 5px;
+    margin: 5px auto 0px;
+}
+
+#contact-form-rejeppat .btn-box,
+#demande-service-form .btn-box {
+    position: relative;
+    display: block;
+    padding-top: 11px;
+    padding-bottom: 0px;
+}
+
+#contact-form-rejeppat .btn-box button,
+#demande-service-form .btn-box button {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    color: var(--thm-black);
+    font-size: 14px;
+    line-height: 20px;
+    font-family: var(--thm-font-2);
+    font-weight: 700;
+    text-transform: uppercase;
+    transition: all 200ms linear;
+    transition-delay: 0.1s;
+}
+
+#contact-form-rejeppat .btn-box button:hover,
+#demande-service-form .btn-box button:hover {
+    color: var(--thm-primary-color);
+}
+
+#contact-form-rejeppat .btn-box button i,
+#demande-service-form .btn-box button i {
+    position: relative;
+    top: -1px;
+    font-size: 20px;
+    margin-left: 5px;
+}
+
+
+/* Logo officiel du REJEPPAT : badge 300×200 (au lieu du logo horizontal 221×42 du template) */
+.header-logo-box-style1 a img,
+.main-header-logo-style4 a img,
+.sticky-logo-box-style1 a img,
+.footer-logo-style1 a img,
+.footer-widget-style4__logo img,
+.mobile-nav__content .logo-box img {
+    width: auto;
+    border-radius: 6px;
+}
+
+.header-logo-box-style1 a img {
+    height: 80px;
+}
+
+.main-header-logo-style4 a img {
+    height: 72px;
+}
+
+/* Bloc logo de l'accueil plus compact pour ne pas recouvrir le contenu voisin */
+@media only screen and (min-width: 1200px) {
+    .main-header-logo-style4 {
+        max-width: 240px;
+    }
+
+    .main-header-logo-style4 a {
+        padding: 22px 28px 44px;
+    }
+}
+
+.sticky-logo-box-style1 a img {
+    height: 56px;
+}
+
+/* Sans cela, le menu des pages internes écrase le logo de l'en-tête collant (largeur 0) */
+.stricky-header .main-menu__wrapper-inner .sticky-logo-box-style1 {
+    flex-shrink: 0;
+    margin-right: 30px;
+}
+
+.footer-logo-style1 a img,
+.footer-widget-style4__logo img {
+    height: 110px;
+}
+
+.mobile-nav__content .logo-box img {
+    height: 90px;
+}
+
+/* Sur tablette et mobile, l'en-tête blanc est plus bas : le logo ne doit pas déborder */
+@media only screen and (max-width: 1199px) {
+    .header-logo-box-style1 a img {
+        height: 60px;
+    }
+}
