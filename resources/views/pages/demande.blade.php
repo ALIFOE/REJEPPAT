@@ -6,7 +6,7 @@
     $etapes = [
         ['image' => 'demande-personnalisee.jpg', 'titre' => 'Demande personnalisée', 'texte' => 'Votre demande est étudiée en fonction de vos besoins.'],
         ['image' => 'echange-equipe.jpg', 'titre' => 'Échange avec notre équipe', 'texte' => 'Notre équipe pourra vous contacter pour approfondir votre demande.'],
-        ['image' => 'whatsapp.jpg', 'titre' => 'Transmission par WhatsApp', 'texte' => 'Votre demande sera préparée et transmise directement sur WhatsApp.'],
+        ['image' => 'whatsapp.jpg', 'titre' => 'Suivi et réponse', 'texte' => 'Votre demande est enregistrée et suivie par notre équipe, qui vous répond par téléphone, WhatsApp ou e-mail.'],
     ];
 @endphp
 
@@ -85,28 +85,44 @@
                     <div class="row">
                         <!--Start Main Contact Form-->
                         <div class="contact-form">
-                            <form id="demande-service-form" class="default-form2" action="#" method="post" novalidate>
+                            @if (session('succes'))
+                                <div class="alert alert-success">
+                                    {{ session('succes') }}
+                                    @if (session('demande_whatsapp'))
+                                        <br><a href="{{ session('demande_whatsapp') }}" target="_blank" rel="noopener"><i class="fab fa-whatsapp"></i> Transmettre aussi ma demande sur WhatsApp</a>
+                                    @endif
+                                </div>
+                            @endif
+                            @if ($errors->any())
+                                <div class="alert alert-danger">Veuillez corriger les champs signalés.</div>
+                            @endif
+
+                            <form id="demande-service-form" class="default-form2" action="{{ route('demande.envoyer') }}" method="post">
+                                @csrf
                                 <p class="mb-3">Les champs marqués d’un * sont obligatoires.</p>
 
                                 <div class="row">
                                     <div class="col-xl-6 col-lg-6">
                                         <div class="input-box">
-                                            <input type="text" name="nom" placeholder="Nom complet *" required>
+                                            <input type="text" name="nom" placeholder="Nom complet *" required value="{{ old('nom') }}">
+                                            @error('nom') <small class="text-danger">{{ $message }}</small> @enderror
                                         </div>
                                     </div>
                                     <div class="col-xl-6 col-lg-6">
                                         <div class="input-box">
-                                            <input type="text" name="telephone" placeholder="Téléphone *" required>
+                                            <input type="text" name="telephone" placeholder="Téléphone *" required value="{{ old('telephone') }}">
+                                            @error('telephone') <small class="text-danger">{{ $message }}</small> @enderror
                                         </div>
                                     </div>
                                     <div class="col-xl-6 col-lg-6">
                                         <div class="input-box">
-                                            <input type="email" name="email" placeholder="Adresse e-mail">
+                                            <input type="email" name="email" placeholder="Adresse e-mail" value="{{ old('email') }}">
+                                            @error('email') <small class="text-danger">{{ $message }}</small> @enderror
                                         </div>
                                     </div>
                                     <div class="col-xl-6 col-lg-6">
                                         <div class="input-box">
-                                            <input type="text" name="organisation" placeholder="Organisation / Structure">
+                                            <input type="text" name="organisation" placeholder="Organisation / Structure" value="{{ old('organisation') }}">
                                         </div>
                                     </div>
                                     <div class="col-xl-6 col-lg-6">
@@ -114,39 +130,42 @@
                                             <div class="select-box clearfix">
                                                 <select class="wide" name="service" required>
                                                     <option value="" data-display="Service souhaité *">Sélectionnez le service souhaité</option>
-                                                    @foreach (config('rejeppat.services_demande') as $service)
-                                                        <option value="{{ $service }}" @selected(request('service') === $service)>{{ $service }}</option>
+                                                    @foreach ($services as $service)
+                                                        <option value="{{ $service }}" @selected(old('service', request('service')) === $service)>{{ $service }}</option>
                                                     @endforeach
                                                 </select>
                                             </div>
+                                            @error('service') <small class="text-danger">{{ $message }}</small> @enderror
                                         </div>
                                     </div>
                                     <div class="col-xl-6 col-lg-6">
                                         <div class="input-box">
-                                            <input type="text" name="region" placeholder="Région / Localité">
+                                            <input type="text" name="region" placeholder="Région / Localité" value="{{ old('region') }}">
                                         </div>
                                     </div>
                                     <div class="col-xl-12 col-lg-12 col-md-12">
                                         <div class="input-box">
-                                            <input type="text" name="objet" placeholder="Objet de la demande *" required>
+                                            <input type="text" name="objet" placeholder="Objet de la demande *" required value="{{ old('objet') }}">
+                                            @error('objet') <small class="text-danger">{{ $message }}</small> @enderror
                                         </div>
                                     </div>
                                     <div class="col-xl-12 col-lg-12 col-md-12">
                                         <div class="input-box">
-                                            <textarea name="besoin" placeholder="Décrivez votre besoin *" required></textarea>
+                                            <textarea name="besoin" placeholder="Décrivez votre besoin *" required>{{ old('besoin') }}</textarea>
+                                            @error('besoin') <small class="text-danger">{{ $message }}</small> @enderror
                                         </div>
                                     </div>
                                 </div>
                                 <div class="checked-box1">
-                                    <input type="checkbox" name="accord" id="accord" required>
+                                    <input type="checkbox" name="accord" id="accord" value="1" required @checked(old('accord'))>
                                     <label for="accord">
                                         <span></span>J’accepte que les informations renseignées soient utilisées pour traiter ma demande de service. *
                                     </label>
                                 </div>
-                                <p class="text-danger mt-2" id="demande-erreur" hidden>Veuillez remplir tous les champs obligatoires (*) et accepter les conditions.</p>
+                                @error('accord') <p class="text-danger mt-2">{{ $message }}</p> @enderror
                                 <div class="btn-box">
                                     <button type="submit">
-                                        Envoyer ma demande via WhatsApp
+                                        Envoyer ma demande
                                         <i class="icon-angle-double-small-right"></i>
                                     </button>
                                 </div>
@@ -160,37 +179,3 @@
         <!-- End Main Contact Form -->
 
 @endsection
-
-@push('scripts')
-    <script>
-        // Comme sur l'ancien site : la demande est préparée puis transmise sur WhatsApp.
-        document.getElementById('demande-service-form').addEventListener('submit', function (event) {
-            event.preventDefault();
-            var form = event.target;
-            var champ = function (nom) { return (form.elements[nom].value || '').trim(); };
-            var erreur = document.getElementById('demande-erreur');
-
-            var obligatoires = ['nom', 'telephone', 'service', 'objet', 'besoin'];
-            var incomplet = obligatoires.some(function (nom) { return champ(nom) === ''; }) || !form.elements.accord.checked;
-            erreur.hidden = !incomplet;
-            if (incomplet) {
-                return;
-            }
-
-            var lignes = [
-                '*Demande de service - REJEPPAT*',
-                'Nom complet : ' + champ('nom'),
-                'Téléphone : ' + champ('telephone'),
-                'E-mail : ' + (champ('email') || '-'),
-                'Organisation / Structure : ' + (champ('organisation') || '-'),
-                'Service souhaité : ' + champ('service'),
-                'Région / Localité : ' + (champ('region') || '-'),
-                'Objet : ' + champ('objet'),
-                '',
-                champ('besoin')
-            ];
-
-            window.open('https://wa.me/{{ config('rejeppat.whatsapp') }}?text=' + encodeURIComponent(lignes.join('\n')), '_blank', 'noopener');
-        });
-    </script>
-@endpush

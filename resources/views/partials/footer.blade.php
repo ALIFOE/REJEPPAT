@@ -90,7 +90,7 @@
                                         @foreach (\App\Support\Contenu::actualites()->take(2) as $article)
                                             <li class="footer-widget-blog-post-single">
                                                 <div class="footer-widget-blog-post-img">
-                                                    <img src="{{ asset('assets/images/rejeppat/actualites/' . $article['image'] . '-mini.jpg') }}" alt="{{ $article['title'] }}">
+                                                    <img src="{{ $article->visuel('-mini') }}" alt="{{ $article['title'] }}">
                                                 </div>
                                                 <div class="footer-widget-blog-post-content">
                                                     <div class="date">

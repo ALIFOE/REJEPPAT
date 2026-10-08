@@ -15,11 +15,13 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
-        // User::factory(10)->create();
+        $this->call(ContenuSeeder::class);
 
-        User::factory()->create([
-            'name' => 'Test User',
-            'email' => 'test@example.com',
+        // Premier compte administrateur (à changer après la première connexion)
+        User::firstOrCreate(['email' => env('ADMIN_EMAIL', 'admin@rejeppat.org')], [
+            'name' => 'Administrateur REJEPPAT',
+            'password' => env('ADMIN_PASSWORD', 'Rejeppat@2026'),
+            'is_admin' => true,
         ]);
     }
 }

@@ -14,7 +14,7 @@
         <a href="{{ route('fermes.index') }}">Fermes Écoles</a>
         <ul>
             <li><a href="{{ route('fermes.index') }}">Les Fermes Écoles</a></li>
-            @foreach (config('fermes.liste') as $ferme)
+            @foreach (\App\Support\Contenu::fermes() as $ferme)
                 <li><a href="{{ route('fermes.show', $ferme['slug']) }}">{{ $ferme['nom'] }}</a></li>
             @endforeach
         </ul>
@@ -23,7 +23,7 @@
         <a href="{{ route('projets.index') }}">Nos Projets</a>
         <ul>
             <li><a href="{{ route('projets.index') }}">Nos Programmes &amp; Projets</a></li>
-            @foreach (config('projets.liste') as $projet)
+            @foreach (\App\Support\Contenu::projets() as $projet)
                 <li><a href="{{ route('projets.show', $projet['slug']) }}">{{ $projet['titre_court'] }}</a></li>
             @endforeach
         </ul>

@@ -102,7 +102,7 @@
                                 </div>
                                 <div class="header-cart-btn-style1">
                                     <div class="cart-icon">
-                                        <a href="{{ route('boutique.index') }}" aria-label="Boutique"><span class="icon-empty-cart"></span></a>
+                                        <a href="{{ route('panier.index') }}" aria-label="Mon panier"><span class="icon-empty-cart"></span>@if ($nombre = \App\Support\Panier::nombre())<span class="panier-compteur">{{ $nombre }}</span>@endif</a>
                                     </div>
                                 </div>
                                 <div class="header-btn-style1">

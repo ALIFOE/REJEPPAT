@@ -11,7 +11,7 @@
         @foreach ($actualites as $article)
             <li>
                 <div class="img-box">
-                    <img src="{{ asset('assets/images/rejeppat/actualites/' . $article['image'] . '-thumb.jpg') }}" alt="">
+                    <img src="{{ $article->visuel('-thumb') }}" alt="">
                     <div class="overlay-content">
                         <a href="{{ route('actualites.show', $article['slug']) }}"><i class="fa fa-link" aria-hidden="true"></i></a>
                     </div>

@@ -80,7 +80,7 @@
 
                 <div class="row">
 
-                    @foreach (config('rejeppat.offres') as $offre)
+                    @foreach (\App\Support\Contenu::offres() as $offre)
                     <!-- Start Single Grown with Care -->
                     <div class="col-xl-4">
                         <div class="single-grown-with-care">
@@ -175,7 +175,7 @@
                     <div class="{{ $grand ? 'col-xl-6' : 'col-xl-4' }} col-lg-6 col-md-6">
                         <div class="single-project-style1">
                             <div class="single-project-style1__img">
-                                <img src="{{ asset('assets/images/rejeppat/projets/' . $projet['slug'] . ($grand ? '-large' : '-small') . '.jpg') }}" alt="{{ $projet['titre_court'] }}">
+                                <img src="{{ $projet->visuel($grand ? '-large' : '-small') }}" alt="{{ $projet['titre_court'] }}">
                                 <div class="single-project-style1__img-category">
                                     <span>{{ $categorie }}</span>
                                 </div>

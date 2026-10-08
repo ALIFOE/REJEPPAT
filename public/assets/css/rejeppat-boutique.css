@@ -1,0 +1,257 @@
+/*
+ * Boutique en ligne REJEPPAT : panier, commande, confirmation et suivi.
+ * Complète les styles du template (cart-area, checkout-area) avec la charte verte du site.
+ */
+
+/* Compteur du panier dans l'en-tête des pages intérieures */
+.header-cart-btn-style1 .cart-icon a {
+    position: relative;
+}
+
+.header-cart-btn-style1 .cart-icon span.panier-compteur {
+    position: absolute;
+    top: -8px;
+    right: -10px;
+    min-width: 20px;
+    height: 20px;
+    padding: 0 5px;
+    border-radius: 10px;
+    background: var(--thm-primary-color);
+    color: var(--thm-black);
+    font-size: 12px;
+    font-weight: 700;
+    line-height: 20px;
+    text-align: center;
+}
+
+/* Panier vide */
+.panier-vide {
+    max-width: 560px;
+    margin: 0 auto;
+    padding: 50px 30px;
+    border-radius: var(--thm-border-radius);
+    background: var(--rej-green-50);
+    text-align: center;
+}
+
+.panier-vide > span {
+    display: inline-block;
+    margin-bottom: 15px;
+    color: var(--rej-green-dark);
+    font-size: 54px;
+}
+
+.panier-vide h3 {
+    margin-bottom: 10px;
+}
+
+.panier-vide p {
+    margin-bottom: 25px;
+}
+
+.cart-table .remove {
+    border: 0;
+    background: transparent;
+    cursor: pointer;
+}
+
+.cart-table .prod-title a {
+    color: inherit;
+}
+
+/* Choix de livraison et de paiement */
+.choix-boutique {
+    display: grid;
+    gap: 12px;
+    margin-bottom: 20px;
+}
+
+.choix-boutique__option {
+    display: flex;
+    align-items: flex-start;
+    gap: 14px;
+    margin: 0;
+    padding: 16px 18px;
+    border: 1px solid var(--thm-border-color-1);
+    border-radius: var(--thm-border-radius);
+    background: var(--thm-white);
+    cursor: pointer;
+    transition: border-color .2s ease, background-color .2s ease;
+}
+
+.choix-boutique__option:has(input:checked) {
+    border-color: var(--rej-green-dark);
+    background: var(--rej-green-50);
+}
+
+.choix-boutique__option input {
+    margin-top: 6px;
+    accent-color: var(--rej-green-dark);
+}
+
+.choix-boutique__texte {
+    display: flex;
+    flex: 1;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    gap: 4px 12px;
+    line-height: 1.5;
+}
+
+.choix-boutique__texte strong {
+    color: var(--thm-heading-font-color);
+}
+
+.choix-boutique__texte em {
+    color: var(--rej-green-dark);
+    font-style: normal;
+    font-weight: 600;
+}
+
+.choix-boutique__texte span {
+    flex-basis: 100%;
+    color: var(--rej-green-text);
+    font-size: 15px;
+}
+
+.checkout-area .field-input textarea {
+    width: 100%;
+    padding: 15px 20px;
+    border: 1px solid var(--thm-border-color-1);
+    border-radius: var(--thm-border-radius);
+}
+
+.checkout-area .field-input small,
+.checkout-area .choix-boutique small {
+    display: block;
+    margin-top: 5px;
+}
+
+.commande-aide {
+    margin-top: 15px;
+    font-size: 15px;
+    text-align: center;
+}
+
+/* Confirmation et suivi */
+.commande-merci {
+    max-width: 760px;
+    margin: 0 auto 40px;
+    text-align: center;
+}
+
+.commande-merci > span {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 80px;
+    height: 80px;
+    margin-bottom: 20px;
+    border-radius: 50%;
+    background: var(--rej-green-dark);
+    color: var(--thm-white);
+    font-size: 34px;
+}
+
+.commande-merci h2 {
+    margin-bottom: 15px;
+}
+
+.commande-merci__actions {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 15px;
+    margin-top: 40px;
+}
+
+.suivi-commande {
+    margin-bottom: 40px;
+}
+
+.suivi-commande .btn-one {
+    width: 100%;
+    justify-content: center;
+}
+
+.recap-commande {
+    padding: 30px;
+    border: 1px solid var(--thm-border-color-1);
+    border-radius: var(--thm-border-radius);
+    background: var(--thm-white);
+}
+
+.recap-commande__entete {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+    gap: 20px;
+    margin-bottom: 25px;
+    padding: 20px;
+    border-radius: var(--thm-border-radius);
+    background: var(--rej-green-50);
+}
+
+.recap-commande__entete p {
+    margin: 0;
+    font-size: 14px;
+    line-height: 1.4;
+}
+
+.recap-commande__entete h3 {
+    margin: 0;
+    font-size: 18px;
+    line-height: 1.5;
+}
+
+.recap-commande__table {
+    width: 100%;
+    margin-bottom: 20px;
+    border-collapse: collapse;
+}
+
+.recap-commande__table th,
+.recap-commande__table td {
+    padding: 12px 10px;
+    border-bottom: 1px solid var(--thm-border-color-1);
+    text-align: left;
+}
+
+.recap-commande__table th:last-child,
+.recap-commande__table td:last-child {
+    text-align: right;
+    white-space: nowrap;
+}
+
+.recap-commande__total td {
+    color: var(--thm-heading-font-color);
+    font-size: 20px;
+    font-weight: 700;
+}
+
+.recap-commande__infos {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+
+.statut-commande {
+    display: inline-block;
+    padding: 2px 12px;
+    border-radius: 20px;
+    background: var(--rej-green-150);
+    color: var(--rej-green-title);
+    font-size: 14px;
+}
+
+.statut-commande--en_attente { background: #fdf0c4; color: #7a5b00; }
+.statut-commande--annulee { background: #fbe0dc; color: #8f2d1f; }
+
+@media (max-width: 767px) {
+    .recap-commande {
+        padding: 18px;
+    }
+
+    .recap-commande__table {
+        font-size: 15px;
+    }
+}

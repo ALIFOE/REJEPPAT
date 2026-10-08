@@ -14,6 +14,7 @@
     --rej-green-text: #4f6b52;
     --rej-green-dark: #2e6b3a;
     --rej-green-title: #174d2a;
+    --rej-blanc-casse: #ece7da;
 
     --thm-gray-bg: #e6f2de;
     --thm-gray-bg-rgb: 230, 242, 222;
@@ -121,7 +122,7 @@
     padding-right: 42px !important;
 }
 
-/* En-tête et slider d'accueil posés sur les photos : petits textes en noir ;
+/* En-tête et slider d'accueil posés sur les photos : petits textes en blanc cassé ;
    seul le grand titre du slider, vert sombre, garde un contour blanc transparent */
 .main-header-style4__top-left-content li .text p,
 .main-header-style4__top-left-content li .text p a,
@@ -130,7 +131,7 @@
 .main-header-style4__content-contact-info-list li .content h4,
 .main-header-style4__content-contact-info-list li .content p,
 .main-header-style4__content-contact-info-list li .content p a {
-    color: #000000;
+    color: var(--rej-blanc-casse);
     font-weight: 600;
 }
 
@@ -138,7 +139,7 @@
 .main-header-style4__search-box a:hover,
 .main-header-style4__cart-box a:hover,
 .main-header-style4__content-contact-info-list li:hover .content p a {
-    color: var(--rej-green-dark);
+    color: var(--thm-primary-color);
 }
 
 /* Couche noire transparente uniforme (15 %) sur les photos du slider */
@@ -150,10 +151,10 @@
     pointer-events: none;
 }
 
-/* Menu et flèches du slider en noir, comme les autres textes de l'en-tête */
+/* Menu et flèches du slider en blanc cassé, comme les autres textes de l'en-tête */
 .main-menu.main-menu-style4 .main-menu__list > li > a {
-    color: #000000;
-    border-color: rgba(0, 0, 0, 0.35);
+    color: var(--rej-blanc-casse);
+    border-color: rgba(236, 231, 218, 0.5);
 }
 
 .main-menu.main-menu-style4 .main-menu__list > li.current > a,
@@ -162,8 +163,8 @@
 }
 
 .main-slider-style4 .main-slider-nav__control {
-    color: #000000;
-    border-color: rgba(0, 0, 0, 0.35);
+    color: var(--rej-blanc-casse);
+    border-color: rgba(236, 231, 218, 0.5);
 }
 
 .main-slider-style4 .content-box .big-title h2 {
@@ -176,7 +177,7 @@
 
 .main-slider-style4 .content-box .sub-title h5,
 .main-slider-style4 .content-box .text-box p {
-    color: #000000;
+    color: var(--rej-blanc-casse);
     font-weight: 600;
 }
 
@@ -506,5 +507,95 @@
 @media only screen and (max-width: 1199px) {
     .header-logo-box-style1 a img {
         height: 60px;
+    }
+}
+
+/* Page Fermes Écoles : carte interactive du Togo et liste des fermes */
+.carte-fermes {
+    position: relative;
+    display: block;
+    padding-top: 50px;
+}
+
+.carte-fermes__title h3 {
+    font-size: 30px;
+    line-height: 1.3em;
+    margin-bottom: 10px;
+}
+
+.carte-fermes__title p {
+    margin-bottom: 25px;
+}
+
+.carte-fermes__map {
+    width: 100%;
+    height: 560px;
+}
+
+.carte-fermes__liste {
+    position: relative;
+    display: block;
+    max-height: 560px;
+    overflow-y: auto;
+    padding-right: 6px;
+}
+
+.carte-fermes__liste li + li {
+    border-top: 1px solid var(--thm-border-color-1);
+}
+
+.carte-fermes__liste a {
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+    padding: 10px 6px;
+    border-radius: 8px;
+    transition: background-color 200ms ease;
+}
+
+.carte-fermes__liste a:hover {
+    background-color: var(--rej-green-50);
+}
+
+.carte-fermes__puce {
+    flex-shrink: 0;
+    width: 14px;
+    height: 14px;
+    margin-top: 6px;
+    border-radius: 50%;
+    border: 2px solid #ffffff;
+    background-color: #dd3333;
+    box-shadow: 0 0 0 1px #dd3333;
+    transition: background-color 200ms ease;
+}
+
+.carte-fermes__liste a:hover .carte-fermes__puce {
+    background-color: #d1cc38;
+    box-shadow: 0 0 0 1px #d1cc38;
+}
+
+.carte-fermes__liste strong {
+    display: block;
+    color: var(--thm-black);
+    font-family: var(--thm-font-2);
+    font-size: 17px;
+    line-height: 26px;
+}
+
+.carte-fermes__liste small {
+    display: block;
+    color: var(--thm-body-font-color);
+    font-size: 14px;
+    line-height: 22px;
+}
+
+@media only screen and (max-width: 767px) {
+    .carte-fermes__map {
+        height: 480px;
+    }
+
+    .carte-fermes__liste {
+        max-height: none;
+        margin-top: 20px;
     }
 }

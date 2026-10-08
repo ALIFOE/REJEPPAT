@@ -45,7 +45,7 @@
                     <div class="col-xl-4 col-lg-6 col-md-6 filter-item {{ implode(' ', $projet['categories']) }}">
                         <div class="single-project-page-two">
                             <div class="single-project-page-two__img">
-                                <img src="{{ asset('assets/images/rejeppat/projets/' . $projet['slug'] . '.jpg') }}" alt="{{ $projet['titre'] }}">
+                                <img src="{{ $projet->visuel('') }}" alt="{{ $projet['titre'] }}">
                                 <div class="single-project-page-two__img-icon">
                                     <a href="{{ $lien }}">
                                         <i class="icon-arrow"></i>

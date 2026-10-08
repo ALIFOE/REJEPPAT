@@ -9,6 +9,8 @@
 | « modules » : domaines de formation proposés par chaque ferme école.
 | « localisation » : renseignée uniquement quand elle figure sur le site
 | ou sur le logo de la ferme.
+| « carte » : position GPS et adresse affichées sur la carte interactive
+| (reprises de la carte de https://rejeppat.org/les-fermes-ecoles/).
 |
 */
 
@@ -73,6 +75,7 @@ return [
             'nom' => 'Ma Joie',
             'localisation' => 'Kpété-Kpété, Région Centrale',
             'specialite' => 'Élevage & apiculture',
+            'carte' => ['lat' => 8.50413, 'lng' => 0.97139, 'adresse' => 'Sise à Kpétè-Kpétè, canton de Sotouboua, commune de Sotouboua 1, préfecture de Sotouboua.'],
             'modules' => [
                 'Élevage de petits ruminants',
                 'Production de céréales suivant les pratiques agroécologiques',
@@ -89,6 +92,7 @@ return [
             'nom' => 'C.A.DE.T.E',
             'localisation' => 'Région des Plateaux',
             'specialite' => 'Agroécologie & maraîchage',
+            'carte' => ['lat' => 7.5207418, 'lng' => 1.0610079, 'adresse' => 'Sise à Wakpa, canton de Temedja, commune d’Amou 3, préfecture d’Amou.'],
             'modules' => [
                 'Agroécologie & production de céréales, légumineuses et tubercules (gestion durable des terres, compostage, association des cultures, fumure, cultures en couloirs, agroforesterie et arboriculture…)',
                 'Système intégré de production végétale et animale',
@@ -104,6 +108,7 @@ return [
             'nom' => 'Terre Bénie',
             'localisation' => 'Région des Plateaux',
             'specialite' => 'Agroécologie',
+            'carte' => ['lat' => 6.77658, 'lng' => 1.3312, 'adresse' => 'Sise à Agoto, canton d’Atchavé, commune de Haho 1, préfecture de Haho.'],
             'modules' => [
                 'Agroécologie & production de céréales, légumineuses et tubercules (gestion durable des terres, compostage, association des cultures, fumure, cultures…)',
             ],
@@ -113,6 +118,7 @@ return [
             'nom' => 'Teoufema',
             'localisation' => null,
             'specialite' => 'Élevage de porcs',
+            'carte' => ['lat' => 8.84818, 'lng' => 1.07091, 'adresse' => 'Sise à Yao-Kopé, canton de Lama-Tessi, commune de Tchaoudjo 2, préfecture de Tchaoudjo.'],
             'modules' => [
                 'Agroécologie & production de céréales, légumineuses et tubercules (gestion durable des terres, compostage, association des cultures, fumure, cultures en couloirs, agroforesterie et arboriculture…)',
                 'Système intégré de production végétale et animale',
@@ -126,6 +132,7 @@ return [
             'nom' => 'Pain de Vie',
             'localisation' => 'Blitta - Tcharé-Baou',
             'specialite' => 'Transformation du soja',
+            'carte' => ['lat' => 7.986, 'lng' => 0.816, 'adresse' => 'Sise à Niamtougou-Copé, canton de Tcharebaou, commune de Blitta 2, préfecture de Blitta.'],
             'modules' => [
                 'Agroécologie & production de céréales, légumineuses et tubercules (gestion durable des terres, compostage, association des cultures, fumure, cultures en couloirs, agroforesterie et arboriculture…)',
                 'Système intégré de production végétale et animale',
@@ -139,6 +146,7 @@ return [
             'nom' => 'Togo Food',
             'localisation' => null,
             'specialite' => 'Riziculture intensive (SRI)',
+            'carte' => ['lat' => 8.343848, 'lng' => 1.010407, 'adresse' => 'Sise à Tchangaidè, canton de Blitta village, commune de Blitta 1, préfecture de Blitta.'],
             'modules' => [
                 'Agroécologie & production de céréales, légumineuses et tubercules (gestion durable des terres, compostage, association des cultures, fumure, cultures en couloirs, agroforesterie et arboriculture…)',
                 'Système intégré de production végétale et animale',
@@ -152,6 +160,7 @@ return [
             'nom' => 'N’Gnakpeboni',
             'localisation' => null,
             'specialite' => 'Anacarde & biointrants',
+            'carte' => ['lat' => 9.03333, 'lng' => 1.41667, 'adresse' => 'Sise à Nandjoubi, canton de Tchamba, commune de Tchamba 1, préfecture de Tchamba.'],
             'modules' => [
                 'Agroécologie & production de céréales, légumineuses et tubercules (gestion durable des terres, compostage, association des cultures, fumure, cultures en couloirs, agroforesterie et arboriculture…)',
                 'Système intégré de production végétale et animale',
@@ -168,6 +177,7 @@ return [
             'nom' => 'Sath Agro Business',
             'localisation' => null,
             'specialite' => 'Poules pondeuses',
+            'carte' => ['lat' => 9.033333, 'lng' => 1.416667, 'adresse' => 'Sise à Koutaboni, canton de Tchamba, commune de Tchamba 1, préfecture de Tchamba.'],
             'modules' => [
                 'Élevage de poules pondeuses',
                 'Production de céréales suivant les pratiques agroécologiques',
@@ -185,6 +195,7 @@ return [
             'nom' => 'Albaraka',
             'localisation' => null,
             'specialite' => 'Transformation & agroforesterie',
+            'carte' => ['lat' => 8.995, 'lng' => 1.14, 'adresse' => 'Sise à Tchavadi, canton de Sokodé, commune de Tchaoudjo 1, préfecture de Tchaoudjo.'],
             'modules' => [
                 'Transformation agroalimentaire (fruits, légumes, tubercules et céréales)',
                 'Techniques de l’agroforesterie (culture associée à l’anacardier, plantes forestières non ligneuses, stratégies de régénération, plan de fertilisation des plants)',
@@ -201,6 +212,7 @@ return [
             'nom' => 'Pirenadou',
             'localisation' => 'Kéletou - Tchamba',
             'specialite' => 'Maraîchage & élevage',
+            'carte' => ['lat' => 8.841417, 'lng' => 1.534483, 'adresse' => 'Sise à Kélétou, canton de Koussountou, commune de Tchamba 2, préfecture de Tchamba.'],
             'modules' => [
                 'Production de céréales et tubercules suivant les pratiques agroécologiques (compostage, bokashi)',
                 'Diagnostic d’une exploitation agricole',
@@ -220,6 +232,7 @@ return [
             'nom' => 'Capable-Plus',
             'localisation' => null,
             'specialite' => 'Transformation & irrigation',
+            'carte' => ['lat' => 8.4308803, 'lng' => 0.9940179, 'adresse' => 'Sise à Tchébébé, canton de Tchébébé, commune de Sotouboua 3, préfecture de Sotouboua.'],
             'modules' => [
                 'Transformation agroalimentaire',
                 'Maraîchage agroécologique',
@@ -235,6 +248,7 @@ return [
             'nom' => 'Les Merveilles de Dieu',
             'localisation' => null,
             'specialite' => 'Maraîchage agroécologique',
+            'carte' => ['lat' => 8.31667, 'lng' => 0.98333, 'adresse' => 'Sise à Kélébo, canton de Katchenke, commune de Blitta 3, préfecture de Blitta.'],
             'modules' => [
                 'Pratiques agroécologiques en maraîchage : étude du sol, stratégie de régénération, plan de fertilisation',
                 'Confection des planches et pépinières',

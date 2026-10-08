@@ -58,27 +58,26 @@
                                     </div>
                                 </div>
                                 <div class="img-box">
-                                    <img src="{{ asset('assets/images/rejeppat/actualites/' . $actualite['image'] . '-detail.jpg') }}" alt="{{ $actualite['title'] }}">
+                                    <img src="{{ $actualite->visuel('-detail') }}" alt="{{ $actualite['title'] }}">
                                     <div class="category">
                                         <h6>{{ $categories }}</h6>
                                     </div>
                                 </div>
                             </div>
 
-                            <div class="blog-details-text1">
-                                @foreach ($paragraphes as $paragraphe)
-                                    <p>{{ $paragraphe }}</p>
-                                @endforeach
+                            {{-- Texte mis en forme dans l'administration, nettoyé à l'enregistrement (App\Support\TexteRiche) --}}
+                            <div class="blog-details-text1 article-contenu">
+                                {!! $actualite->corpsHtml() !!}
                             </div>
 
                             @if (count($actualite['gallery']))
                             <div class="blog-details-text2">
                                 <div class="row">
-                                    @foreach ($actualite['gallery'] as $photo)
+                                    @foreach ($actualite->galerie() as $photo)
                                         <div class="col-md-6 mb-4">
                                             <a class="lightbox-image" data-fancybox="galerie"
-                                                href="{{ asset('assets/images/rejeppat/actualites/galerie/' . $photo . '-full.jpg') }}">
-                                                <img src="{{ asset('assets/images/rejeppat/actualites/galerie/' . $photo . '.jpg') }}" alt="{{ $actualite['title'] }}" style="border-radius: 10px;">
+                                                href="{{ $photo['full'] }}">
+                                                <img src="{{ $photo['mini'] }}" alt="{{ $actualite['title'] }}" style="border-radius: 10px;">
                                             </a>
                                         </div>
                                     @endforeach

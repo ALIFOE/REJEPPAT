@@ -23,7 +23,7 @@
                 <div class="row">
                     <div class="col-xl-8 col-lg-7">
                         <div class="project-details-style1__img">
-                            <img src="{{ asset('assets/images/rejeppat/projets/' . $projet['slug'] . '-detail.jpg') }}" alt="{{ $projet['titre'] }}">
+                            <img src="{{ $projet->visuel('-detail') }}" alt="{{ $projet['titre'] }}">
                         </div>
                     </div>
                     <div class="col-xl-4 col-lg-5">
@@ -110,7 +110,7 @@
                     </div>
                     <div class="col-xl-4 col-lg-5">
                         <div class="project-details-style2__img">
-                            <img src="{{ asset('assets/images/rejeppat/projets/' . $projet['slug'] . '-side.jpg') }}" alt="{{ $projet['titre_court'] }}">
+                            <img src="{{ $projet->visuel('-side') }}" alt="{{ $projet['titre_court'] }}">
                         </div>
                     </div>
                 </div>

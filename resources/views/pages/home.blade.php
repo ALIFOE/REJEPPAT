@@ -736,6 +736,7 @@
 
 
         <!-- Start Blog Style4 -->
+        @if ($actualites->isNotEmpty())
         <section class="blog-style4" id="actualites">
             <div class="container">
                 <div class="sec-title withtext text-center sec-title-animation animation-style2">
@@ -762,10 +763,10 @@
                             <div class="single-blog-style3">
                                 <div class="single-blog-style3__img">
                                     <div class="single-blog-style3__img-inner">
-                                        <img src="{{ asset('assets/images/rejeppat/actualites/' . $une['image'] . '-accueil-grand.jpg') }}" alt="{{ $une['title'] }}">
+                                        <img src="{{ $une->visuel('-accueil-grand') }}" alt="{{ $une['title'] }}">
                                         <div class="single-blog-style3__img-icon">
                                             <a class="lightbox-image" data-fancybox="gallery"
-                                                href="{{ asset('assets/images/rejeppat/actualites/' . $une['image'] . '-detail.jpg') }}">
+                                                href="{{ $une->visuel('-detail') }}">
                                                 <i class="icon-resize"></i>
                                             </a>
                                         </div>
@@ -837,10 +838,10 @@
                                         </div>
                                     </div>
                                     <div class="blog-style2__single-img">
-                                        <img src="{{ asset('assets/images/rejeppat/actualites/' . $article['image'] . '-accueil.jpg') }}" alt="{{ $article['title'] }}">
+                                        <img src="{{ $article->visuel('-accueil') }}" alt="{{ $article['title'] }}">
                                         <div class="blog-style2__single-img-overlay-icon">
                                             <a class="lightbox-image" data-fancybox="gallery"
-                                                href="{{ asset('assets/images/rejeppat/actualites/' . $article['image'] . '-detail.jpg') }}">
+                                                href="{{ $article->visuel('-detail') }}">
                                                 <i class="icon-resize"></i>
                                             </a>
                                         </div>
@@ -862,6 +863,7 @@
                 </div>
             </div>
         </section>
+        @endif
         <!-- End Blog Style4 -->
 
 @endsection

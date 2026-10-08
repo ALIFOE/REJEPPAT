@@ -49,8 +49,10 @@
                                     </div>
                                     <div class="product-page__sidebar-categories-list-box">
                                         <ul class="product-page__sidebar-categories-list">
+                                            <li class="{{ $categorie ? '' : 'active' }}"><a href="{{ route('boutique.index') }}">Tous les produits <span>({{ $tous->count() }})</span> </a></li>
                                             @foreach (config('boutique.categories') as $cle => $nom)
-                                                <li class="active"><a href="{{ route('boutique.index') }}">{{ $nom }} <span>({{ $tous->where('categorie', $cle)->count() }})</span> </a></li>
+                                                @continue($tous->where('categorie', $cle)->isEmpty())
+                                                <li class="{{ $categorie === $cle ? 'active' : '' }}"><a href="{{ route('boutique.index', ['categorie' => $cle]) }}">{{ $nom }} <span>({{ $tous->where('categorie', $cle)->count() }})</span> </a></li>
                                             @endforeach
                                         </ul>
                                     </div>
@@ -72,7 +74,7 @@
                                             @foreach ($tous as $produit)
                                             <li>
                                                 <div class="product-page__sidebar-recent-post-img">
-                                                    <img src="{{ asset('assets/images/rejeppat/shop/' . $produit['slug'] . '-mini.jpg') }}"
+                                                    <img src="{{ $produit->visuel('-mini') }}"
                                                         alt="{{ $produit['nom'] }}">
                                                 </div>
                                                 <div class="product-page__sidebar-recent-post-content">

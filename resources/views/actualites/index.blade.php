@@ -33,7 +33,7 @@
                     <div class="col-xl-4 col-lg-6 col-md-6">
                         <div class="single-blog-style1">
                             <div class="single-blog-style1__img">
-                                <img src="{{ asset('assets/images/rejeppat/actualites/' . $article['image'] . '.jpg') }}" alt="{{ $article['title'] }}">
+                                <img src="{{ $article->visuel('') }}" alt="{{ $article['title'] }}">
                                 <div class="single-blog-style1__img-overlay-icon">
                                     <a href="{{ $lien }}"><i class="icon-resize"></i></a>
                                 </div>

@@ -14,6 +14,40 @@ return [
 
     'categories' => [
         'bio' => 'Bio',
+        'cereales' => 'Céréales & légumineuses',
+        'transformes' => 'Produits transformés',
+        'elevage' => 'Élevage',
+    ],
+
+    /*
+    | Modes de livraison proposés à la commande (frais en francs CFA).
+    | À ajuster selon les conditions réelles du REJEPPAT.
+    */
+    'livraisons' => [
+        'retrait' => ['label' => 'Retrait au siège du REJEPPAT (Sokodé)', 'frais' => 0],
+        'sokode' => ['label' => 'Livraison à domicile à Sokodé', 'frais' => 500],
+        'togo' => ['label' => 'Expédition dans une autre ville du Togo', 'frais' => 2000],
+    ],
+
+    /*
+    | Modes de paiement. Mobile Money : le client envoie le montant puis
+    | indique la référence de la transaction, vérifiée depuis l'administration.
+    */
+    'paiements' => [
+        'livraison' => [
+            'label' => 'Paiement à la livraison / au retrait',
+            'texte' => 'Vous payez en espèces ou par Mobile Money à la réception de votre commande.',
+        ],
+        'tmoney' => [
+            'label' => 'T-Money (Togocom)',
+            'texte' => 'Envoyez le montant total au (+228) 91 87 33 16, puis indiquez la référence de la transaction.',
+            'reference' => true,
+        ],
+        'flooz' => [
+            'label' => 'Flooz (Moov Africa)',
+            'texte' => 'Envoyez le montant total au (+228) 98 92 63 50, puis indiquez la référence de la transaction.',
+            'reference' => true,
+        ],
     ],
 
     'produits' => [

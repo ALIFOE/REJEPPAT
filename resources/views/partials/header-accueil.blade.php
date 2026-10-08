@@ -67,10 +67,10 @@
                                             </a>
                                         </div>
                                         <div class="main-header-style4__cart-box">
-                                            <a href="{{ route('boutique.index') }}">
+                                            <a href="{{ route('panier.index') }}">
                                                 <span class="icon-empty-cart"></span>
                                                 Panier
-                                                <div class="main-header-style4__cart-count">(0)</div>
+                                                <div class="main-header-style4__cart-count">({{ \App\Support\Panier::nombre() }})</div>
                                             </a>
                                         </div>
                                     </div>

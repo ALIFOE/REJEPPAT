@@ -40,6 +40,8 @@
                                 </div>
                             </div>
 
+                            @include('fermes._carte-togo', ['fermes' => $fermes])
+
                             <div class="services-details__content-process">
                                 <div class="services-details__content-process-text">
                                     <h3>Une formation par la pratique</h3>

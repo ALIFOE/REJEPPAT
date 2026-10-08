@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Actualite;
 use App\Support\Contenu;
 use Illuminate\Http\Request;
 use Illuminate\Pagination\LengthAwarePaginator;
@@ -46,6 +47,7 @@ class ActualiteController extends Controller
     {
         $toutes = Contenu::actualites();
         $actualite = Contenu::actualite($slug);
+        Actualite::withoutTimestamps(fn () => $actualite->increment('vues'));
         $position = $toutes->search(fn ($a) => $a['slug'] === $slug);
 
         return view('actualites.show', [

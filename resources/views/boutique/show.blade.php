@@ -3,9 +3,8 @@
 @section('title', $produit['nom'])
 
 @php
-    $categorie = config('boutique.categories')[$produit['categorie']];
-    $reduction = (int) round(100 - $produit['prix'] * 100 / $produit['prix_initial']);
-    $message = 'Bonjour, je souhaite commander : ' . $produit['nom'] . ' (' . \App\Support\Contenu::prix($produit['prix']) . ').';
+    $categorie = $produit->categorieNom();
+    $reduction = $produit->reduction();
 @endphp
 
 @section('content')
@@ -30,7 +29,7 @@
                                         <div class="swiper-wrapper">
                                             <div class="swiper-slide">
                                                 <div class="product-details__img">
-                                                    <img src="{{ asset('assets/images/rejeppat/shop/' . $produit['slug'] . '-detail.jpg') }}" alt="{{ $produit['nom'] }}">
+                                                    <img src="{{ $produit->visuel('-detail') }}" alt="{{ $produit['nom'] }}">
                                                 </div>
                                             </div><!-- /.swiper-slide -->
                                         </div>
@@ -49,7 +48,7 @@
                                         <div class="swiper-wrapper">
                                             <div class="swiper-slide">
                                                 <div class="product-details__thumb-img">
-                                                    <img src="{{ asset('assets/images/rejeppat/shop/' . $produit['slug'] . '-thumb.jpg') }}"
+                                                    <img src="{{ $produit->visuel('-thumb') }}"
                                                         alt="{{ $produit['nom'] }}">
                                                 </div>
                                             </div><!-- /.swiper-slide -->
@@ -69,35 +68,37 @@
                                         <div class="product-details__rating-icon">
                                             <span class="icon-rate-star-button"></span>
                                         </div>
-                                        <p class="product-details__rating-text"> -{{ $reduction }} %</p>
+                                        <p class="product-details__rating-text">{{ $reduction ? '-' . $reduction . ' %' : 'Prix producteur' }}</p>
                                     </div>
                                     <div class="product-details__stock-box">
                                         <div class="product-details__stock-img">
                                             <img src="{{ asset('assets/images/icon/product-details-stock-icon.png') }}" alt="">
                                         </div>
-                                        <p class="product-details__stock-text">Produit local</p>
+                                        <p class="product-details__stock-text">{{ $produit->enStock() ? ($produit->stock !== null ? $produit->stock . ' en stock' : 'Produit local') : 'Rupture de stock' }}</p>
                                     </div>
                                 </div>
                                 <div class="product-details__price-box">
-                                    <h3 class="product-details__price">{{ \App\Support\Contenu::prix($produit['prix']) }} <span>{{ \App\Support\Contenu::prix($produit['prix_initial']) }}</span> </h3>
+                                    <h3 class="product-details__price">{{ \App\Support\Contenu::prix($produit['prix']) }} @if ($reduction)<span>{{ \App\Support\Contenu::prix($produit['prix_initial']) }}</span>@endif </h3>
                                 </div>
                                 <p class="product-details__text-1">{{ $produit['resume'] }}</p>
                                 <div class="product-quantity-box-outer">
-                                    <form class="product-quantity-box" id="commande-produit">
+                                    @include('boutique._alertes')
+                                    <form class="product-quantity-box" id="commande-produit" action="{{ route('panier.ajouter', $produit['slug']) }}" method="post">
+                                        @csrf
                                         <div class="input-box">
-                                            <input class="quantity-spinner" type="text" value="1" name="quantity">
+                                            <input class="quantity-spinner" type="text" value="1" name="quantite" aria-label="Quantité">
                                         </div>
                                         <div class="right">
                                             <div class="cart-box">
-                                                <button class="btn-one" type="submit">
+                                                <button class="btn-one" type="submit" @disabled(! $produit->enStock())>
                                                     <i class="icon-arrow"></i>
-                                                    <span class="txt">Commander</span>
+                                                    <span class="txt">Ajouter au panier</span>
                                                 </button>
                                             </div>
                                         </div>
                                     </form>
                                     <div class="product-wishlist-btn">
-                                        <a href="{{ asset('assets/images/rejeppat/shop/' . $produit['slug'] . '-detail.jpg') }}" class="lightbox-image" data-fancybox="produit"><span class="icon-resize"></span></a>
+                                        <a href="{{ $produit->visuel('-detail') }}" class="lightbox-image" data-fancybox="produit"><span class="icon-resize"></span></a>
                                         <a href="https://wa.me/?text={{ urlencode(route('boutique.show', $produit['slug'])) }}" target="_blank" rel="noopener"><span class="icon-favorite"></span></a>
                                     </div>
                                 </div>
@@ -188,15 +189,3 @@
         @endif
 
 @endsection
-
-@push('scripts')
-    <script>
-        // Commande par WhatsApp (la boutique n'a pas encore de paiement en ligne)
-        document.getElementById('commande-produit').addEventListener('submit', function (event) {
-            event.preventDefault();
-            var quantite = parseInt(event.target.elements.quantity.value, 10) || 1;
-            var message = @json($message) + ' Quantité : ' + quantite + '.';
-            window.open('https://wa.me/{{ config('rejeppat.whatsapp') }}?text=' + encodeURIComponent(message), '_blank', 'noopener');
-        });
-    </script>
-@endpush

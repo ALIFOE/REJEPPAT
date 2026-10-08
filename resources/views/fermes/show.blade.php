@@ -33,7 +33,7 @@
 
                             <div class="services-details__content-top">
                                 <div class="services-details__content-top-img">
-                                    <img src="{{ asset('assets/images/rejeppat/fermes/' . $ferme['slug'] . '-top.jpg') }}" alt="Ferme école {{ $ferme['nom'] }}">
+                                    <img src="{{ $ferme->visuel('-top') }}" alt="Ferme école {{ $ferme['nom'] }}">
                                 </div>
                                 <div class="services-details__content-top-text">
                                     <h2>Ferme école {{ $ferme['nom'] }}</h2>

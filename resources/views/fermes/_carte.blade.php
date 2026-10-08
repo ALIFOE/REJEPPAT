@@ -7,7 +7,7 @@
                         <div class="single-team-style1">
                             <div class="single-team-style1__img">
                                 <div class="single-team-style1__img-inner">
-                                    <img src="{{ asset('assets/images/rejeppat/fermes/' . $ferme['slug'] . '.jpg') }}" alt="Ferme école {{ $ferme['nom'] }}">
+                                    <img src="{{ $ferme->visuel('') }}" alt="Ferme école {{ $ferme['nom'] }}">
                                 </div>
                                 <div class="single-team-style1__img-designation">
                                     <div class="single-team-style1__img-designation-inner">
