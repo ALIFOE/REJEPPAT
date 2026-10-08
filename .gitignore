@@ -1,28 +1,63 @@
-*.log
-.DS_Store
+# --- Secrets et configuration locale ---
 .env
-.env.backup
-.env.production
-.phpactor.json
+.env.*
+!.env.example
+/auth.json
+*.key
+*.pem
+*.p12
+*.crt
+
+# --- Bases de données, sauvegardes et exports ---
+*.sqlite
+*.sqlite-journal
+*.sql
+*.sql.gz
+*.dump
+*.bak
+*.backup
+/backups
+
+# --- Fichiers envoyés par les utilisateurs (images de l'administration) ---
+/public/uploads/*
+!/public/uploads/.gitignore
+/public/storage
+
+# --- Dépendances et fichiers générés ---
+/node_modules
+/vendor
+/public/build
+/public/hot
+/public/fonts-manifest.dev.json
+/storage/*.key
+/storage/pail
+/storage/framework/cache/htmlpurifier
+/.phpunit.cache
 .phpunit.result.cache
+/coverage
+_ide_helper.php
+_ide_helper_models.php
+.phpstorm.meta.php
+
+# --- Journaux ---
+*.log
+
+# --- Assistants IA et éditeurs ---
+.claude/
+CLAUDE.md
+AGENTS.md
+.mcp.json
 /.codex
 /.cursor/
 /.idea
 /.nova
-/.phpunit.cache
 /.vscode
 /.zed
-/auth.json
-/node_modules
-/public/build
-/public/fonts-manifest.dev.json
-/public/hot
-/public/storage
-/storage/*.key
-/storage/pail
-/vendor
-_ide_helper.php
+.phpactor.json
+
+# --- Environnements de développement et systèmes ---
 Homestead.json
 Homestead.yaml
+.DS_Store
 Thumbs.db
-/.claude
+desktop.ini
