@@ -43,7 +43,7 @@ class ActualiteController extends Controller
 
     public function store(Request $request): RedirectResponse
     {
-        $actualite = new Actualite();
+        $actualite = new Actualite;
         $this->enregistrer($request, $actualite);
 
         return redirect()->route('admin.actualites.index')->with('succes', 'Article publié.');
@@ -77,9 +77,9 @@ class ActualiteController extends Controller
     {
         $request->validate(['file' => ['required', 'image', 'mimes:jpg,jpeg,png,webp,gif', 'max:4096']], self::MESSAGES);
 
-        $chemin = $request->file('file')->store('actualites/contenu', 'uploads');
+        $chemin = $this->stockerPhoto($request->file('file'), 'actualites/contenu');
 
-        return response()->json(['location' => parse_url(asset(Actualite::DOSSIER_UPLOADS . '/' . $chemin), PHP_URL_PATH)]);
+        return response()->json(['location' => parse_url(asset(Actualite::DOSSIER_UPLOADS.'/'.$chemin), PHP_URL_PATH)]);
     }
 
     private function enregistrer(Request $request, Actualite $actualite): void
@@ -116,7 +116,7 @@ class ActualiteController extends Controller
 
                 return false;
             })
-            ->merge(collect($request->file('galerie', []))->map(fn ($fichier) => $fichier->store('actualites/galerie', 'uploads')))
+            ->merge(collect($request->file('galerie', []))->map(fn ($fichier) => $this->stockerPhoto($fichier, 'actualites/galerie')))
             ->values()
             ->all();
 

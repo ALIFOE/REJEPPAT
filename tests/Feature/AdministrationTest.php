@@ -15,6 +15,7 @@ use Database\Seeders\ContenuSeeder;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Str;
 use Tests\TestCase;
 
 class AdministrationTest extends TestCase
@@ -105,6 +106,35 @@ class AdministrationTest extends TestCase
         $reponse->assertOk()->assertJsonPath('location', fn ($url) => str_starts_with($url, '/uploads/actualites/contenu/'));
     }
 
+    public function test_une_tres_grande_photo_envoyee_est_reduite(): void
+    {
+        Storage::fake('uploads');
+
+        $reponse = $this->actingAs($this->admin)->postJson(route('admin.actualites.image'), ['file' => UploadedFile::fake()->image('grande.jpg', 3000, 2000)]);
+
+        $chemin = Str::after($reponse->json('location'), '/uploads/');
+        $this->assertSame([1920, 1280], array_slice(getimagesize(Storage::disk('uploads')->path($chemin)), 0, 2));
+    }
+
+    public function test_une_photo_de_telephone_est_remise_a_l_endroit(): void
+    {
+        Storage::fake('uploads');
+
+        // Photo 400 x 200 prise téléphone tourné : orientation EXIF 6 (à faire pivoter de 90° vers la droite)
+        $image = imagecreatetruecolor(400, 200);
+        ob_start();
+        imagejpeg($image);
+        $jpeg = ob_get_clean();
+        $tiff = "MM\x00\x2A".pack('N', 8).pack('n', 1).pack('nnNn', 0x0112, 3, 1, 6)."\x00\x00".pack('N', 0);
+        $exif = "\xFF\xE1".pack('n', strlen($tiff) + 8)."Exif\x00\x00".$tiff;
+        $fichier = UploadedFile::fake()->createWithContent('telephone.jpg', substr($jpeg, 0, 2).$exif.substr($jpeg, 2));
+
+        $reponse = $this->actingAs($this->admin)->postJson(route('admin.actualites.image'), ['file' => $fichier]);
+
+        $chemin = Str::after($reponse->json('location'), '/uploads/');
+        $this->assertSame([200, 400], array_slice(getimagesize(Storage::disk('uploads')->path($chemin)), 0, 2));
+    }
+
     public function test_gerer_produit_offre_ferme_et_projet(): void
     {
         $this->actingAs($this->admin);
@@ -129,7 +159,7 @@ class AdministrationTest extends TestCase
         $this->put(route('admin.projets.update', $projet), [
             'titre' => $projet->titre, 'titre_court' => $projet->titre_court, 'slug' => $projet->slug, 'icone' => 'icon-farmer',
             'categories' => ['formation'], 'date' => '2026-01-01', 'resume' => 'Résumé', 'description' => 'Texte',
-            'actions' => "Action 1 | Détail 1", 'publie' => '0',
+            'actions' => 'Action 1 | Détail 1', 'publie' => '0',
         ])->assertRedirect(route('admin.projets.index'));
         $this->assertSame([['titre' => 'Action 1', 'texte' => 'Détail 1']], $projet->fresh()->actions);
         $this->get(route('projets.show', $projet->slug))->assertNotFound();

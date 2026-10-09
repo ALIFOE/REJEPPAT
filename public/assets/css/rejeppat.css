@@ -599,3 +599,17 @@
         margin-top: 20px;
     }
 }
+
+/* ---------- Effets sur les images ---------- */
+
+/* Logos des fermes écoles : cadre blanc uniforme, survol discret (le voile noir du modèle masquait le logo) */
+.single-team-style1__img-inner {
+    border: 1px solid var(--rej-green-150);
+    background: #fff;
+    box-shadow: 0 10px 30px rgba(23, 77, 42, .06);
+}
+
+.single-team-style1:hover .single-team-style1__img-inner::before {
+    background-color: var(--rej-green-dark);
+    opacity: .08;
+}

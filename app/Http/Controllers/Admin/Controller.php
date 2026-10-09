@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller as BaseController;
+use App\Support\Photo;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\Request;
 use Illuminate\Http\UploadedFile;
@@ -67,7 +68,7 @@ abstract class Controller extends BaseController
         $i = 2;
 
         while ($modele::where('slug', $slug)->when($actuel, fn ($q) => $q->whereKeyNot($actuel->getKey()))->exists()) {
-            $slug = $base . '-' . $i++;
+            $slug = $base.'-'.$i++;
         }
 
         return $slug;
@@ -82,7 +83,16 @@ abstract class Controller extends BaseController
 
         $this->supprimerPhoto($ancienne);
 
-        return $fichier->store($dossier, 'uploads');
+        return $this->stockerPhoto($fichier, $dossier);
+    }
+
+    /** Stocke une image dans public/uploads/{dossier} puis l'optimise (orientation, taille, netteté). */
+    protected function stockerPhoto(UploadedFile $fichier, string $dossier): string
+    {
+        $chemin = $fichier->store($dossier, 'uploads');
+        Photo::optimiser($chemin);
+
+        return $chemin;
     }
 
     protected function supprimerPhoto(?string $chemin): void
