@@ -48,6 +48,9 @@
             chart.geodata = am4geodata_togoHigh;
             chart.projection = new am4maps.projections.Miller();
 
+            // Masque le logo amCharts (lien vers amcharts.com) en bas à gauche de la carte
+            chart.logo.disabled = true;
+
             // Carte fixe, comme sur rejeppat.org : pas de zoom ni de déplacement (la molette fait défiler la page)
             chart.seriesContainer.draggable = false;
             chart.seriesContainer.resizable = false;
