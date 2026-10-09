@@ -4,6 +4,7 @@ use App\Http\Controllers\ActualiteController;
 use App\Http\Controllers\Admin;
 use App\Http\Controllers\BoutiqueController;
 use App\Http\Controllers\CommandeController;
+use App\Http\Controllers\Compte;
 use App\Http\Controllers\FermeController;
 use App\Http\Controllers\PageController;
 use App\Http\Controllers\PanierController;
@@ -41,6 +42,36 @@ Route::get('/boutique/{slug}', [BoutiqueController::class, 'show'])->name('bouti
 Route::get('/contact', [PageController::class, 'contact'])->name('contact');
 Route::post('/contact', [PageController::class, 'envoyerContact'])->middleware('throttle:5,1')->name('contact.envoyer');
 
+// Espace client : connexion, inscription, mot de passe oublié et compte
+Route::middleware('guest')->group(function () {
+    Route::get('/connexion', [Compte\ConnexionController::class, 'create'])->name('connexion');
+    Route::post('/connexion', [Compte\ConnexionController::class, 'store'])->middleware('throttle:6,1');
+    Route::get('/inscription', [Compte\InscriptionController::class, 'create'])->name('inscription');
+    Route::post('/inscription', [Compte\InscriptionController::class, 'store'])->middleware('throttle:6,1');
+
+    Route::get('/mot-de-passe-oublie', [Compte\MotDePasseController::class, 'demande'])->name('password.request');
+    Route::post('/mot-de-passe-oublie', [Compte\MotDePasseController::class, 'envoyerLien'])->middleware('throttle:6,1')->name('password.email');
+    Route::get('/reinitialiser-mot-de-passe/{token}', [Compte\MotDePasseController::class, 'edit'])->name('password.reset');
+    Route::post('/reinitialiser-mot-de-passe', [Compte\MotDePasseController::class, 'update'])->middleware('throttle:6,1')->name('password.update');
+});
+
+Route::middleware('auth')->group(function () {
+    Route::post('/deconnexion', [Compte\ConnexionController::class, 'destroy'])->name('deconnexion');
+
+    Route::get('/verifier-email', [Compte\VerificationController::class, 'notice'])->name('verification.notice');
+    Route::get('/verifier-email/{id}/{hash}', [Compte\VerificationController::class, 'verify'])->middleware(['signed', 'throttle:6,1'])->name('verification.verify');
+    Route::post('/verifier-email', [Compte\VerificationController::class, 'renvoyer'])->middleware('throttle:6,1')->name('verification.send');
+
+    Route::prefix('mon-compte')->name('compte.')->middleware('verified')->group(function () {
+        Route::get('/', [Compte\CompteController::class, 'index'])->name('index');
+        Route::get('/commandes/{numero}', [Compte\CompteController::class, 'commande'])->name('commande');
+        Route::get('/profil', [Compte\ProfilController::class, 'edit'])->name('profil');
+        Route::patch('/profil', [Compte\ProfilController::class, 'update'])->name('profil.update');
+        Route::put('/mot-de-passe', [Compte\ProfilController::class, 'motDePasse'])->name('mot-de-passe');
+        Route::delete('/', [Compte\ProfilController::class, 'destroy'])->name('supprimer');
+    });
+});
+
 // Administration
 Route::prefix('admin')->name('admin.')->group(function () {
     Route::middleware('guest')->group(function () {
@@ -64,6 +95,13 @@ Route::prefix('admin')->name('admin.')->group(function () {
         Route::resource('demandes', Admin\DemandeController::class)->only(['index', 'show', 'update', 'destroy'])->parameters(['demandes' => 'demande']);
         Route::resource('messages', Admin\MessageController::class)->only(['index', 'show', 'update', 'destroy']);
 
-        Route::resource('utilisateurs', Admin\UtilisateurController::class)->except('show')->parameters(['utilisateurs' => 'utilisateur']);
+        // Profil du super admin ou de l'administrateur connecté
+        Route::get('/profil', [Admin\ProfilController::class, 'edit'])->name('profil');
+        Route::put('/profil', [Admin\ProfilController::class, 'update'])->name('profil.update');
+        Route::put('/profil/mot-de-passe', [Admin\ProfilController::class, 'motDePasse'])->name('profil.mot-de-passe');
+
+        // Comptes et rôles : réservé au super admin
+        Route::resource('utilisateurs', Admin\UtilisateurController::class)->except('show')->parameters(['utilisateurs' => 'utilisateur'])
+            ->middleware('can:gerer-utilisateurs');
     });
 });

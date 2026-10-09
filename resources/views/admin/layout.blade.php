@@ -31,9 +31,12 @@
             ['route' => 'admin.fermes.index', 'actif' => 'admin.fermes.*', 'icone' => 'icon-farm-house-1', 'libelle' => 'Fermes écoles'],
             ['route' => 'admin.projets.index', 'actif' => 'admin.projets.*', 'icone' => 'icon-smart-farming', 'libelle' => 'Programmes & projets'],
         ],
-        'Réglages' => [
-            ['route' => 'admin.utilisateurs.index', 'actif' => 'admin.utilisateurs.*', 'icone' => 'fas fa-user-shield', 'libelle' => 'Administrateurs'],
-        ],
+        'Réglages' => array_values(array_filter([
+            auth()->user()->can('gerer-utilisateurs')
+                ? ['route' => 'admin.utilisateurs.index', 'actif' => 'admin.utilisateurs.*', 'icone' => 'fas fa-user-shield', 'libelle' => 'Utilisateurs & rôles']
+                : null,
+            ['route' => 'admin.profil', 'actif' => 'admin.profil', 'icone' => 'fas fa-user-cog', 'libelle' => 'Mon profil'],
+        ])),
     ];
     $utilisateur = auth()->user();
 @endphp
@@ -83,7 +86,7 @@
                 </a>
                 <div class="a-utilisateur">
                     <span class="a-utilisateur__avatar">{{ \Illuminate\Support\Str::upper(\Illuminate\Support\Str::substr($utilisateur->name, 0, 1)) }}</span>
-                    <span class="a-utilisateur__nom">{{ $utilisateur->name }}<small>{{ $utilisateur->email }}</small></span>
+                    <a href="{{ route('admin.profil') }}" class="a-utilisateur__nom" title="Mon profil">{{ $utilisateur->name }}<small>{{ $utilisateur->roleLibelle() }} · {{ $utilisateur->email }}</small></a>
                     <form action="{{ route('admin.deconnexion') }}" method="post">
                         @csrf
                         <button type="submit" class="a-btn a-btn--clair a-btn--icone" title="Se déconnecter" aria-label="Se déconnecter">

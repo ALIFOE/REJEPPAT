@@ -73,6 +73,19 @@
                                                 <div class="main-header-style4__cart-count">({{ \App\Support\Panier::nombre() }})</div>
                                             </a>
                                         </div>
+                                        <div class="main-header-style4__cart-box main-header-style4__compte-box">
+                                            @auth
+                                                <a href="{{ route('compte.index') }}">
+                                                    <i class="fas fa-user-check"></i>
+                                                    Mon compte
+                                                </a>
+                                            @else
+                                                <a href="{{ route('connexion') }}">
+                                                    <i class="far fa-user"></i>
+                                                    Connexion
+                                                </a>
+                                            @endauth
+                                        </div>
                                     </div>
                                 </div>
                             </div>

@@ -50,6 +50,7 @@
     <link rel="stylesheet" href="{{ asset('assets/css/rejeppat.css') }}" />
     <link rel="stylesheet" href="{{ asset('assets/css/rejeppat-boutique.css') }}" />
     <link rel="stylesheet" href="{{ asset('assets/css/rejeppat-articles.css') }}" />
+    <link rel="stylesheet" href="{{ asset('assets/css/rejeppat-compte.css') }}" />
 
 </head>
 

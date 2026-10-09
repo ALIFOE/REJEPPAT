@@ -9,24 +9,39 @@ use Illuminate\Validation\Rule;
 use Illuminate\Validation\Rules\Password;
 use Illuminate\View\View;
 
-/** Comptes ayant accès à l'administration. */
+/** Comptes du site et leurs rôles (super admin, administrateur, client) : réservé au super admin. */
 class UtilisateurController extends Controller
 {
-    public function index(): View
+    public function index(Request $request): View
     {
-        return view('admin.utilisateurs.index', ['utilisateurs' => User::where('is_admin', true)->orderBy('name')->get()]);
+        $utilisateurs = User::query()
+            ->when($request->query('q'), fn ($q, $recherche) => $q->where(fn ($q) => $q
+                ->where('name', 'like', "%{$recherche}%")
+                ->orWhere('email', 'like', "%{$recherche}%")
+                ->orWhere('telephone', 'like', "%{$recherche}%")))
+            ->when($request->query('role'), fn ($q, $role) => $q->where('role', $role))
+            ->withCount('commandes')
+            ->orderBy('name')
+            ->paginate(self::PAR_PAGE)->withQueryString();
+
+        $compteurs = User::selectRaw('role, COUNT(*) as total')->groupBy('role')->pluck('total', 'role');
+
+        return view('admin.utilisateurs.index', compact('utilisateurs', 'compteurs'));
     }
 
     public function create(): View
     {
-        return view('admin.utilisateurs.form', ['utilisateur' => new User()]);
+        return view('admin.utilisateurs.form', ['utilisateur' => new User(['role' => User::ADMIN])]);
     }
 
     public function store(Request $request): RedirectResponse
     {
-        User::create($this->donnees($request, new User()) + ['is_admin' => true]);
+        $utilisateur = User::create($this->donnees($request, new User));
 
-        return redirect()->route('admin.utilisateurs.index')->with('succes', 'Compte administrateur créé.');
+        // Compte créé par le super admin : l'adresse est considérée comme vérifiée
+        $utilisateur->markEmailAsVerified();
+
+        return redirect()->route('admin.utilisateurs.index')->with('succes', 'Compte « '.$utilisateur->roleLibelle().' » créé.');
     }
 
     public function edit(User $utilisateur): View
@@ -36,7 +51,14 @@ class UtilisateurController extends Controller
 
     public function update(Request $request, User $utilisateur): RedirectResponse
     {
-        $utilisateur->update($this->donnees($request, $utilisateur));
+        $donnees = $this->donnees($request, $utilisateur);
+
+        // Le super admin ne peut pas se retirer ses propres droits (il resterait toujours au moins un super admin)
+        if ($utilisateur->is($request->user()) && $donnees['role'] !== $utilisateur->role) {
+            return back()->withInput()->withErrors(['role' => 'Vous ne pouvez pas modifier votre propre rôle.']);
+        }
+
+        $utilisateur->update($donnees);
 
         return redirect()->route('admin.utilisateurs.index')->with('succes', 'Compte mis à jour.');
     }
@@ -57,8 +79,13 @@ class UtilisateurController extends Controller
         $donnees = $request->validate([
             'name' => ['required', 'string', 'max:120'],
             'email' => ['required', 'email', 'max:160', Rule::unique('users')->ignore($utilisateur)],
+            'telephone' => ['nullable', 'string', 'max:40'],
+            'role' => ['required', Rule::in(array_keys(User::ROLES))],
             'password' => [$utilisateur->exists ? 'nullable' : 'required', 'confirmed', Password::min(8)],
-        ], self::MESSAGES + ['password.min' => 'Le mot de passe doit contenir au moins 8 caractères.']);
+        ], self::MESSAGES + [
+            'password.min' => 'Le mot de passe doit contenir au moins 8 caractères.',
+            'role.in' => 'Veuillez choisir un rôle.',
+        ]);
 
         if (blank($donnees['password'] ?? null)) {
             unset($donnees['password']);

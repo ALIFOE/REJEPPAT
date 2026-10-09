@@ -64,6 +64,9 @@ class CommandeController extends Controller
             return redirect()->route('panier.index');
         }
 
+        // Client connecté : la commande apparaît dans son espace « Mon compte »
+        $donnees['user_id'] = $request->user()?->id;
+
         $commande = DB::transaction(function () use ($donnees, $lignes) {
             // Vérification du stock au moment de la commande
             foreach ($lignes as $ligne) {
@@ -142,16 +145,16 @@ class CommandeController extends Controller
 
     private function resumeCommande(Commande $commande): string
     {
-        $lignes = $commande->lignes->map(fn ($l) => "- {$l->nom_produit} x {$l->quantite} = " . Contenu::prix($l->total))->implode("\n");
+        $lignes = $commande->lignes->map(fn ($l) => "- {$l->nom_produit} x {$l->quantite} = ".Contenu::prix($l->total))->implode("\n");
 
         return "Nouvelle commande sur la boutique du REJEPPAT\n\n"
-            . "Numéro : {$commande->numero}\n"
-            . "Client : {$commande->nom} ({$commande->telephone})\n"
-            . 'E-mail : ' . ($commande->email ?: '-') . "\n"
-            . 'Livraison : ' . $commande->modeLivraisonLibelle() . ' ' . trim("{$commande->ville} {$commande->adresse}") . "\n"
-            . 'Paiement : ' . $commande->modePaiementLibelle() . ($commande->reference_paiement ? " (réf. {$commande->reference_paiement})" : '') . "\n\n"
-            . $lignes . "\n\n"
-            . 'Total : ' . Contenu::prix($commande->total) . "\n\n"
-            . 'Gérer la commande : ' . route('admin.commandes.show', $commande);
+            ."Numéro : {$commande->numero}\n"
+            ."Client : {$commande->nom} ({$commande->telephone})\n"
+            .'E-mail : '.($commande->email ?: '-')."\n"
+            .'Livraison : '.$commande->modeLivraisonLibelle().' '.trim("{$commande->ville} {$commande->adresse}")."\n"
+            .'Paiement : '.$commande->modePaiementLibelle().($commande->reference_paiement ? " (réf. {$commande->reference_paiement})" : '')."\n\n"
+            .$lignes."\n\n"
+            .'Total : '.Contenu::prix($commande->total)."\n\n"
+            .'Gérer la commande : '.route('admin.commandes.show', $commande);
     }
 }

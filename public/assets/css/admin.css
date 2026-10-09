@@ -238,6 +238,59 @@ body.admin {
     font-weight: 400;
 }
 
+a.a-utilisateur__nom {
+    text-decoration: none;
+}
+
+/* ---------- Profil (super admin / administrateur) ---------- */
+.a-profil {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+    text-align: center;
+}
+
+.a-profil .a-utilisateur__avatar {
+    width: 84px;
+    height: 84px;
+    font-size: 34px;
+}
+
+.a-profil h2 {
+    margin: 4px 0 0;
+    font-size: 20px;
+}
+
+.a-profil p {
+    margin: 0;
+    color: var(--a-vert-doux);
+    font-size: 14px;
+}
+
+.a-droits {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+
+.a-droits li {
+    display: flex;
+    gap: 10px;
+    padding: 9px 0;
+    border-bottom: 1px solid var(--a-bordure);
+    font-size: 14px;
+}
+
+.a-droits li:last-child {
+    border-bottom: 0;
+}
+
+.a-droits i {
+    margin-top: 3px;
+    color: var(--a-vert);
+}
+
 .a-contenu {
     padding: 28px 32px 48px;
 }
@@ -1019,6 +1072,12 @@ body.admin {
 .a-connexion__retour {
     display: inline-block;
     margin-top: 22px;
+    font-size: 14px;
+}
+
+.a-connexion__oubli {
+    float: right;
+    margin-top: 9px;
     font-size: 14px;
 }
 

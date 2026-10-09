@@ -5,11 +5,12 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Attributes\Fillable;
 use Illuminate\Database\Eloquent\Attributes\Table;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Support\Str;
 
 #[Table('commandes')]
-#[Fillable(['numero', 'nom', 'telephone', 'email', 'ville', 'adresse', 'mode_livraison', 'frais_livraison', 'sous_total', 'total', 'mode_paiement', 'reference_paiement', 'statut', 'statut_paiement', 'note', 'note_admin'])]
+#[Fillable(['user_id', 'numero', 'nom', 'telephone', 'email', 'ville', 'adresse', 'mode_livraison', 'frais_livraison', 'sous_total', 'total', 'mode_paiement', 'reference_paiement', 'statut', 'statut_paiement', 'note', 'note_admin'])]
 class Commande extends Model
 {
     /** Statut => [libellé, couleur du badge dans l'administration] */
@@ -41,10 +42,16 @@ class Commande extends Model
         return $this->hasMany(CommandeLigne::class);
     }
 
+    /** Compte client ayant passé la commande (aucun pour une commande sans compte). */
+    public function user(): BelongsTo
+    {
+        return $this->belongsTo(User::class);
+    }
+
     public static function nouveauNumero(): string
     {
         do {
-            $numero = 'RJ-' . now()->format('ymd') . '-' . Str::upper(Str::random(4));
+            $numero = 'RJ-'.now()->format('ymd').'-'.Str::upper(Str::random(4));
         } while (static::where('numero', $numero)->exists());
 
         return $numero;

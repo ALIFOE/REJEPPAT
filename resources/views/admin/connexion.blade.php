@@ -35,6 +35,7 @@
                     <label class="a-case">
                         <input type="checkbox" name="remember" value="1" @checked(old('remember'))> Rester connecté
                     </label>
+                    <a href="{{ route('password.request') }}" class="a-connexion__oubli">Mot de passe oublié ?</a>
                     <button type="submit" class="a-btn">
                         <i class="fas fa-sign-in-alt"></i> Se connecter
                     </button>

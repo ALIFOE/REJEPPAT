@@ -9,6 +9,7 @@
     $paiements = config('boutique.paiements');
     $livraisonChoisie = old('mode_livraison', array_key_first($livraisons));
     $paiementChoisi = old('mode_paiement', array_key_first($paiements));
+    $client = auth()->user();
 @endphp
 
 @section('content')
@@ -42,22 +43,27 @@
                                             <h2>Vos coordonnées</h2>
                                             <div class="border-box"></div>
                                         </div>
+                                        @guest
+                                            <p class="commande-compte">
+                                                Vous avez un compte ? <a href="{{ route('connexion') }}">Connectez-vous</a> pour retrouver cette commande dans votre espace.
+                                            </p>
+                                        @endguest
                                         <div class="row">
                                             <div class="col-lg-12">
                                                 <div class="field-input">
-                                                    <input type="text" name="nom" value="{{ old('nom') }}" placeholder="Nom complet *" required>
+                                                    <input type="text" name="nom" value="{{ old('nom', $client?->name) }}" placeholder="Nom complet *" required>
                                                     @error('nom') <small class="text-danger">{{ $message }}</small> @enderror
                                                 </div>
                                             </div>
                                             <div class="col-lg-6">
                                                 <div class="field-input">
-                                                    <input type="tel" name="telephone" value="{{ old('telephone') }}" placeholder="Téléphone / WhatsApp *" required>
+                                                    <input type="tel" name="telephone" value="{{ old('telephone', $client?->telephone) }}" placeholder="Téléphone / WhatsApp *" required>
                                                     @error('telephone') <small class="text-danger">{{ $message }}</small> @enderror
                                                 </div>
                                             </div>
                                             <div class="col-lg-6">
                                                 <div class="field-input">
-                                                    <input type="email" name="email" value="{{ old('email') }}" placeholder="Adresse e-mail">
+                                                    <input type="email" name="email" value="{{ old('email', $client?->email) }}" placeholder="Adresse e-mail">
                                                     @error('email') <small class="text-danger">{{ $message }}</small> @enderror
                                                 </div>
                                             </div>

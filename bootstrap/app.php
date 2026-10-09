@@ -14,8 +14,11 @@ return Application::configure(basePath: dirname(__DIR__))
     )
     ->withMiddleware(function (Middleware $middleware): void {
         $middleware->alias(['admin' => EstAdministrateur::class]);
-        $middleware->redirectGuestsTo(fn () => route('admin.connexion'));
-        $middleware->redirectUsersTo(fn () => route('admin.tableau'));
+        // Visiteur non connecté : connexion de l'administration ou de l'espace client selon la page demandée
+        $middleware->redirectGuestsTo(fn (Request $request) => $request->is('admin', 'admin/*') ? route('admin.connexion') : route('connexion'));
+        $middleware->redirectUsersTo(fn (Request $request) => $request->is('admin', 'admin/*') && $request->user()?->estAdministrateur()
+            ? route('admin.tableau')
+            : route('compte.index'));
     })
     ->withExceptions(function (Exceptions $exceptions): void {
         $exceptions->shouldRenderJsonWhen(

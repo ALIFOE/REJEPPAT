@@ -20,6 +20,14 @@
             <div class="mobile-nav__container"></div>
             <ul class="mobile-nav__contact list-unstyled">
                 <li>
+                    <i class="fa fa-user"></i>
+                    @auth
+                        <a href="{{ route('compte.index') }}">Mon compte</a>
+                    @else
+                        <a href="{{ route('connexion') }}">Connexion</a> / <a href="{{ route('inscription') }}">Inscription</a>
+                    @endauth
+                </li>
+                <li>
                     <i class="fa fa-envelope"></i>
                     <a href="mailto:{{ config('rejeppat.emails.0') }}">{{ config('rejeppat.emails.0') }}</a>
                 </li>

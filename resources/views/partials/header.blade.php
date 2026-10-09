@@ -105,6 +105,15 @@
                                         <a href="{{ route('panier.index') }}" aria-label="Mon panier"><span class="icon-empty-cart"></span>@if ($nombre = \App\Support\Panier::nombre())<span class="panier-compteur">{{ $nombre }}</span>@endif</a>
                                     </div>
                                 </div>
+                                <div class="header-cart-btn-style1 header-compte-btn">
+                                    <div class="cart-icon">
+                                        @auth
+                                            <a href="{{ route('compte.index') }}" aria-label="Mon compte" title="Mon compte"><i class="fas fa-user-check"></i></a>
+                                        @else
+                                            <a href="{{ route('connexion') }}" aria-label="Connexion / Inscription" title="Connexion / Inscription"><i class="far fa-user"></i></a>
+                                        @endauth
+                                    </div>
+                                </div>
                                 <div class="header-btn-style1">
                                     <a class="btn-one" href="{{ route('demande') }}">
                                         <i class="icon-arrow"></i>

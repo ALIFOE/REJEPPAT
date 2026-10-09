@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Models\User;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -21,7 +22,8 @@ class ConnexionController extends Controller
             'password' => ['required', 'string'],
         ], self::MESSAGES);
 
-        if (! Auth::attempt($identifiants + ['is_admin' => true], $request->boolean('remember'))) {
+        // Seuls les super admins et administrateurs se connectent ici
+        if (! Auth::attemptWhen($identifiants, fn (User $user) => $user->estAdministrateur(), $request->boolean('remember'))) {
             return back()->withInput($request->only('email', 'remember'))
                 ->withErrors(['email' => 'Adresse e-mail ou mot de passe incorrect.']);
         }

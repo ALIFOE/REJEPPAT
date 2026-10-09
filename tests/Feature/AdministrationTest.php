@@ -27,14 +27,14 @@ class AdministrationTest extends TestCase
     {
         parent::setUp();
         $this->seed(ContenuSeeder::class);
-        $this->admin = User::factory()->create(['is_admin' => true]);
+        $this->admin = User::factory()->superAdmin()->create();
     }
 
     public function test_l_administration_est_protegee(): void
     {
         $this->get(route('admin.tableau'))->assertRedirect(route('admin.connexion'));
 
-        $this->actingAs(User::factory()->create(['is_admin' => false]))
+        $this->actingAs(User::factory()->create())
             ->get(route('admin.tableau'))->assertRedirect(route('admin.connexion'));
     }
 
@@ -62,6 +62,7 @@ class AdministrationTest extends TestCase
             route('admin.fermes.index'), route('admin.fermes.create'), route('admin.fermes.edit', Ferme::first()),
             route('admin.projets.index'), route('admin.projets.create'), route('admin.projets.edit', Projet::first()),
             route('admin.utilisateurs.index'), route('admin.utilisateurs.create'), route('admin.utilisateurs.edit', $this->admin),
+            route('admin.profil'),
         ];
 
         foreach ($ecrans as $ecran) {
