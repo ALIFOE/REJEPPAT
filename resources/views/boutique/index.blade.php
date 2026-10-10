@@ -1,12 +1,12 @@
 @extends('layouts.app')
 
-@section('title', 'Boutique')
+@section('title', __('Boutique'))
 
 @section('content')
 
         @include('partials.breadcrumb', [
-            'titre' => 'Boutique',
-            'texte' => $recherche !== '' ? 'Résultats pour « ' . $recherche . ' »' : 'Achetez local et frais, directement chez les producteurs.',
+            'titre' => __('Boutique'),
+            'texte' => $recherche !== '' ? __('Résultats pour « :recherche »', ['recherche' => $recherche]) : __('Achetez local et frais, directement chez les producteurs.'),
             'image' => 'boutique.jpg',
         ])
 
@@ -25,11 +25,11 @@
                                             <span class="icon-hat"></span>
                                         </div>
                                         <div class="title">
-                                            <h4>Rechercher</h4>
+                                            <h4>{{ __('Rechercher') }}</h4>
                                         </div>
                                     </div>
                                     <form class="search-form" action="{{ route('boutique.index') }}">
-                                        <input placeholder="Rechercher un produit..." type="text" name="q" value="{{ $recherche }}">
+                                        <input placeholder="{{ __('Rechercher un produit...') }}" type="text" name="q" value="{{ $recherche }}">
                                         <button type="submit">
                                             <i class="icon-search"></i>
                                         </button>
@@ -44,15 +44,15 @@
                                             <span class="icon-hat"></span>
                                         </div>
                                         <div class="title">
-                                            <h4>Catégories</h4>
+                                            <h4>{{ __('Catégories') }}</h4>
                                         </div>
                                     </div>
                                     <div class="product-page__sidebar-categories-list-box">
                                         <ul class="product-page__sidebar-categories-list">
-                                            <li class="{{ $categorie ? '' : 'active' }}"><a href="{{ route('boutique.index') }}">Tous les produits <span>({{ $tous->count() }})</span> </a></li>
+                                            <li class="{{ $categorie ? '' : 'active' }}"><a href="{{ route('boutique.index') }}">{{ __('Tous les produits') }} <span>({{ $tous->count() }})</span> </a></li>
                                             @foreach (config('boutique.categories') as $cle => $nom)
                                                 @continue($tous->where('categorie', $cle)->isEmpty())
-                                                <li class="{{ $categorie === $cle ? 'active' : '' }}"><a href="{{ route('boutique.index', ['categorie' => $cle]) }}">{{ $nom }} <span>({{ $tous->where('categorie', $cle)->count() }})</span> </a></li>
+                                                <li class="{{ $categorie === $cle ? 'active' : '' }}"><a href="{{ route('boutique.index', ['categorie' => $cle]) }}">{{ __($nom) }} <span>({{ $tous->where('categorie', $cle)->count() }})</span> </a></li>
                                             @endforeach
                                         </ul>
                                     </div>
@@ -66,7 +66,7 @@
                                             <span class="icon-hat"></span>
                                         </div>
                                         <div class="title">
-                                            <h4>Nos produits</h4>
+                                            <h4>{{ __('Nos produits') }}</h4>
                                         </div>
                                     </div>
                                     <div class="product-page__sidebar-recent-post__list-box">
@@ -75,7 +75,7 @@
                                             <li>
                                                 <div class="product-page__sidebar-recent-post-img">
                                                     <img src="{{ $produit->visuel('-mini') }}"
-                                                        alt="{{ $produit['nom'] }}">
+                                                        alt="{{ $produit->tr('nom') }}">
                                                 </div>
                                                 <div class="product-page__sidebar-recent-post-content">
                                                     <div class="product-page__sidebar-recent-post-date-box">
@@ -88,7 +88,7 @@
                                                             </div>
                                                         </div>
                                                         <h5 class="product-page__sidebar-recent-post-date-title"><a
-                                                                href="{{ route('boutique.show', $produit['slug']) }}">{{ $produit['nom'] }}</a></h5>
+                                                                href="{{ route('boutique.show', $produit['slug']) }}">{{ $produit->tr('nom') }}</a></h5>
                                                     </div>
                                                 </div>
                                             </li>
@@ -112,8 +112,8 @@
                                 <!-- End Single Shop Style1 -->
                                 @empty
                                 <div class="col-xl-12">
-                                    <p>Aucun produit ne correspond à votre recherche.
-                                        <a href="{{ route('boutique.index') }}">Voir tous les produits</a>.</p>
+                                    <p>{{ __('Aucun produit ne correspond à votre recherche.') }}
+                                        <a href="{{ route('boutique.index') }}">{{ __('Voir tous les produits') }}</a>.</p>
                                 </div>
                                 @endforelse
 

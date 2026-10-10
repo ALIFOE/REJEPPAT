@@ -1,6 +1,6 @@
 @extends('layouts.app', ['accueil' => true])
 
-@section('title', 'Accueil')
+@section('title', __('Accueil'))
 
 @php
     // Contenu repris de https://rejeppat.org (pages Accueil, Qui sommes-nous, Nos offres & services,
@@ -9,26 +9,26 @@
     $slides = [
         [
             'image' => 'slide-1.jpg',
-            'sub_title' => 'Plateforme des producteurs agricoles du Togo',
-            'title' => 'Produits locaux <br> et coopératives connectées',
-            'text' => 'Un réseau national de jeunes producteurs regroupés en coopératives <br> sur toute l’étendue du territoire togolais.',
-            'button' => 'Découvrir le réseau',
+            'sub_title' => __('Plateforme des producteurs agricoles du Togo'),
+            'title' => __('Produits locaux <br> et coopératives connectées'),
+            'text' => __('Un réseau national de jeunes producteurs regroupés en coopératives <br> sur toute l’étendue du territoire togolais.'),
+            'button' => __('Découvrir le réseau'),
             'link' => '#qui-sommes-nous',
         ],
         [
             'image' => 'slide-2.jpg',
-            'sub_title' => 'Achetez local et frais',
-            'title' => 'Directement <br> chez les producteurs',
-            'text' => 'Des produits biologiques et naturels issus des coopératives <br> et des fermes écoles du réseau.',
-            'button' => 'Accéder à la boutique',
+            'sub_title' => __('Achetez local et frais'),
+            'title' => __('Directement <br> chez les producteurs'),
+            'text' => __('Des produits biologiques et naturels issus des coopératives <br> et des fermes écoles du réseau.'),
+            'button' => __('Accéder à la boutique'),
             'link' => route('boutique.index'),
         ],
         [
             'image' => 'slide-3.jpg',
-            'sub_title' => 'Jeunes producteurs engagés',
-            'title' => 'Formation <br> et opportunités agricoles',
-            'text' => 'Former les jeunes à l’agroécologie et à l’entrepreneuriat agricole <br> pour une agriculture durable et prospère.',
-            'button' => 'Découvrir le réseau',
+            'sub_title' => __('Jeunes producteurs engagés'),
+            'title' => __('Formation <br> et opportunités agricoles'),
+            'text' => __('Former les jeunes à l’agroécologie et à l’entrepreneuriat agricole <br> pour une agriculture durable et prospère.'),
+            'button' => __('Découvrir les fermes écoles'),
             'link' => route('fermes.index'),
         ],
     ];
@@ -37,30 +37,28 @@
         [
             'image' => 'mission.jpg',
             'icon' => 'icon-seedling',
-            'title' => 'Notre mission',
-            'text' => 'Contribuer à l’épanouissement économique et social des organisations paysannes, des producteurs et professionnels agricoles membres pour un développement durable et inclusif au Togo.',
+            'title' => __('Notre mission'),
+            'text' => __('Contribuer à l’épanouissement économique et social des organisations paysannes, des producteurs et professionnels agricoles membres pour un développement durable et inclusif au Togo.'),
         ],
         [
             'image' => 'vision.jpg',
             'icon' => 'icon-eco-friendly',
-            'title' => 'Notre vision',
-            'text' => 'Un réseau crédible de jeunes agriculteurs, fortement ancré à la base, qui promeut une agriculture durable, faisant d’elle un métier viable et prospère.',
+            'title' => __('Notre vision'),
+            'text' => __('Un réseau crédible de jeunes agriculteurs, fortement ancré à la base, qui promeut une agriculture durable, faisant d’elle un métier viable et prospère.'),
         ],
         [
             'image' => 'valeurs.jpg',
             'icon' => 'icon-handshake',
-            'title' => 'Nos valeurs',
-            'text' => 'Professionnalisme, Équité et Engagement au service des jeunes producteurs et des communautés rurales.',
+            'title' => __('Nos valeurs'),
+            'text' => __('Professionnalisme, Équité et Engagement au service des jeunes producteurs et des communautés rurales.'),
         ],
     ];
 
-    $temoignages = config('rejeppat.temoignages');
-
     $domaines = [
-        ['icon' => 'icon-carrot.png', 'title' => 'Agriculture & élevage', 'text' => 'Formation, innovation et pratiques agricoles durables pour les jeunes producteurs.'],
-        ['icon' => 'icon-corn.png', 'title' => 'Agroalimentaire', 'text' => 'Transformation locale, création de valeur et innovation.'],
-        ['icon' => 'icon-beetroot.png', 'title' => 'Entrepreneuriat', 'text' => 'Accompagnement des jeunes et projets créateurs de valeur.'],
-        ['icon' => 'icon-lemon.png', 'title' => 'Formation / santé', 'text' => 'Renforcer les compétences et le bien-être des communautés.'],
+        ['icon' => 'icon-carrot.png', 'title' => __('Agriculture & élevage'), 'text' => __('Formation, innovation et pratiques agricoles durables pour les jeunes producteurs.')],
+        ['icon' => 'icon-corn.png', 'title' => __('Agroalimentaire'), 'text' => __('Transformation locale, création de valeur et innovation.')],
+        ['icon' => 'icon-beetroot.png', 'title' => __('Entrepreneuriat'), 'text' => __('Accompagnement des jeunes et projets créateurs de valeur.')],
+        ['icon' => 'icon-lemon.png', 'title' => __('Formation / santé'), 'text' => __('Renforcer les compétences et le bien-être des communautés.')],
     ];
 
 @endphp
@@ -136,11 +134,11 @@
                         <div class="icon">
                             <i class="icon-hat"></i>
                         </div>
-                        <h4>Notre identité</h4>
+                        <h4>{{ __('Notre identité') }}</h4>
                     </div>
-                    <h2 class="title-animation">Mission, Vision &amp; Valeurs</h2>
+                    <h2 class="title-animation">{{ __('Mission, Vision & Valeurs') }}</h2>
                     <div class="text">
-                        <p>Une vision commune pour une agriculture durable <br>et portée par la jeunesse.</p>
+                        <p>{!! __('Une vision commune pour une agriculture durable <br>et portée par la jeunesse.') !!}</p>
                     </div>
                 </div>
                 <div class="row">
@@ -172,7 +170,7 @@
                                 <div class="single-products-style1__content-btn">
                                     <a href="#qui-sommes-nous">
                                         <i class="one icon-arrow"></i>
-                                        En savoir plus
+                                        {{ __('En savoir plus') }}
                                         <i class="two icon-arrow"></i>
                                     </a>
                                 </div>
@@ -190,7 +188,7 @@
 
         <!-- Start About Style4 -->
         <section class="about-style4" id="qui-sommes-nous">
-            <div class="about-style4__bg" style="background-image: url({{ asset('assets/images/backgrounds/about-v4__bg.png?v=vert') }});">
+            <div class="about-style4__bg" style="background-image: url({{ asset('assets/images/backgrounds/about-v4__bg.png') }}?v=vert);">
             </div>
             <div class="about-style4__shape">
                 <img src="{{ asset('assets/images/shapes/about-v4__shape2.png') }}" alt="Shape">
@@ -201,10 +199,10 @@
                         <div class="about-style4__left">
                             <div class="about-style4__img-box">
                                 <div class="about-style4__img-box-shape">
-                                    <img src="{{ asset('assets/images/shapes/about-v4__shape1.png?v=vert') }}" alt="Shape">
+                                    <img src="{{ asset('assets/images/shapes/about-v4__shape1.png') }}?v=vert" alt="Shape">
                                 </div>
                                 <div class="about-style4__img">
-                                    <img src="{{ asset('assets/images/rejeppat/about/about-1.png') }}" alt="Jeunes producteurs du REJEPPAT">
+                                    <img src="{{ asset('assets/images/rejeppat/about/about-1.png') }}" alt="{{ __('Jeunes producteurs du REJEPPAT') }}">
                                 </div>
                                 <div class="about-style4__top-left-fact">
                                     <div class="about-style4__top-left-fact-bg"
@@ -212,7 +210,7 @@
                                     </div>
                                     <div class="about-style4__top-left-fact-inner">
                                         <div class="about-style1__top-left-fact-title">
-                                            <h4>Engagés <br>depuis</h4>
+                                            <h4>{!! __('Engagés <br>depuis') !!}</h4>
                                         </div>
                                         <div class="about-style4__top-left-fact-shape">
                                             <img src="{{ asset('assets/images/shapes/activities-v1-fact__shape1.png') }}" alt="Shape">
@@ -232,25 +230,22 @@
                                     <div class="icon">
                                         <i class="icon-hat"></i>
                                     </div>
-                                    <h4>Qui sommes-nous</h4>
+                                    <h4>{{ __('Qui sommes-nous') }}</h4>
                                 </div>
-                                <h2 class="title-animation">À propos du REJEPPAT-Togo</h2>
+                                <h2 class="title-animation">{{ __('À propos du REJEPPAT-Togo') }}</h2>
                             </div>
-                            <p class="about-style4__text">Le Réseau des Jeunes Producteurs et Professionnels Agricoles du
-                                Togo est une faîtière des organisations paysannes de jeunes créée le 10 juillet 2010 et
-                                membre de la CTOP. Il rassemble 185 coopératives réparties sur tout le territoire
-                                national et représentées par 5 sections régionales.</p>
+                            <p class="about-style4__text">{{ __('Le Réseau des Jeunes Producteurs et Professionnels Agricoles du Togo est une faîtière des organisations paysannes de jeunes créée le 10 juillet 2010 et membre de la CTOP. Il rassemble 185 coopératives réparties sur tout le territoire national et représentées par 5 sections régionales.') }}
+                                <a href="{{ route('regions.index') }}">{{ __('Découvrir les sections régionales') }}</a>.</p>
                             <div class="about-style4__points-box">
-                                <h5 class="about-style4__points-title">Notre engagement</h5>
-                                <p class="about-style4__points-text">Promouvoir l’agroécologie et <br>
-                                    l’installation des jeunes.</p>
+                                <h5 class="about-style4__points-title">{{ __('Notre engagement') }}</h5>
+                                <p class="about-style4__points-text">{!! __('Promouvoir l’agroécologie et <br> l’installation des jeunes.') !!}</p>
                                 <ul class="about-style4__points">
                                     <li>
                                         <div class="icon">
                                             <span class="icon-wheat"></span>
                                         </div>
                                         <div class="text">
-                                            <p>Formation des jeunes dans <br> les fermes écoles.</p>
+                                            <p>{!! __('Formation des jeunes dans <br> les fermes écoles.') !!}</p>
                                         </div>
                                     </li>
                                     <li>
@@ -258,7 +253,7 @@
                                             <span class="icon-wheat"></span>
                                         </div>
                                         <div class="text">
-                                            <p>Organisation des jeunes en <br> coopératives agricoles.</p>
+                                            <p>{!! __('Organisation des jeunes en <br> coopératives agricoles.') !!}</p>
                                         </div>
                                     </li>
                                     <li>
@@ -266,13 +261,13 @@
                                             <span class="icon-wheat"></span>
                                         </div>
                                         <div class="text">
-                                            <p>Transformation et marchés des <br> produits agroécologiques.</p>
+                                            <p>{!! __('Transformation et marchés des <br> produits agroécologiques.') !!}</p>
                                         </div>
                                     </li>
                                 </ul>
                                 <div class="about-style4__crops-harvested-box">
                                     <div class="about-style4__crops-harvested-shape"
-                                        style="background-image: url({{ asset('assets/images/shapes/about-style4-crops-harvested-shape-1.png?v=vert') }});">
+                                        style="background-image: url({{ asset('assets/images/shapes/about-style4-crops-harvested-shape-1.png') }}?v=vert);">
                                     </div>
                                     <div class="about-style4__crops-harvested-icon">
                                         <span class="icon-tractor"><span class="path1"></span><span
@@ -281,7 +276,7 @@
                                                 class="path6"></span><span class="path7"></span></span>
                                     </div>
                                     <div class="about-style4__crops-harvested-text">
-                                        <h5>Producteurs membres</h5>
+                                        <h5>{{ __('Producteurs membres') }}</h5>
                                     </div>
                                     <div class="about-style4__crops-harvested-count">
                                         <h2 class="odometer" data-count="15751"></h2>
@@ -293,15 +288,15 @@
                                 <div class="btn-box">
                                     <a class="btn-one" href="#reseau">
                                         <i class="icon-arrow"></i>
-                                        <span class="txt">En savoir plus</span>
+                                        <span class="txt">{{ __('En savoir plus') }}</span>
                                     </a>
                                 </div>
                                 <div class="about-style4__video-box">
-                                    <a class="video-popup" title="Vidéo REJEPPAT"
+                                    <a class="video-popup" title="{{ __('Vidéo REJEPPAT') }}"
                                         href="{{ config('rejeppat.social.youtube') }}">
                                         <span class="fas fa-play"></span>
                                     </a>
-                                    <p class="about-style4__video-title">Notre réseau, <br> notre histoire.</p>
+                                    <p class="about-style4__video-title">{!! __('Notre réseau, <br> notre histoire.') !!}</p>
                                 </div>
                             </div>
                         </div>
@@ -319,9 +314,9 @@
                         <div class="icon">
                             <i class="icon-hat"></i>
                         </div>
-                        <h4>Produits les plus vendus</h4>
+                        <h4>{{ __('Produits les plus vendus') }}</h4>
                     </div>
-                    <h2 class="title-animation">Achetez local et frais</h2>
+                    <h2 class="title-animation">{{ __('Achetez local et frais') }}</h2>
                 </div>
 
                 <div class="owl-carousel owl-theme thm-owl__carousel shop-style2-carousel owl-nav-style-one"
@@ -363,7 +358,7 @@
                 <div class="shop-style1__btn text-center">
                     <a href="{{ route('boutique.index') }}">
                         <i class="icon-arrow"></i>
-                        Voir tous les produits
+                        {{ __('Voir tous les produits') }}
                     </a>
                 </div>
 
@@ -388,9 +383,9 @@
                         </div>
                         <h4>REJEPPAT</h4>
                     </div>
-                    <h2 class="title-animation">Nos Programmes &amp; Projets</h2>
+                    <h2 class="title-animation">{{ __('Nos Programmes & Projets') }}</h2>
                     <div class="text">
-                        <p>Des initiatives au service des jeunes agriculteurs, des femmes rurales <br>et de la protection de l’environnement.</p>
+                        <p>{!! __('Des initiatives au service des jeunes agriculteurs, des femmes rurales <br>et de la protection de l’environnement.') !!}</p>
                     </div>
                 </div>
                 <div class="row">
@@ -400,23 +395,23 @@
                     <div class="col-xl-4 col-lg-6 col-md-6">
                         <div class="single-why-choose-style2">
                             <div class="single-why-choose-style2__bg"
-                                style="background-image: url({{ asset('assets/images/backgrounds/why-choose__v2-bg2.png?v=vert') }});">
+                                style="background-image: url({{ asset('assets/images/backgrounds/why-choose__v2-bg2.png') }}?v=vert);">
                             </div>
                             <div class="single-why-choose-style2__content">
                                 <div class="single-why-choose-style2__icon">
                                     <div class="single-why-choose-style2__icon-bg"
-                                        style="background-image: url({{ asset('assets/images/shapes/single-why-choose-style2-icon-bg-shape-1.png?v=vert') }});">
+                                        style="background-image: url({{ asset('assets/images/shapes/single-why-choose-style2-icon-bg-shape-1.png') }}?v=vert);">
                                     </div>
                                     <i class="{{ $projet['icone'] }}"></i>
                                 </div>
                                 <div class="single-why-choose-style2__title">
-                                    <h3><a href="{{ route('projets.show', $projet['slug']) }}">{{ $projet['titre_court'] }}</a></h3>
-                                    <p>{{ $projet['resume'] }}</p>
+                                    <h3><a href="{{ route('projets.show', $projet['slug']) }}">{{ $projet->tr('titre_court') }}</a></h3>
+                                    <p>{{ $projet->tr('resume') }}</p>
                                 </div>
                                 <div class="single-why-choose-style2__btn">
                                     <a href="{{ route('projets.show', $projet['slug']) }}">
                                         <i class="icon-arrow"></i>
-                                        Lire plus
+                                        {{ __('Lire plus') }}
                                     </a>
                                 </div>
                             </div>
@@ -441,21 +436,19 @@
                                     <div class="icon">
                                         <i class="icon-hat"></i>
                                     </div>
-                                    <h4>Nos offres &amp; services</h4>
+                                    <h4>{{ __('Nos offres & services') }}</h4>
                                 </div>
-                                <h2 class="title-animation">Nos domaines d’intervention</h2>
+                                <h2 class="title-animation">{{ __('Nos domaines d’intervention') }}</h2>
                                 <div class="text">
-                                    <p>À travers ses différents domaines d’intervention, le REJEPPAT accompagne les
-                                        jeunes et les acteurs ruraux dans le développement de leurs activités, le
-                                        renforcement de leurs compétences et la création d’opportunités durables.</p>
+                                    <p>{{ __('À travers ses différents domaines d’intervention, le REJEPPAT accompagne les jeunes et les acteurs ruraux dans le développement de leurs activités, le renforcement de leurs compétences et la création d’opportunités durables.') }}</p>
                                 </div>
                             </div>
                             <div class="farmed-style1__img">
-                                <img src="{{ asset('assets/images/rejeppat/domaines/domaines-1.jpg') }}" alt="Formation pratique en ferme école">
+                                <img src="{{ asset('assets/images/rejeppat/domaines/domaines-1.jpg') }}" alt="{{ __('Formation pratique en ferme école') }}">
                             </div>
                             <div class="farmed-style1__points-box">
                                 <ul class="farmed-style1__points">
-                                    @foreach (['Formation &amp; <br> renforcement', 'Accompagnement <br> des initiatives', 'Mise en réseau <br> &amp; partenariats'] as $point)
+                                    @foreach ([__('Formation &amp; <br> renforcement'), __('Accompagnement <br> des initiatives'), __('Mise en réseau <br> &amp; partenariats')] as $point)
                                     <li>
                                         <div class="icon">
                                             <span class="icon-check-mark"><span class="path1"></span><span
@@ -508,14 +501,14 @@
                 <div class="section-bottom-shape"
                     style="background-image: url({{ asset('assets/images/shapes/section-bottom-shape.png') }});"></div>
             </div>
-            <div class="production-progress__big-title">Notre<br> Réseau</div>
+            <div class="production-progress__big-title">{!! __('Notre<br> Réseau') !!}</div>
             <div class="container">
                 <div class="production-progress__inner">
                     <div class="production-progress__round-box">
                         <div class="production-progress__round-box-bg"
-                            style="background-image: url({{ asset('assets/images/shapes/production-progress-bg.png?v=vert') }});"></div>
+                            style="background-image: url({{ asset('assets/images/shapes/production-progress-bg.png') }}?v=vert);"></div>
                         <div class="inner-title">
-                            <h3>Notre<br> réseau en<br> chiffres</h3>
+                            <h3>{!! __('Notre<br> réseau en<br> chiffres') !!}</h3>
                         </div>
                         <div class="production-progress__content">
                             <ul>
@@ -528,7 +521,7 @@
                                     </div>
                                     <div class="right">
                                         <div class="title-box">
-                                            <h5>Femmes parmi les membres actifs</h5>
+                                            <h5>{{ __('Femmes parmi les membres actifs') }}</h5>
                                         </div>
                                     </div>
                                 </li>
@@ -541,7 +534,7 @@
                                     </div>
                                     <div class="right">
                                         <div class="title-box">
-                                            <h5>Jeunes femmes par coopérative mixte</h5>
+                                            <h5>{{ __('Jeunes femmes par coopérative mixte') }}</h5>
                                         </div>
                                     </div>
                                 </li>
@@ -554,7 +547,7 @@
                                     </div>
                                     <div class="right">
                                         <div class="title-box">
-                                            <h5>Coopératives féminines</h5>
+                                            <h5>{{ __('Coopératives féminines') }}</h5>
                                         </div>
                                     </div>
                                 </li>
@@ -576,14 +569,14 @@
                             <div class="icon">
                                 <i class="icon-hat"></i>
                             </div>
-                            <h4>Fermes Écoles</h4>
+                            <h4>{{ __('Fermes Écoles') }}</h4>
                         </div>
-                        <h2 class="title-animation">Apprendre par la pratique</h2>
+                        <h2 class="title-animation">{{ __('Apprendre par la pratique') }}</h2>
                     </div>
                     <div class="team-style1__btn">
                         <a href="{{ route('fermes.index') }}">
                             <i class="icon-arrow"></i>
-                            Toutes les fermes écoles
+                            {{ __('Toutes les fermes écoles') }}
                         </a>
                     </div>
                 </div>
@@ -602,7 +595,7 @@
         <!-- Start Testimonials Style3 -->
         <section class="testimonials-style3">
             <div class="testimonials-style3__bg"
-                style="background-image: url({{ asset('assets/images/backgrounds/testimonials-v3__bg.jpg') }});">
+                style="background-image: url({{ asset('assets/images/rejeppat/temoignages/fond-temoignages.jpg') }});">
                 <div class="section-top-shape"
                     style="background-image: url({{ asset('assets/images/shapes/section-top-shape.png') }});"></div>
                 <div class="section-bottom-shape"
@@ -614,11 +607,11 @@
                         <div class="icon">
                             <i class="icon-hat"></i>
                         </div>
-                        <h4>Témoignages</h4>
+                        <h4>{{ __('Témoignages') }}</h4>
                     </div>
-                    <h2 class="title-animation">Ce que nos bénéficiaires disent</h2>
+                    <h2 class="title-animation">{{ __('Ce que nos bénéficiaires disent') }}</h2>
                     <div class="text">
-                        <p>Des jeunes producteurs accompagnés par le REJEPPAT <br>partagent leur expérience.</p>
+                        <p>{!! __('Des jeunes producteurs accompagnés par le REJEPPAT <br>partagent leur expérience.') !!}</p>
                     </div>
                 </div>
                 <div class="row">
@@ -632,7 +625,7 @@
                                     style="background-image: url({{ asset('assets/images/backgrounds/testimonials-v2-img__bg.png') }});">
                                 </div>
                                 <div class="single-testimonials-style2__img-inner">
-                                    <img src="{{ asset('assets/images/rejeppat/temoignages/' . $temoignage['image'] . '?v=vert') }}" alt="{{ $temoignage['nom'] }}">
+                                    <img src="{{ $temoignage->visuel() }}" alt="{{ $temoignage->nom }}">
                                 </div>
                             </div>
                             <div class="single-testimonials-style2__content">
@@ -646,18 +639,18 @@
                                                 <i class="icon-rate-star-button"></i>
                                             </div>
                                             <div class="single-testimonials-style2__top-right-text">
-                                                <p>Bénéficiaire</p>
+                                                <p>{{ __('Bénéficiaire') }}</p>
                                             </div>
                                         </div>
                                     </div>
                                     <div class="single-testimonials-style2__top-text">
-                                        <p>“{{ $temoignage['texte'] }}”</p>
+                                        <p>“{{ $temoignage->tr('texte') }}”</p>
                                     </div>
                                 </div>
                                 <div class="single-testimonials-style2__bottom">
                                     <div class="single-testimonials-style2__bottom-author">
-                                        <h3>{{ $temoignage['nom'] }}</h3>
-                                        <p>{{ $temoignage['role'] }}.</p>
+                                        <h3>{{ $temoignage->nom }}</h3>
+                                        <p>{{ $temoignage->tr('role') }}.</p>
                                     </div>
                                     <div class="single-testimonials-style2__bottom-day">
                                         <p>Togo</p>
@@ -671,9 +664,9 @@
 
                 </div>
                 <div class="testimonials-style3__btn text-center">
-                    <a href="{{ route('contact') }}">
+                    <a href="{{ route('espace-jeunes.temoignages') }}">
                         <i class="icon-arrow"></i>
-                        Nous contacter
+                        {{ __('Toutes les success stories') }}
                     </a>
                 </div>
             </div>
@@ -683,7 +676,7 @@
 
         <!-- Start Banner Style1 -->
         <section class="banner-style1">
-            <div class="banner-style1__bg" style="background-image: url({{ asset('assets/images/backgrounds/banner-v1__bg.jpg?v=vert') }});">
+            <div class="banner-style1__bg" style="background-image: url({{ asset('assets/images/backgrounds/banner-v1__bg.jpg') }}?v=vert);">
                 <div class="section-bottom-shape"
                     style="background-image: url({{ asset('assets/images/shapes/section-bottom-shape.png') }});"></div>
             </div>
@@ -707,24 +700,24 @@
 
                     <div class="banner-style1__content-inner">
                         <div class="banner-style1__curved-top">
-                            Produits locaux, biologiques et naturels
+                            {{ __('Produits locaux, biologiques et naturels') }}
                         </div>
                         <div class="banner-style1__curved-bottom">
-                            Produits locaux, biologiques et naturels
+                            {{ __('Produits locaux, biologiques et naturels') }}
                         </div>
                         <div class="banner-style1__sub-title">
-                            <h5>Bienvenue au REJEPPAT</h5>
+                            <h5>{{ __('Bienvenue au REJEPPAT') }}</h5>
                         </div>
                         <div class="banner-style1__big-title">
-                            <h2>Achetez local</h2>
+                            <h2>{{ __('Achetez local') }}</h2>
                         </div>
                         <div class="banner-style1__title">
-                            <h3>Directement chez les producteurs...</h3>
+                            <h3>{{ __('Directement chez les producteurs...') }}</h3>
                         </div>
                         <div class="banner-style1__btn">
                             <a class="btn-one" href="{{ route('boutique.index') }}">
                                 <i class="icon-arrow"></i>
-                                <span class="txt">Accéder à la boutique</span>
+                                <span class="txt">{{ __('Accéder à la boutique') }}</span>
                             </a>
                         </div>
                     </div>
@@ -744,11 +737,11 @@
                         <div class="icon">
                             <i class="icon-hat"></i>
                         </div>
-                        <h4>Information</h4>
+                        <h4>{{ __('Information') }}</h4>
                     </div>
-                    <h2 class="title-animation">Actualités &amp; Événements</h2>
+                    <h2 class="title-animation">{{ __('Actualités & Événements') }}</h2>
                     <div class="text">
-                        <p>Retrouvez ici nos actualités et événements.</p>
+                        <p>{{ __('Retrouvez ici nos actualités et événements.') }}</p>
                     </div>
                 </div>
                 <div class="row">
@@ -763,7 +756,7 @@
                             <div class="single-blog-style3">
                                 <div class="single-blog-style3__img">
                                     <div class="single-blog-style3__img-inner">
-                                        <img src="{{ $une->visuel('-accueil-grand') }}" alt="{{ $une['title'] }}">
+                                        <img src="{{ $une->visuel('-accueil-grand') }}" alt="{{ $une->tr('title') }}">
                                         <div class="single-blog-style3__img-icon">
                                             <a class="lightbox-image" data-fancybox="gallery"
                                                 href="{{ $une->visuel('-detail') }}">
@@ -773,7 +766,7 @@
                                     </div>
                                     <div class="single-blog-style3__img-top">
                                         <div class="single-blog-style3__img-category">
-                                            <h6>{{ collect($une['categories'])->map(fn ($c) => $categoriesNoms[$c])->implode(', ') }}</h6>
+                                            <h6>{{ collect($une['categories'])->map(fn ($c) => __($categoriesNoms[$c]))->implode(', ') }}</h6>
                                         </div><br>
                                         <ul class="single-blog-style3__content-meta">
                                             <li>
@@ -789,13 +782,13 @@
                                     <div class="single-blog-style3__img-content">
                                         <div class="single-blog-style3__img-title">
                                             <h3>
-                                                <a href="{{ route('actualites.show', $une['slug']) }}"><span>{{ $une['title'] }}</span></a>
+                                                <a href="{{ route('actualites.show', $une['slug']) }}"><span>{{ $une->tr('title') }}</span></a>
                                             </h3>
                                         </div>
                                         <div class="single-blog-style3__img-btn">
                                             <a href="{{ route('actualites.show', $une['slug']) }}">
                                                 <i class="fa fa-regular fa-clock"></i>
-                                                {{ \App\Support\Contenu::lecture($une['content']) }} min de lecture
+                                                {{ __(':minutes min de lecture', ['minutes' => \App\Support\Contenu::lecture($une->paragraphes())]) }}
                                             </a>
                                         </div>
                                     </div>
@@ -814,7 +807,7 @@
                             <div class="blog-style2__single">
                                 <div class="blog-style2__single-inner">
                                     <div class="blog-style2__single-category">
-                                        <h6>{{ $categoriesNoms[$article['categories'][0]] }}</h6>
+                                        <h6>{{ __($categoriesNoms[$article['categories'][0]]) }}</h6>
                                     </div>
                                     <div class="blog-style2__single-content">
                                         <ul class="blog-style2__meta">
@@ -828,17 +821,17 @@
                                             </li>
                                         </ul>
                                         <div class="blog-style2__title">
-                                            <h3><a href="{{ route('actualites.show', $article['slug']) }}">{{ \Illuminate\Support\Str::limit($article['title'], 70) }}</a></h3>
+                                            <h3><a href="{{ route('actualites.show', $article['slug']) }}">{{ \Illuminate\Support\Str::limit($article->tr('title'), 70) }}</a></h3>
                                         </div>
                                         <div class="blog-style2__btn">
                                             <a href="{{ route('actualites.show', $article['slug']) }}">
                                                 <i class="fa fa-regular fa-clock"></i>
-                                                {{ \App\Support\Contenu::lecture($article['content']) }} min de lecture
+                                                {{ __(':minutes min de lecture', ['minutes' => \App\Support\Contenu::lecture($article->paragraphes())]) }}
                                             </a>
                                         </div>
                                     </div>
                                     <div class="blog-style2__single-img">
-                                        <img src="{{ $article->visuel('-accueil') }}" alt="{{ $article['title'] }}">
+                                        <img src="{{ $article->visuel('-accueil') }}" alt="{{ $article->tr('title') }}">
                                         <div class="blog-style2__single-img-overlay-icon">
                                             <a class="lightbox-image" data-fancybox="gallery"
                                                 href="{{ $article->visuel('-detail') }}">
@@ -858,12 +851,40 @@
                 <div class="blog-style2__btn2 text-center">
                     <a href="{{ route('actualites.index') }}">
                         <i class="icon-arrow"></i>
-                        Voir plus d’articles
+                        {{ __('Voir plus d’articles') }}
                     </a>
                 </div>
             </div>
         </section>
         @endif
         <!-- End Blog Style4 -->
+
+        @if ($evenements->isNotEmpty())
+        <!-- Start Agenda -->
+        <section class="rj-section rj-section--clair rj-section--serree" id="agenda">
+            <div class="container">
+                <div class="sec-title withtext text-center">
+                    <div class="sub-title">
+                        <div class="icon">
+                            <i class="icon-hat"></i>
+                        </div>
+                        <h4>{{ __('Agenda') }}</h4>
+                    </div>
+                    <h2>{{ __('Prochains rendez-vous') }}</h2>
+                </div>
+                <div class="row justify-content-center">
+                    <div class="col-xl-9">
+                        @foreach ($evenements as $evenement)
+                            @include('agenda._evenement', ['evenement' => $evenement])
+                        @endforeach
+                        <p class="text-center" style="margin-top: 30px">
+                            <a class="btn-one" href="{{ route('agenda.index') }}"><i class="icon-arrow"></i><span class="txt">{{ __('Tout l’agenda') }}</span></a>
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <!-- End Agenda -->
+        @endif
 
 @endsection

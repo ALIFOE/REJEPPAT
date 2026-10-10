@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Models\Commande;
 use App\Models\Produit;
+use App\Support\Paygate;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -40,9 +41,23 @@ class CommandeController extends Controller
 
     public function show(Commande $commande): View
     {
-        $commande->load('lignes.produit');
+        $commande->load(['lignes.produit', 'paiements' => fn ($q) => $q->latest()]);
 
         return view('admin.commandes.show', compact('commande'));
+    }
+
+    /** Facture simple de la commande, prête à imprimer ou à enregistrer en PDF. */
+    public function facture(Commande $commande): View
+    {
+        return view('boutique.facture', ['commande' => $commande->load('lignes')]);
+    }
+
+    /** Redemande à PayGate le statut des paiements en ligne encore en attente. */
+    public function verifierPaiement(Commande $commande, Paygate $paygate): RedirectResponse
+    {
+        $commande->paiements()->where('statut', 'en_attente')->get()->each(fn ($paiement) => $paygate->verifier($paiement));
+
+        return back()->with('succes', $commande->fresh()->estPayee() ? 'Paiement confirmé par l’opérateur.' : 'Aucun paiement confirmé pour le moment.');
     }
 
     public function update(Request $request, Commande $commande): RedirectResponse

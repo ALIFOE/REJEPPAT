@@ -22,6 +22,8 @@
             </div>
         </div>
 
+        @include('admin.partials.traduction', ['modele' => $offre])
+
         <div class="a-form__pied">
             <a href="{{ route('admin.offres.index') }}" class="a-btn a-btn--clair">Annuler</a>
             <button type="submit" class="a-btn"><i class="fas fa-save"></i> Enregistrer</button>

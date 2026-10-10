@@ -1,0 +1,1247 @@
+/*
+ * Pages ajoutées d'après le cahier des charges : sections régionales, partenaires,
+ * Espace Jeunes (annuaire, témoignages, opportunités, ressources), agenda, médiathèque,
+ * newsletter, contact rapide et choix de la langue.
+ * Reprend la charte verte du site (variables de rejeppat.css et du template).
+ */
+
+/* ---------- Mise en page commune ---------- */
+.rj-section {
+    padding: 100px 0 110px;
+}
+
+.rj-section--clair {
+    background: var(--rej-green-50);
+}
+
+.rj-section--serree {
+    padding: 70px 0 80px;
+}
+
+.rj-intro {
+    max-width: 760px;
+    margin: 0 auto 50px;
+    text-align: center;
+}
+
+.rj-intro p {
+    margin: 0;
+}
+
+.rj-grille {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 30px;
+}
+
+.rj-grille--3 {
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+}
+
+.rj-grille--4 {
+    grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+}
+
+.rj-grille--logos {
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+}
+
+.rj-titre-bloc {
+    margin: 0 0 25px;
+    font-size: 28px;
+    line-height: 1.3;
+}
+
+.rj-vide {
+    padding: 50px 30px;
+    border: 1px dashed var(--thm-border-color-1);
+    border-radius: var(--thm-border-radius);
+    background: var(--thm-white);
+    text-align: center;
+}
+
+.rj-vide i {
+    display: block;
+    margin-bottom: 14px;
+    color: var(--rej-green-muted);
+    font-size: 38px;
+}
+
+.rj-vide p {
+    margin: 0 0 18px;
+}
+
+.rj-vide p:last-child {
+    margin-bottom: 0;
+}
+
+/* Onglets de filtre (types, catégories) */
+.rj-filtres {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 10px;
+    margin-bottom: 45px;
+}
+
+.rj-filtres a {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 9px 20px;
+    border: 1px solid var(--thm-border-color-1);
+    border-radius: 30px;
+    background: var(--thm-white);
+    color: var(--thm-heading-font-color);
+    font-size: 15px;
+    font-weight: 600;
+    transition: all .2s ease;
+}
+
+.rj-filtres a span {
+    color: var(--rej-green-muted);
+    font-weight: 400;
+}
+
+.rj-filtres a:hover,
+.rj-filtres a.actif {
+    border-color: var(--rej-green-dark);
+    background: var(--rej-green-dark);
+    color: var(--thm-white);
+}
+
+.rj-filtres a:hover span,
+.rj-filtres a.actif span {
+    color: rgba(255, 255, 255, .8);
+}
+
+/* Pastilles (type, statut, filière) */
+.rj-pastille {
+    display: inline-block;
+    padding: 4px 12px;
+    border-radius: 30px;
+    background: var(--rej-green-100);
+    color: var(--rej-green-dark);
+    font-size: 13px;
+    font-weight: 600;
+    line-height: 1.5;
+}
+
+.rj-pastille--jaune {
+    background: #fdf2cc;
+    color: #7a5d06;
+}
+
+.rj-pastille--gris {
+    background: #eceee9;
+    color: #5b6b5e;
+}
+
+/* ---------- Cartes ---------- */
+.rj-carte {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    overflow: hidden;
+    border: 1px solid var(--thm-border-color-1);
+    border-radius: var(--thm-border-radius);
+    background: var(--thm-white);
+    box-shadow: 0 10px 30px rgba(23, 77, 42, .06);
+    transition: transform .25s ease, box-shadow .25s ease;
+}
+
+.rj-carte:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 18px 40px rgba(23, 77, 42, .12);
+}
+
+.rj-carte__image {
+    position: relative;
+    display: block;
+    aspect-ratio: 16 / 10;
+    overflow: hidden;
+    background: var(--rej-green-100);
+}
+
+.rj-carte__image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform .4s ease;
+}
+
+.rj-carte:hover .rj-carte__image img {
+    transform: scale(1.04);
+}
+
+.rj-carte__image .rj-pastille {
+    position: absolute;
+    top: 14px;
+    left: 14px;
+}
+
+.rj-carte__corps {
+    display: flex;
+    flex: 1;
+    flex-direction: column;
+    gap: 10px;
+    padding: 24px 26px 26px;
+}
+
+.rj-carte__corps h3 {
+    margin: 0;
+    font-size: 22px;
+    line-height: 1.35;
+}
+
+.rj-carte__corps h3 a {
+    color: var(--thm-heading-font-color);
+}
+
+.rj-carte__corps h3 a:hover {
+    color: var(--rej-green-dark);
+}
+
+.rj-carte__corps p {
+    margin: 0;
+    font-size: 16px;
+    line-height: 1.6;
+}
+
+.rj-meta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px 16px;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    color: var(--rej-green-text);
+    font-size: 15px;
+}
+
+.rj-meta li {
+    display: inline-flex;
+    align-items: center;
+    gap: 7px;
+}
+
+.rj-meta i {
+    color: var(--rej-green-dark);
+}
+
+.rj-lien-fleche {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    margin-top: auto;
+    padding-top: 6px;
+    color: var(--rej-green-dark);
+    font-weight: 700;
+}
+
+.rj-lien-fleche:hover {
+    color: var(--thm-heading-font-color);
+}
+
+/* Chiffres clés */
+.rj-chiffres {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+    gap: 16px;
+    margin: 30px 0;
+}
+
+.rj-chiffre {
+    padding: 22px 18px;
+    border-radius: var(--thm-border-radius);
+    background: var(--rej-green-50);
+    text-align: center;
+}
+
+.rj-chiffre strong {
+    display: block;
+    color: var(--rej-green-dark);
+    font-family: var(--thm-font-2);
+    font-size: 34px;
+    line-height: 1.2;
+}
+
+.rj-chiffre span {
+    font-size: 15px;
+}
+
+/* Bloc de contact latéral */
+.rj-encadre {
+    padding: 30px;
+    border-radius: var(--thm-border-radius);
+    background: var(--rej-green-50);
+}
+
+.rj-encadre + .rj-encadre {
+    margin-top: 30px;
+}
+
+.rj-encadre h3 {
+    margin: 0 0 18px;
+    font-size: 22px;
+}
+
+.rj-encadre ul {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+
+.rj-encadre li {
+    display: flex;
+    gap: 12px;
+    padding: 8px 0;
+    border-bottom: 1px solid var(--thm-border-color-1);
+    font-size: 16px;
+}
+
+.rj-encadre li:last-child {
+    border-bottom: 0;
+}
+
+.rj-encadre li i {
+    width: 18px;
+    margin-top: 6px;
+    color: var(--rej-green-dark);
+}
+
+.rj-encadre li a {
+    color: var(--thm-heading-font-color);
+    word-break: break-word;
+}
+
+.rj-encadre li.actif a,
+.rj-encadre li a:hover {
+    color: var(--rej-green-dark);
+    font-weight: 700;
+}
+
+.rj-texte p {
+    margin-bottom: 18px;
+}
+
+.rj-liste-puces {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin: 0 0 30px;
+    padding: 0;
+    list-style: none;
+}
+
+/* ---------- Sections régionales ---------- */
+.rj-region__appel {
+    padding: 26px 30px;
+    border-left: 4px solid var(--thm-primary-color);
+    border-radius: var(--thm-border-radius);
+    background: #fdf8e6;
+}
+
+.rj-region__appel p {
+    margin: 0 0 14px;
+}
+
+/* ---------- Partenaires ---------- */
+.rj-logo {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 14px;
+    height: 100%;
+    padding: 26px 20px;
+    border: 1px solid var(--thm-border-color-1);
+    border-radius: var(--thm-border-radius);
+    background: var(--thm-white);
+    text-align: center;
+}
+
+.rj-logo__image {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    height: 90px;
+}
+
+.rj-logo__image img {
+    max-width: 100%;
+    max-height: 90px;
+    object-fit: contain;
+}
+
+.rj-logo h4 {
+    margin: 0;
+    font-size: 18px;
+}
+
+.rj-logo p {
+    margin: 0;
+    font-size: 14px;
+    line-height: 1.5;
+}
+
+.rj-logo a {
+    font-size: 14px;
+    font-weight: 600;
+}
+
+.rj-etapes {
+    counter-reset: etape;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+
+.rj-etapes li {
+    position: relative;
+    padding: 0 0 22px 58px;
+    counter-increment: etape;
+}
+
+.rj-etapes li::before {
+    content: counter(etape);
+    position: absolute;
+    top: 0;
+    left: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background: var(--rej-green-dark);
+    color: var(--thm-white);
+    font-weight: 700;
+}
+
+.rj-etapes h4 {
+    margin: 0 0 6px;
+    font-size: 19px;
+}
+
+.rj-etapes p {
+    margin: 0;
+    font-size: 16px;
+}
+
+/* Formulaires des nouvelles pages (même rendu que le formulaire de contact) */
+.rj-formulaire {
+    padding: 45px;
+    border: 1px solid var(--thm-border-color-1);
+    border-radius: var(--thm-border-radius);
+    background: var(--thm-white);
+    box-shadow: 0 20px 50px rgba(23, 77, 42, .08);
+}
+
+.rj-formulaire .input-box {
+    margin-bottom: 20px;
+}
+
+.rj-formulaire label.rj-label {
+    display: block;
+    margin-bottom: 6px;
+    color: var(--thm-heading-font-color);
+    font-size: 15px;
+    font-weight: 600;
+}
+
+.rj-formulaire input[type="text"],
+.rj-formulaire input[type="email"],
+.rj-formulaire input[type="tel"],
+.rj-formulaire select,
+.rj-formulaire textarea {
+    width: 100%;
+    padding: 12px 18px;
+    border: 1px solid var(--thm-border-color-1);
+    border-radius: 8px;
+    background: var(--rej-green-50);
+    color: var(--thm-heading-font-color);
+    font-size: 16px;
+}
+
+.rj-formulaire textarea {
+    min-height: 150px;
+}
+
+.rj-formulaire input[type="file"] {
+    width: 100%;
+    font-size: 15px;
+}
+
+.rj-formulaire .text-danger {
+    display: block;
+    margin-top: 4px;
+}
+
+.rj-formulaire .rj-case {
+    display: flex;
+    gap: 10px;
+    align-items: flex-start;
+    margin: 6px 0 22px;
+    font-size: 15px;
+    line-height: 1.5;
+}
+
+.rj-formulaire .rj-case input {
+    margin-top: 5px;
+}
+
+/* ---------- Annuaire des membres ---------- */
+.rj-recherche {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+    margin-bottom: 40px;
+    padding: 20px;
+    border-radius: var(--thm-border-radius);
+    background: var(--rej-green-50);
+}
+
+.rj-recherche input,
+.rj-recherche select {
+    flex: 1 1 200px;
+    min-width: 0;
+    padding: 11px 16px;
+    border: 1px solid var(--thm-border-color-1);
+    border-radius: 8px;
+    background: var(--thm-white);
+    font-size: 16px;
+}
+
+.rj-recherche button {
+    padding: 11px 24px;
+    border: 0;
+    border-radius: 8px;
+    background: var(--rej-green-dark);
+    color: var(--thm-white);
+    font-weight: 600;
+}
+
+.rj-membre {
+    display: flex;
+    gap: 18px;
+    align-items: flex-start;
+    height: 100%;
+    padding: 24px;
+    border: 1px solid var(--thm-border-color-1);
+    border-radius: var(--thm-border-radius);
+    background: var(--thm-white);
+}
+
+.rj-avatar {
+    display: flex;
+    flex-shrink: 0;
+    align-items: center;
+    justify-content: center;
+    width: 76px;
+    height: 76px;
+    overflow: hidden;
+    border-radius: 50%;
+    background: var(--rej-green-dark);
+    color: var(--thm-white);
+    font-family: var(--thm-font-2);
+    font-size: 26px;
+}
+
+.rj-avatar img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.rj-avatar--grand {
+    width: 150px;
+    height: 150px;
+    font-size: 48px;
+}
+
+.rj-membre h3 {
+    margin: 0 0 4px;
+    font-size: 20px;
+}
+
+.rj-membre h3 a {
+    color: var(--thm-heading-font-color);
+}
+
+.rj-membre p {
+    margin: 0 0 8px;
+    font-size: 15px;
+    line-height: 1.5;
+}
+
+.rj-profil {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 30px;
+    align-items: center;
+    margin-bottom: 35px;
+}
+
+.rj-profil h2 {
+    margin: 0 0 8px;
+}
+
+/* Pagination des listes */
+.rj-pagination {
+    margin-top: 45px;
+}
+
+.rj-pagination nav {
+    display: flex;
+    justify-content: center;
+}
+
+/* ---------- Témoignages & success stories ---------- */
+.rj-story {
+    display: grid;
+    grid-template-columns: 260px 1fr;
+    gap: 40px;
+    align-items: center;
+    padding: 40px;
+    border-radius: var(--thm-border-radius);
+    background: var(--thm-white);
+    box-shadow: 0 10px 30px rgba(23, 77, 42, .06);
+}
+
+.rj-story + .rj-story {
+    margin-top: 30px;
+}
+
+.rj-story img {
+    width: 100%;
+    aspect-ratio: 1;
+    border-radius: 50%;
+    object-fit: cover;
+}
+
+.rj-story h3 {
+    margin: 0 0 14px;
+    font-size: 26px;
+}
+
+.rj-story blockquote {
+    margin: 0 0 16px;
+    padding: 0;
+    border: 0;
+    font-size: 17px;
+}
+
+.rj-story blockquote p {
+    margin-bottom: 12px;
+}
+
+.rj-temoignage {
+    position: relative;
+    height: 100%;
+    padding: 32px 28px 26px;
+    border-radius: var(--thm-border-radius);
+    background: var(--thm-white);
+    box-shadow: 0 10px 30px rgba(23, 77, 42, .06);
+}
+
+.rj-temoignage::before {
+    content: "\201C";
+    position: absolute;
+    top: 6px;
+    right: 22px;
+    color: var(--rej-green-200);
+    font-family: Georgia, serif;
+    font-size: 80px;
+    line-height: 1;
+}
+
+.rj-temoignage p {
+    margin: 0 0 20px;
+    font-size: 16px;
+    line-height: 1.65;
+}
+
+.rj-auteur {
+    display: flex;
+    gap: 14px;
+    align-items: center;
+}
+
+.rj-auteur img {
+    width: 56px;
+    height: 56px;
+    border-radius: 50%;
+    object-fit: cover;
+}
+
+.rj-auteur strong {
+    display: block;
+    color: var(--thm-heading-font-color);
+}
+
+.rj-auteur span {
+    font-size: 14px;
+}
+
+/* ---------- Opportunités et ressources ---------- */
+.rj-opportunite {
+    display: grid;
+    grid-template-columns: 1fr auto;
+    gap: 20px;
+    align-items: center;
+    padding: 26px 30px;
+    border: 1px solid var(--thm-border-color-1);
+    border-radius: var(--thm-border-radius);
+    background: var(--thm-white);
+}
+
+.rj-opportunite + .rj-opportunite {
+    margin-top: 18px;
+}
+
+.rj-opportunite h3 {
+    margin: 8px 0;
+    font-size: 21px;
+}
+
+.rj-opportunite h3 a {
+    color: var(--thm-heading-font-color);
+}
+
+.rj-echeance {
+    min-width: 120px;
+    padding: 12px 16px;
+    border-radius: var(--thm-border-radius);
+    background: var(--rej-green-50);
+    text-align: center;
+}
+
+.rj-echeance small {
+    display: block;
+    font-size: 13px;
+}
+
+.rj-echeance strong {
+    color: var(--rej-green-dark);
+    font-size: 17px;
+}
+
+.rj-document {
+    display: flex;
+    gap: 18px;
+    align-items: flex-start;
+    height: 100%;
+    padding: 24px;
+    border: 1px solid var(--thm-border-color-1);
+    border-radius: var(--thm-border-radius);
+    background: var(--thm-white);
+}
+
+.rj-document__icone {
+    display: flex;
+    flex-shrink: 0;
+    align-items: center;
+    justify-content: center;
+    width: 58px;
+    height: 68px;
+    border-radius: 8px;
+    background: var(--rej-green-dark);
+    color: var(--thm-white);
+    font-size: 13px;
+    font-weight: 700;
+}
+
+.rj-document h3 {
+    margin: 0 0 6px;
+    font-size: 19px;
+    line-height: 1.4;
+}
+
+.rj-document p {
+    margin: 0 0 10px;
+    font-size: 15px;
+    line-height: 1.55;
+}
+
+.rj-bouton-petit {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 8px 18px;
+    border-radius: 30px;
+    background: var(--thm-primary-color);
+    color: var(--thm-heading-font-color);
+    font-size: 15px;
+    font-weight: 700;
+}
+
+.rj-bouton-petit:hover {
+    background: var(--rej-green-dark);
+    color: var(--thm-white);
+}
+
+/* ---------- Agenda ---------- */
+.rj-evenement {
+    display: grid;
+    grid-template-columns: 110px 1fr;
+    gap: 26px;
+    padding: 26px;
+    border: 1px solid var(--thm-border-color-1);
+    border-radius: var(--thm-border-radius);
+    background: var(--thm-white);
+}
+
+.rj-evenement + .rj-evenement {
+    margin-top: 20px;
+}
+
+.rj-date {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 14px 8px;
+    border-radius: var(--thm-border-radius);
+    background: var(--rej-green-dark);
+    color: var(--thm-white);
+    text-align: center;
+    line-height: 1.1;
+}
+
+.rj-date strong {
+    font-family: var(--thm-font-2);
+    font-size: 38px;
+}
+
+.rj-date span {
+    margin-top: 4px;
+    font-size: 15px;
+    text-transform: uppercase;
+    letter-spacing: .05em;
+}
+
+.rj-evenement h3 {
+    margin: 8px 0;
+    font-size: 22px;
+}
+
+.rj-evenement h3 a {
+    color: var(--thm-heading-font-color);
+}
+
+.rj-evenement p {
+    margin: 10px 0 0;
+    font-size: 16px;
+}
+
+.rj-evenement--passe .rj-date {
+    background: var(--rej-green-muted);
+}
+
+/* ---------- Médiathèque ---------- */
+.rj-media {
+    position: relative;
+    display: block;
+    aspect-ratio: 4 / 3;
+    overflow: hidden;
+    border-radius: var(--thm-border-radius);
+    background: var(--rej-green-100);
+}
+
+.rj-media img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform .4s ease;
+}
+
+.rj-media:hover img {
+    transform: scale(1.05);
+}
+
+.rj-media__lecture {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 64px;
+    height: 64px;
+    border-radius: 50%;
+    background: rgba(244, 202, 78, .95);
+    color: var(--thm-heading-font-color);
+    font-size: 22px;
+    transform: translate(-50%, -50%);
+}
+
+.rj-media__legende {
+    margin: 12px 0 0;
+}
+
+.rj-media__legende strong {
+    display: block;
+    color: var(--thm-heading-font-color);
+    line-height: 1.4;
+}
+
+.rj-media__legende small {
+    color: var(--rej-green-muted);
+}
+
+.rj-podcast audio {
+    width: 100%;
+    margin-top: 10px;
+}
+
+/* ---------- Fermes écoles : contacts, productions, galerie ---------- */
+.rj-galerie {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+    gap: 14px;
+}
+
+.rj-galerie a {
+    display: block;
+    aspect-ratio: 1;
+    overflow: hidden;
+    border-radius: var(--thm-border-radius);
+}
+
+.rj-galerie img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform .4s ease;
+}
+
+.rj-galerie a:hover img {
+    transform: scale(1.06);
+}
+
+.rj-bloc {
+    margin-top: 45px;
+}
+
+.rj-bloc > h2 {
+    margin-bottom: 22px;
+    font-size: 30px;
+}
+
+/* Projets : état d'avancement */
+.rj-avancement {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    z-index: 3;
+}
+
+/* ---------- Bandeau newsletter (pied de page des pages intérieures) ---------- */
+.rj-newsletter {
+    padding: 40px 0;
+    background: var(--rej-green-dark);
+    color: rgba(255, 255, 255, .85);
+}
+
+.rj-newsletter__inner {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px 40px;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.rj-newsletter h3 {
+    margin: 0 0 4px;
+    color: var(--thm-white);
+    font-size: 26px;
+}
+
+.rj-newsletter .rj-newsletter__inner p {
+    margin: 0;
+    color: rgba(255, 255, 255, .85);
+}
+
+.rj-newsletter form {
+    display: flex;
+    flex: 1 1 380px;
+    max-width: 520px;
+    gap: 10px;
+}
+
+.rj-newsletter input {
+    flex: 1;
+    min-width: 0;
+    padding: 13px 20px;
+    border: 0;
+    border-radius: 30px;
+    font-size: 16px;
+}
+
+.rj-newsletter button {
+    padding: 13px 26px;
+    border: 0;
+    border-radius: 30px;
+    background: var(--thm-primary-color);
+    color: var(--thm-heading-font-color);
+    font-weight: 700;
+    white-space: nowrap;
+}
+
+.rj-newsletter .rj-newsletter__inner .rj-newsletter__message {
+    flex-basis: 100%;
+    color: var(--thm-primary-color);
+    font-weight: 600;
+}
+
+.rj-newsletter .rj-newsletter__inner .rj-newsletter__message--erreur {
+    color: #ffd0c8;
+}
+
+/* ---------- Choix de la langue ---------- */
+.rj-langues {
+    display: inline-flex;
+    align-items: center;
+    gap: 2px;
+    padding: 3px;
+    border: 1px solid var(--thm-border-color-1);
+    border-radius: 30px;
+    background: var(--thm-white);
+    line-height: 1;
+}
+
+.rj-langues a {
+    padding: 6px 10px;
+    border-radius: 30px;
+    color: var(--thm-heading-font-color);
+    font-size: 13px;
+    font-weight: 700;
+    letter-spacing: .04em;
+}
+
+.rj-langues a.actif {
+    background: var(--rej-green-dark);
+    color: var(--thm-white);
+}
+
+.rj-langues--mobile {
+    margin: 20px 0 0;
+}
+
+.rj-langues--entete {
+    flex-shrink: 0;
+    margin: 0 14px;
+}
+
+/* ---------- Contact rapide (bulle présente sur toutes les pages) ---------- */
+.rj-aide {
+    position: fixed;
+    left: 20px;
+    bottom: 20px;
+    z-index: 990;
+    display: flex;
+    flex-direction: column-reverse;
+    align-items: flex-start;
+    gap: 12px;
+}
+
+.rj-aide__boutons {
+    display: flex;
+    gap: 10px;
+}
+
+.rj-aide__bouton {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 58px;
+    height: 58px;
+    border: 0;
+    border-radius: 50%;
+    background: var(--rej-green-dark);
+    color: var(--thm-white);
+    font-size: 24px;
+    box-shadow: 0 10px 25px rgba(12, 34, 19, .25);
+    cursor: pointer;
+    transition: transform .2s ease;
+}
+
+.rj-aide__bouton:hover {
+    color: var(--thm-white);
+    transform: scale(1.06);
+}
+
+.rj-aide__bouton--whatsapp {
+    background: #25d366;
+    font-size: 28px;
+}
+
+.rj-aide__panneau {
+    width: min(360px, calc(100vw - 40px));
+    max-height: calc(100vh - 120px);
+    overflow-y: auto;
+    border-radius: 14px;
+    background: var(--thm-white);
+    box-shadow: 0 20px 50px rgba(12, 34, 19, .25);
+}
+
+.rj-aide__panneau[hidden] {
+    display: none;
+}
+
+.rj-aide__entete {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 12px;
+    padding: 18px 20px;
+    background: var(--rej-green-dark);
+    color: var(--thm-white);
+}
+
+.rj-aide__entete strong {
+    display: block;
+    font-size: 17px;
+}
+
+.rj-aide__entete small {
+    color: rgba(255, 255, 255, .8);
+    font-size: 13px;
+}
+
+.rj-aide__fermer {
+    border: 0;
+    background: none;
+    color: var(--thm-white);
+    font-size: 20px;
+    line-height: 1;
+}
+
+.rj-aide__corps {
+    padding: 18px 20px 20px;
+    font-size: 15px;
+    line-height: 1.55;
+}
+
+.rj-aide__bulle {
+    margin-bottom: 12px;
+    padding: 12px 14px;
+    border-radius: 12px 12px 12px 2px;
+    background: var(--rej-green-50);
+}
+
+.rj-aide__bulle--reponse {
+    border-radius: 12px 12px 2px 12px;
+    background: #fdf8e6;
+}
+
+.rj-aide__questions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-bottom: 14px;
+}
+
+.rj-aide__questions button {
+    padding: 7px 12px;
+    border: 1px solid var(--thm-border-color-1);
+    border-radius: 20px;
+    background: var(--thm-white);
+    color: var(--rej-green-dark);
+    font-size: 14px;
+    font-weight: 600;
+    text-align: left;
+}
+
+.rj-aide__questions button:hover {
+    border-color: var(--rej-green-dark);
+}
+
+.rj-aide__formulaire input,
+.rj-aide__formulaire textarea {
+    width: 100%;
+    margin-bottom: 8px;
+    padding: 9px 12px;
+    border: 1px solid var(--thm-border-color-1);
+    border-radius: 8px;
+    font-size: 15px;
+}
+
+.rj-aide__formulaire textarea {
+    min-height: 80px;
+}
+
+.rj-aide__formulaire button {
+    width: 100%;
+    padding: 10px;
+    border: 0;
+    border-radius: 8px;
+    background: var(--thm-primary-color);
+    color: var(--thm-heading-font-color);
+    font-weight: 700;
+}
+
+.rj-aide__statut {
+    margin: 8px 0 0;
+    font-weight: 600;
+}
+
+.rj-aide__statut--erreur {
+    color: #b3261e;
+}
+
+/* ---------- Écrans moyens et petits ---------- */
+@media (max-width: 991px) {
+    .rj-section {
+        padding: 70px 0 80px;
+    }
+
+    .rj-story {
+        grid-template-columns: 1fr;
+        gap: 24px;
+        padding: 28px;
+        text-align: center;
+    }
+
+    .rj-story img {
+        max-width: 180px;
+        margin: 0 auto;
+    }
+}
+
+@media (max-width: 575px) {
+    .rj-formulaire {
+        padding: 26px 20px;
+    }
+
+    .rj-opportunite {
+        grid-template-columns: 1fr;
+    }
+
+    .rj-evenement {
+        grid-template-columns: 1fr;
+        gap: 16px;
+    }
+
+    .rj-date {
+        flex-direction: row;
+        gap: 10px;
+        justify-content: flex-start;
+        padding: 10px 16px;
+    }
+
+    .rj-date strong {
+        font-size: 26px;
+    }
+
+    .rj-aide {
+        left: 14px;
+        bottom: 14px;
+    }
+
+    .rj-aide__bouton {
+        width: 52px;
+        height: 52px;
+    }
+}

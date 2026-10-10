@@ -3,10 +3,14 @@
 namespace App\Support;
 
 use App\Models\Actualite;
+use App\Models\Evenement;
 use App\Models\Ferme;
 use App\Models\Offre;
+use App\Models\Partenaire;
 use App\Models\Produit;
 use App\Models\Projet;
+use App\Models\Region;
+use App\Models\Temoignage;
 use DateTimeInterface;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Collection;
@@ -67,21 +71,43 @@ class Contenu
         return once(fn () => Offre::actif()->get());
     }
 
+    public static function regions(): Collection
+    {
+        return once(fn () => Region::publie()->get());
+    }
+
+    public static function partenaires(): Collection
+    {
+        return once(fn () => Partenaire::publie()->get());
+    }
+
+    /** Témoignages de bénéficiaires mis en avant sur la page d'accueil. */
+    public static function temoignagesAccueil(): Collection
+    {
+        return once(fn () => Temoignage::publie()->where('accueil', true)->get());
+    }
+
+    /** Prochains rendez-vous de l'agenda. */
+    public static function prochainsEvenements(int $nombre = 3): Collection
+    {
+        return Evenement::publie()->aVenir()->take($nombre)->get();
+    }
+
     /** Services proposés dans le formulaire de demande : les offres actives, plus « Autre besoin ». */
     public static function servicesDemande(): array
     {
         return self::offres()->pluck('titre')->push('Autre besoin')->unique()->values()->all();
     }
 
-    /** Ex. « 4 Oct - 2026 », le format des dates du template. */
+    /** Ex. « 4 Oct - 2026 », le format des dates du template, dans la langue du visiteur. */
     public static function date(string|DateTimeInterface $date, string $format = 'j M - Y'): string
     {
-        return Carbon::parse($date)->locale('fr')->translatedFormat($format);
+        return Carbon::parse($date)->locale(app()->getLocale())->translatedFormat($format);
     }
 
     public static function prix(int $montant): string
     {
-        return number_format($montant, 0, ',', ' ') . ' CFA';
+        return number_format($montant, 0, ',', ' ').' CFA';
     }
 
     /** Durée de lecture estimée (200 mots par minute). */

@@ -55,13 +55,14 @@ class OffreController extends Controller
             'titre' => ['required', 'string', 'max:160'],
             'texte' => ['required', 'string', 'max:1000'],
             'ordre' => ['nullable', 'integer', 'min:0'],
-        ], self::MESSAGES);
+        ] + $this->reglesTraductions(), self::MESSAGES);
 
         return [
             'titre' => $donnees['titre'],
             'texte' => $donnees['texte'],
             'ordre' => (int) ($donnees['ordre'] ?? 0),
             'actif' => $request->boolean('actif'),
+            'traductions' => $this->traductions($request, Offre::class),
         ];
     }
 }

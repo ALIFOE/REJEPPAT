@@ -11,7 +11,7 @@
                                     <i class="icon-wheat"></i>
                                 </div>
                                 <div class="text-box">
-                                    <p><span>{{ config('rejeppat.name') }} –</span> {{ config('rejeppat.tagline') }}</p>
+                                    <p><span>{{ config('rejeppat.name') }} –</span> {{ __(config('rejeppat.tagline')) }}</p>
                                 </div>
                                 <div class="btn-box">
                                     <a href="{{ route('offres') }}"><i class="icon-arrow"></i></a>
@@ -23,9 +23,10 @@
                                         <i class="icon-incoming-call"></i>
                                     </div>
                                     <div class="text">
-                                        <p><a href="tel:{{ config('rejeppat.phones.0.tel') }}">{{ config('rejeppat.phones.0.label') }}</a> Une question ? Appelez-nous !</p>
+                                        <p><a href="tel:{{ config('rejeppat.phones.0.tel') }}">{{ config('rejeppat.phones.0.label') }}</a> {{ __('Une question ? Appelez-nous !') }}</p>
                                     </div>
                                 </div>
+                                @include('partials.langues', ['classe' => 'rj-langues--entete'])
                                 <div class="header-social-link-style1">
                                     <ul>
                                         <li>
@@ -83,7 +84,7 @@
                                                 <div class="header-btn-style1 header-sticky-btn-one">
                                                     <a class="btn-one" href="{{ route('demande') }}">
                                                         <i class="icon-arrow"></i>
-                                                        <span class="txt">Demande de service</span>
+                                                        <span class="txt">{{ __('Demande de service') }}</span>
                                                     </a>
                                                 </div>
 
@@ -102,22 +103,22 @@
                                 </div>
                                 <div class="header-cart-btn-style1">
                                     <div class="cart-icon">
-                                        <a href="{{ route('panier.index') }}" aria-label="Mon panier"><span class="icon-empty-cart"></span>@if ($nombre = \App\Support\Panier::nombre())<span class="panier-compteur">{{ $nombre }}</span>@endif</a>
+                                        <a href="{{ route('panier.index') }}" aria-label="{{ __('Mon panier') }}"><span class="icon-empty-cart"></span>@if ($nombre = \App\Support\Panier::nombre())<span class="panier-compteur">{{ $nombre }}</span>@endif</a>
                                     </div>
                                 </div>
                                 <div class="header-cart-btn-style1 header-compte-btn">
                                     <div class="cart-icon">
                                         @auth
-                                            <a href="{{ route('compte.index') }}" aria-label="Mon compte" title="Mon compte"><i class="fas fa-user-check"></i></a>
+                                            <a href="{{ auth()->user()->tableauDeBord() }}" aria-label="{{ __('Mon compte') }}" title="{{ __('Mon compte') }}"><i class="fas fa-user-check"></i></a>
                                         @else
-                                            <a href="{{ route('connexion') }}" aria-label="Connexion / Inscription" title="Connexion / Inscription"><i class="far fa-user"></i></a>
+                                            <a href="{{ route('connexion') }}" aria-label="{{ __('Connexion / Inscription') }}" title="{{ __('Connexion / Inscription') }}"><i class="far fa-user"></i></a>
                                         @endauth
                                     </div>
                                 </div>
                                 <div class="header-btn-style1">
                                     <a class="btn-one" href="{{ route('demande') }}">
                                         <i class="icon-arrow"></i>
-                                        <span class="txt">Demande de service</span>
+                                        <span class="txt">{{ __('Demande de service') }}</span>
                                     </a>
                                 </div>
 
@@ -126,7 +127,7 @@
                                         <img src="{{ asset('assets/images/icon/address-icon1.png') }}" alt="Icon">
                                     </div>
                                     <div class="text">
-                                        <h4>Sokodé, Togo</h4>
+                                        <h4>{{ __('Sokodé, Togo') }}</h4>
                                     </div>
                                     <a href="{{ route('contact') }}" class="btn-box1">
                                         <i class="icon-arrow"></i>

@@ -1,3 +1,5 @@
+        @include('partials.newsletter')
+
         <!--Start footer Style1 -->
         <footer class="footer-style1">
 
@@ -16,7 +18,7 @@
                                         </a>
                                     </div>
                                     <div class="single-footer-widget-about-text">
-                                        <p>{{ config('rejeppat.full_name') }}.</p>
+                                        <p>{{ __(config('rejeppat.full_name')) }}.</p>
                                     </div>
                                     <div class="single-footer-widget-about-certification">
                                         <div class="footer-widget-about-certification-logo">
@@ -26,8 +28,8 @@
                                             </a>
                                         </div>
                                         <div class="footer-widget-about-certification-title">
-                                            <h4>Membre de la Coordination Togolaise des OP (CTOP).</h4>
-                                            <p>Créé le : 10 juillet 2010</p>
+                                            <h4>{{ __('Membre de la Coordination Togolaise des OP (CTOP).') }}</h4>
+                                            <p>{{ __('Créé le : 10 juillet 2010') }}</p>
                                         </div>
                                     </div>
                                 </div>
@@ -39,17 +41,20 @@
                         <div class="col-xl-3 col-lg-6 col-md-6 single-widget">
                             <div class="single-footer-widget">
                                 <div class="title">
-                                    <h3>Liens utiles</h3>
+                                    <h3>{{ __('Liens utiles') }}</h3>
                                     <div class="border-dot"></div>
                                 </div>
                                 <div class="footer-widget-useful-links">
                                     <ul>
-                                        <li><a href="{{ route('offres') }}"><i class="icon-corn"></i> Nos offres &amp; services</a></li>
-                                        <li><a href="{{ route('fermes.index') }}"><i class="icon-corn"></i> Fermes Écoles</a></li>
-                                        <li><a href="{{ route('projets.index') }}"><i class="icon-corn"></i> Nos Programmes &amp; Projets</a></li>
-                                        <li><a href="{{ route('actualites.index') }}"><i class="icon-corn"></i> Actualités &amp; Événements</a></li>
-                                        <li><a href="{{ route('boutique.index') }}"><i class="icon-corn"></i> Boutique</a></li>
-                                        <li><a href="{{ route('contact') }}"><i class="icon-corn"></i> Contact</a></li>
+                                        <li><a href="{{ route('offres') }}"><i class="icon-corn"></i> {{ __('Nos offres & services') }}</a></li>
+                                        <li><a href="{{ route('fermes.index') }}"><i class="icon-corn"></i> {{ __('Fermes Écoles') }}</a></li>
+                                        <li><a href="{{ route('projets.index') }}"><i class="icon-corn"></i> {{ __('Nos Programmes & Projets') }}</a></li>
+                                        <li><a href="{{ route('actualites.index') }}"><i class="icon-corn"></i> {{ __('Actualités & Événements') }}</a>
+                                        <li><a href="{{ route('agenda.index') }}"><i class="icon-corn"></i> {{ __('Agenda') }}</a></li>
+                                        <li><a href="{{ route('espace-jeunes.index') }}"><i class="icon-corn"></i> {{ __('Espace Jeunes / Membres') }}</a></li>
+                                        <li><a href="{{ route('partenaires.index') }}"><i class="icon-corn"></i> {{ __('Partenaires') }}</a></li>
+                                        <li><a href="{{ route('boutique.index') }}"><i class="icon-corn"></i> {{ __('Boutique') }}</a></li>
+                                        <li><a href="{{ route('contact') }}"><i class="icon-corn"></i> {{ __('Contact') }}</a></li>
                                     </ul>
                                 </div>
                             </div>
@@ -60,7 +65,7 @@
                         <div class="col-xl-3 col-lg-6 col-md-6 single-widget">
                             <div class="single-footer-widget">
                                 <div class="title">
-                                    <h3>Nous contacter</h3>
+                                    <h3>{{ __('Nous contacter') }}</h3>
                                     <div class="border-dot"></div>
                                 </div>
                                 <div class="footer-widget-useful-links">
@@ -82,7 +87,7 @@
                         <div class="col-xl-3 col-lg-6 col-md-6 single-widget">
                             <div class="single-footer-widget">
                                 <div class="title">
-                                    <h3>Nos actualités</h3>
+                                    <h3>{{ __('Nos actualités') }}</h3>
                                     <div class="border-dot"></div>
                                 </div>
                                 <div class="footer-widget-blog-post">
@@ -90,7 +95,7 @@
                                         @foreach (\App\Support\Contenu::actualites()->take(2) as $article)
                                             <li class="footer-widget-blog-post-single">
                                                 <div class="footer-widget-blog-post-img">
-                                                    <img src="{{ $article->visuel('-mini') }}" alt="{{ $article['title'] }}">
+                                                    <img src="{{ $article->visuel('-mini') }}" alt="{{ $article->tr('title') }}">
                                                 </div>
                                                 <div class="footer-widget-blog-post-content">
                                                     <div class="date">
@@ -99,7 +104,7 @@
                                                     </div>
                                                     <div class="title">
                                                         <h4>
-                                                            <a href="{{ route('actualites.show', $article['slug']) }}">{{ \Illuminate\Support\Str::limit($article['title'], 60) }}</a>
+                                                            <a href="{{ route('actualites.show', $article['slug']) }}">{{ \Illuminate\Support\Str::limit($article->tr('title'), 60) }}</a>
                                                         </h4>
                                                     </div>
                                                 </div>
@@ -122,19 +127,19 @@
                     <div class="footer-bottom-inner">
                         <div class="copyright-text">
                             <p>
-                                Copyrights © {{ date('Y') }} <a href="{{ route('home') }}">{{ config('rejeppat.name') }}.</a> Tous droits réservés.
+                                Copyrights © {{ date('Y') }} <a href="{{ route('home') }}">{{ config('rejeppat.name') }}.</a> {{ __('Tous droits réservés.') }}
                             </p>
                         </div>
                         <div class="footer-menu">
                             <ul class="clearfix">
                                 <li>
-                                    <a href="{{ route('fermes.index') }}">Fermes Écoles</a>
+                                    <a href="{{ route('fermes.index') }}">{{ __('Fermes Écoles') }}</a>
                                 </li>
                                 <li>
-                                    <a href="{{ route('demande') }}">Demande de service</a>
+                                    <a href="{{ route('demande') }}">{{ __('Demande de service') }}</a>
                                 </li>
                                 <li>
-                                    <a href="{{ route('contact') }}">Contact</a>
+                                    <a href="{{ route('contact') }}">{{ __('Contact') }}</a>
                                 </li>
                             </ul>
                         </div>

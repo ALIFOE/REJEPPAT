@@ -33,7 +33,7 @@
                                     <div class="swiper-container testimonial-slider">
 
                                         <div class="swiper-wrapper">
-                                            @foreach (config('rejeppat.temoignages') as $temoignage)
+                                            @foreach (\App\Support\Contenu::temoignagesAccueil() as $temoignage)
                                             <!--Start Single Testimoial Style1 Item -->
                                             <div class="swiper-slide">
                                                 <div class="single-testimoial-style1-item">
@@ -44,26 +44,26 @@
                                                             </div>
                                                             <i class="icon-dialog"></i>
                                                             <div class="testimoial-style1__content-round-text">
-                                                                Témoignages
+                                                                {{ __('Témoignages') }}
                                                             </div>
                                                         </div>
                                                         <div class="testimoial-style1__content-inner">
                                                             <div class="testimoial-style1__content-inner-bg"
-                                                                style="background-image: url({{ asset('assets/images/pattern/testimoial-v1__pattern.jpg?v=vert') }});">
+                                                                style="background-image: url({{ asset('assets/images/pattern/testimoial-v1__pattern.jpg') }}?v=vert);">
                                                             </div>
                                                             <div class="testimoial-style1__content-top">
-                                                                <h3>{{ $temoignage['titre'] }}</h3>
-                                                                <p>{{ $temoignage['texte'] }}</p>
+                                                                <h3>{{ $temoignage->tr('titre') }}</h3>
+                                                                <p>{{ $temoignage->tr('texte') }}</p>
                                                             </div>
                                                             <div class="testimoial-style1__content-shape">
                                                                 <img src="{{ asset('assets/images/shapes/activities-v1-fact__shape1.png') }}"
                                                                     alt="Image">
                                                             </div>
                                                             <div class="testimoial-style1__content-bottom">
-                                                                <p><span>{{ $temoignage['nom'] }}, </span>{{ $temoignage['role'] }}</p>
+                                                                <p><span>{{ $temoignage->nom }}, </span>{{ $temoignage->tr('role') }}</p>
                                                                 <div class="reting">
                                                                     <i class="icon-rate-star-button"></i>
-                                                                    <p>Bénéficiaire</p>
+                                                                    <p>{{ __('Bénéficiaire') }}</p>
                                                                 </div>
                                                             </div>
                                                         </div>
@@ -81,7 +81,7 @@
                                 <div class="col-xl-2 col-lg-2 col-md-2">
                                     <div class="single-testimoial-style1__img">
                                         <div class="single-testimoial-style1__img-inner">
-                                            <img src="{{ asset('assets/images/rejeppat/offres/temoignage-' . $cote . '.jpg') }}" alt="Jeunes producteurs du REJEPPAT">
+                                            <img src="{{ asset('assets/images/rejeppat/offres/temoignage-' . $cote . '.jpg') }}" alt="{{ __('Jeunes producteurs du REJEPPAT') }}">
                                             <ul class="one">
                                                 <li></li>
                                                 <li></li>
@@ -122,7 +122,7 @@
             <div class="partner-style1">
                 <div class="container">
                     <div class="partners-style1__text">
-                        <p>Nos partenaires techniques et financiers.</p>
+                        <p><a href="{{ route('partenaires.index') }}">{{ __('Nos partenaires techniques et financiers.') }}</a></p>
                     </div>
                     <div class="partner-style1__inner">
                         <div class="owl-carousel owl-theme thm-owl__carousel partner-style1-carousel" data-owl-options='{
@@ -153,11 +153,11 @@
                                 }
                             }'>
 
-                            @foreach (config('rejeppat.partenaires') as $partenaire)
+                            @foreach (\App\Support\Contenu::partenaires() as $partenaire)
                             <!-- Start Single Partner Style1-->
                             <div class="single-partner-style1">
-                                <a href="#">
-                                    <img src="{{ asset('assets/images/rejeppat/partenaires/' . $partenaire['image']) }}" alt="{{ $partenaire['nom'] }}">
+                                <a href="{{ $partenaire->site ?: route('partenaires.index') }}" @if ($partenaire->site) target="_blank" rel="noopener" @endif>
+                                    <img src="{{ $partenaire->visuel() }}" alt="{{ $partenaire->nom }}">
                                 </a>
                             </div>
                             <!-- End Single Partner Style1-->

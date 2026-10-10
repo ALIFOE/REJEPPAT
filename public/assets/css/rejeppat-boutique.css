@@ -114,6 +114,175 @@
     font-size: 15px;
 }
 
+/* Paiement Mobile Money : logos des opérateurs */
+.choix-boutique__option--logo {
+    align-items: center;
+}
+
+.choix-boutique__option--logo input {
+    margin-top: 0;
+}
+
+.choix-boutique__logo {
+    flex: 0 0 auto;
+    width: 64px;
+    height: 44px;
+    object-fit: contain;
+}
+
+.paiement-mobile {
+    margin-bottom: 10px;
+    padding: 18px 20px 6px;
+    border-radius: var(--thm-border-radius);
+    background: var(--rej-green-50);
+}
+
+.paiement-mobile > label {
+    display: block;
+    margin-bottom: 8px;
+    color: var(--thm-heading-font-color);
+    font-weight: 600;
+}
+
+.paiement-mobile .field-input {
+    margin-bottom: 10px;
+}
+
+.paiement-mobile__aide {
+    font-size: 14px;
+    line-height: 1.5;
+}
+
+.paiement-mobile__aide i {
+    color: var(--rej-green-dark);
+}
+
+/* Page d'attente du paiement */
+.paiement-attente {
+    max-width: 640px;
+    margin: 0 auto;
+    padding: 40px 36px;
+    border: 1px solid var(--thm-border-color-1);
+    border-radius: var(--thm-border-radius);
+    background: var(--thm-white);
+    text-align: center;
+}
+
+.paiement-attente__logo {
+    width: 120px;
+    height: 80px;
+    object-fit: contain;
+}
+
+.paiement-attente__montant {
+    margin: 12px 0 0;
+    color: var(--rej-green-title);
+    font-size: 34px;
+    font-weight: 700;
+    line-height: 1.2;
+}
+
+.paiement-attente__commande {
+    margin-bottom: 25px;
+}
+
+.paiement-attente__etat h2 {
+    margin: 14px 0 16px;
+    font-size: 24px;
+}
+
+.paiement-attente__roue {
+    display: inline-block;
+    width: 54px;
+    height: 54px;
+    border: 5px solid var(--rej-green-150);
+    border-top-color: var(--rej-green-dark);
+    border-radius: 50%;
+    animation: paiement-roue 1s linear infinite;
+}
+
+@keyframes paiement-roue {
+    to { transform: rotate(360deg); }
+}
+
+.paiement-attente__icone {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 54px;
+    height: 54px;
+    border-radius: 50%;
+    background: #fbe0dc;
+    color: #8f2d1f;
+    font-size: 22px;
+}
+
+.paiement-attente__etapes {
+    max-width: 460px;
+    margin: 0 auto 18px;
+    padding-left: 20px;
+    text-align: left;
+}
+
+.paiement-attente__etapes li {
+    margin-bottom: 6px;
+}
+
+.paiement-attente__info {
+    color: var(--rej-green-text);
+    font-size: 15px;
+}
+
+.paiement-simulation {
+    margin-top: 20px;
+    padding: 16px;
+    border: 1px dashed #c98b4a;
+    border-radius: var(--thm-border-radius);
+    background: #fdf6ec;
+}
+
+.paiement-simulation form {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 10px;
+}
+
+.paiement-simulation .btn-one,
+.paiement-relance .btn-one {
+    border: 0;
+}
+
+.paiement-relance {
+    margin-top: 25px;
+    padding-top: 20px;
+    border-top: 1px solid var(--thm-border-color-1);
+    text-align: left;
+}
+
+.paiement-relance summary {
+    color: var(--rej-green-dark);
+    font-weight: 600;
+    text-align: center;
+    cursor: pointer;
+}
+
+.paiement-relance form {
+    margin-top: 18px;
+}
+
+.paiement-recu {
+    padding: 12px 18px;
+    border-radius: var(--thm-border-radius);
+    background: var(--rej-green-50);
+    color: var(--rej-green-title);
+}
+
+.paiement-recu--attente {
+    background: #fdf0c4;
+    color: #7a5b00;
+}
+
 .checkout-area .field-input textarea {
     width: 100%;
     padding: 15px 20px;

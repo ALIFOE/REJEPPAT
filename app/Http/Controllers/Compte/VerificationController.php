@@ -23,7 +23,7 @@ class VerificationController extends Controller
     {
         $request->fulfill();
 
-        return redirect()->route('compte.index')->with('succes', 'Merci, votre adresse e-mail est confirmée.');
+        return redirect()->route('compte.index')->with('succes', __('Merci, votre adresse e-mail est confirmée.'));
     }
 
     public function renvoyer(Request $request): RedirectResponse
@@ -34,6 +34,6 @@ class VerificationController extends Controller
 
         $request->user()->sendEmailVerificationNotification();
 
-        return back()->with('succes', 'Un nouveau lien de vérification vient de vous être envoyé.');
+        return back()->with('succes', __('Un nouveau lien de vérification vient de vous être envoyé.'));
     }
 }

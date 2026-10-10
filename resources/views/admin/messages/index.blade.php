@@ -57,7 +57,7 @@
                 <tbody>
                     @forelse ($messages as $contact)
                         <tr class="{{ $contact->lu_le ? '' : 'non-lu' }}">
-                            <td><a href="{{ route('admin.messages.show', $contact) }}">{{ $contact->nom }}</a><br><small>{{ $contact->email }}</small></td>
+                            <td><a href="{{ route('admin.messages.show', $contact) }}">{{ $contact->nom }}</a><br><small>{{ $contact->email ?: $contact->telephone }}</small></td>
                             <td>{{ $contact->objet }}</td>
                             <td>{{ \Illuminate\Support\Str::limit($contact->message, 70) }}</td>
                             <td><small>{{ $contact->created_at->format('d/m/Y H:i') }}</small></td>

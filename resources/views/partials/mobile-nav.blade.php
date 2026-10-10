@@ -11,7 +11,7 @@
             </div>
             <div class="mobile-nav-search-box">
                 <form class="search-form" action="{{ route('actualites.index') }}">
-                    <input placeholder="Mot-clé" type="text" name="q" />
+                    <input placeholder="{{ __('Mot-clé') }}" type="text" name="q" />
                     <button type="submit">
                         <i class="fa fa-search"></i>
                     </button>
@@ -22,9 +22,9 @@
                 <li>
                     <i class="fa fa-user"></i>
                     @auth
-                        <a href="{{ route('compte.index') }}">Mon compte</a>
+                        <a href="{{ auth()->user()->tableauDeBord() }}">{{ __('Mon compte') }}</a>
                     @else
-                        <a href="{{ route('connexion') }}">Connexion</a> / <a href="{{ route('inscription') }}">Inscription</a>
+                        <a href="{{ route('connexion') }}">{{ __('Connexion') }}</a> / <a href="{{ route('inscription') }}">{{ __('Inscription') }}</a>
                     @endauth
                 </li>
                 <li>
@@ -42,6 +42,7 @@
                 <a href="{{ config('rejeppat.social.linkedin') }}" class="fab fa-linkedin-in" target="_blank" rel="noopener"></a>
                 <a href="{{ config('rejeppat.social.youtube') }}" class="fab fa-youtube" target="_blank" rel="noopener"></a>
             </div>
+            @include('partials.langues', ['classe' => 'rj-langues--mobile'])
         </div>
     </div>
 
@@ -55,9 +56,9 @@
         </div>
         <div class="search-popup__content">
             <form action="{{ route('actualites.index') }}">
-                <label for="search" class="sr-only">Rechercher</label>
-                <input type="text" id="search" name="q" placeholder="Rechercher..." />
-                <button type="submit" aria-label="Lancer la recherche" class="thm-btn">
+                <label for="search" class="sr-only">{{ __('Rechercher') }}</label>
+                <input type="text" id="search" name="q" placeholder="{{ __('Rechercher...') }}" />
+                <button type="submit" aria-label="{{ __('Lancer la recherche') }}" class="thm-btn">
                     <i class="icon-search"></i>
                 </button>
             </form>

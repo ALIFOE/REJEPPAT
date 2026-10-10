@@ -6,6 +6,7 @@ use App\Models\Commande;
 use App\Models\Produit;
 use App\Support\Contenu;
 use App\Support\Panier;
+use App\Support\Paygate;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -16,10 +17,7 @@ use Illuminate\View\View;
 
 class CommandeController extends Controller
 {
-    /** Numéros des commandes passées pendant la session : seules celles-ci ont une page de confirmation. */
-    private const SESSION_COMMANDES = 'commandes_passees';
-
-    public function create(): View|RedirectResponse
+    public function create(Paygate $paygate): View|RedirectResponse
     {
         $lignes = Panier::lignes();
 
@@ -30,12 +28,13 @@ class CommandeController extends Controller
         return view('boutique.commande', [
             'lignes' => $lignes,
             'sousTotal' => Panier::sousTotal($lignes),
+            'paiements' => $this->modesDePaiement($paygate),
         ]);
     }
 
-    public function store(Request $request): RedirectResponse
+    public function store(Request $request, Paygate $paygate): RedirectResponse
     {
-        $paiements = config('boutique.paiements');
+        $paiements = $this->modesDePaiement($paygate);
 
         $donnees = $request->validate([
             'nom' => ['required', 'string', 'max:120'],
@@ -45,18 +44,24 @@ class CommandeController extends Controller
             'ville' => ['nullable', 'required_unless:mode_livraison,retrait', 'string', 'max:120'],
             'adresse' => ['nullable', 'required_unless:mode_livraison,retrait', 'string', 'max:255'],
             'mode_paiement' => ['required', Rule::in(array_keys($paiements))],
-            'reference_paiement' => ['nullable', 'string', 'max:80'],
             'note' => ['nullable', 'string', 'max:2000'],
-        ], [
+        ], $this->messages([
             'required' => 'Ce champ est obligatoire.',
             'required_unless' => 'Ce champ est obligatoire pour une livraison.',
             'email' => 'L’adresse e-mail n’est pas valide.',
             'in' => 'Veuillez choisir une option.',
             'max' => 'Ce champ est trop long.',
-        ]);
+        ]));
 
-        if (($paiements[$donnees['mode_paiement']]['reference'] ?? false) && blank($donnees['reference_paiement'] ?? null)) {
-            throw ValidationException::withMessages(['reference_paiement' => 'Indiquez la référence de la transaction Mobile Money.']);
+        // Mobile Money : numéro qui recevra la demande de paiement
+        $enLigne = filled($paiements[$donnees['mode_paiement']]['reseau'] ?? null);
+        if ($enLigne) {
+            $request->validate([
+                'telephone_paiement' => ['required', 'string', 'regex:/^(\+?228)?\s*\d{2}(\s*\d{2}){3}$/'],
+            ], $this->messages([
+                'required' => 'Indiquez le numéro Mobile Money qui va payer.',
+                'regex' => 'Indiquez un numéro togolais à 8 chiffres (ex. 90 12 34 56).',
+            ]));
         }
 
         $lignes = Panier::lignes();
@@ -73,7 +78,7 @@ class CommandeController extends Controller
                 $produit = Produit::lockForUpdate()->find($ligne['produit']->id);
                 if (! $produit?->enStock($ligne['quantite'])) {
                     throw ValidationException::withMessages([
-                        'panier' => "Stock insuffisant pour « {$ligne['produit']->nom} ». Veuillez modifier votre panier.",
+                        'panier' => __('Stock insuffisant pour « :produit ». Veuillez modifier votre panier.', ['produit' => $ligne['produit']->tr('nom')]),
                     ]);
                 }
             }
@@ -106,22 +111,36 @@ class CommandeController extends Controller
         });
 
         Panier::vider();
-        session()->push(self::SESSION_COMMANDES, $commande->numero);
+        session()->push(Commande::SESSION_CLIENT, $commande->numero);
 
         rescue(fn () => Mail::raw($this->resumeCommande($commande), fn ($message) => $message
             ->to(config('rejeppat.emails.0'))
             ->subject("[Boutique REJEPPAT] Nouvelle commande {$commande->numero}")));
 
+        if ($enLigne) {
+            $paygate->nouveauPaiement($commande, $donnees['mode_paiement'], $request->input('telephone_paiement'));
+
+            return redirect()->route('paiement.show', $commande->numero);
+        }
+
         return redirect()->route('commande.confirmation', $commande->numero);
     }
 
-    public function confirmation(string $numero): View
+    public function confirmation(Request $request, string $numero): View
     {
-        abort_unless(in_array($numero, session(self::SESSION_COMMANDES, []), true), 404);
+        $commande = Commande::with(['lignes', 'dernierPaiement'])->where('numero', $numero)->firstOrFail();
+        abort_unless($commande->estVisiblePar($request), 404);
 
-        return view('boutique.confirmation', [
-            'commande' => Commande::with('lignes')->where('numero', $numero)->firstOrFail(),
-        ]);
+        return view('boutique.confirmation', compact('commande'));
+    }
+
+    /** Facture de la commande : réservée au navigateur ou au compte client qui l'a passée. */
+    public function facture(Request $request, string $numero): View
+    {
+        $commande = Commande::with('lignes')->where('numero', $numero)->firstOrFail();
+        abort_unless($commande->estVisiblePar($request), 404);
+
+        return view('boutique.facture', compact('commande'));
     }
 
     /** Suivi d'une commande avec son numéro et le téléphone utilisé. */
@@ -141,6 +160,14 @@ class CommandeController extends Controller
             'commande' => $commande,
             'recherche' => $request->filled(['numero', 'telephone']),
         ]);
+    }
+
+    /** Modes de paiement proposés : le Mobile Money en ligne seulement si PayGate est configuré. */
+    private function modesDePaiement(Paygate $paygate): array
+    {
+        return collect(config('boutique.paiements'))
+            ->filter(fn ($mode) => blank($mode['reseau'] ?? null) || $paygate->disponible())
+            ->all();
     }
 
     private function resumeCommande(Commande $commande): string

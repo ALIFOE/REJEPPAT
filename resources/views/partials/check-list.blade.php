@@ -13,7 +13,7 @@
                             class="path6"></span><span class="path7"></span></span>
                 </div>
                 <div class="text">
-                    <p>{{ $element }}</p>
+                    <p>{{ __($element) }}</p>
                 </div>
             </li>
         @endforeach

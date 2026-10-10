@@ -84,6 +84,12 @@ class User extends Authenticatable implements MustVerifyEmail
         return in_array($this->role, [self::SUPER_ADMIN, self::ADMIN], true);
     }
 
+    /** Adresse du tableau de bord du rôle : l'administration ou l'espace client. */
+    public function tableauDeBord(): string
+    {
+        return $this->estAdministrateur() ? route('admin.tableau') : route('compte.index');
+    }
+
     public function roleLibelle(): string
     {
         return self::ROLES[$this->role][0] ?? $this->role;

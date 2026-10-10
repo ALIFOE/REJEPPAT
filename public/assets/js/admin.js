@@ -27,6 +27,11 @@
             var image = document.getElementById(champ.getAttribute('data-apercu'));
             if (image && champ.files[0]) {
                 image.src = URL.createObjectURL(champ.files[0]);
+                image.hidden = false;
+                var vide = image.parentElement.querySelector('[data-apercu-vide]');
+                if (vide) {
+                    vide.hidden = true;
+                }
             }
         });
     });

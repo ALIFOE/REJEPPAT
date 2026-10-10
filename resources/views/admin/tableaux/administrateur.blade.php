@@ -1,25 +1,23 @@
 @extends('admin.layout')
 
 @section('title', 'Tableau de bord')
-@section('sous_titre', 'Bonjour ' . auth()->user()->name . ', voici l’activité du site et de la boutique.')
+@section('sous_titre', 'Bonjour ' . auth()->user()->name . ', voici ce qui est à traiter aujourd’hui sur le site et la boutique.')
 
 @php
-    use App\Models\Commande;
-    use App\Models\DemandeService;
     use App\Support\Contenu;
 
     $g = $graphiques;
     $kpis = [
-        ['valeur' => Contenu::prix($chiffres['ca_mois']), 'libelle' => 'Ventes du mois', 'icone' => 'fas fa-coins', 'style' => 'sombre', 'lien' => route('admin.commandes.index')],
-        ['valeur' => $chiffres['commandes_attente'], 'libelle' => 'Commandes à traiter (' . $chiffres['commandes_mois'] . ' ce mois)', 'icone' => 'icon-empty-cart', 'style' => 'jaune', 'lien' => route('admin.commandes.index', ['statut' => 'en_attente'])],
+        ['valeur' => $chiffres['commandes_attente'], 'libelle' => 'Commandes à traiter (' . $chiffres['commandes_mois'] . ' ce mois)', 'icone' => 'icon-empty-cart', 'style' => $chiffres['commandes_attente'] ? 'jaune' : '', 'lien' => route('admin.commandes.index', ['statut' => 'en_attente'])],
         ['valeur' => $chiffres['demandes_nouvelles'], 'libelle' => 'Nouvelles demandes de services', 'icone' => 'icon-handshake', 'style' => '', 'lien' => route('admin.demandes.index', ['statut' => 'nouvelle'])],
         ['valeur' => $chiffres['messages_non_lus'], 'libelle' => 'Messages non lus', 'icone' => 'icon-mail', 'style' => $chiffres['messages_non_lus'] ? 'rouge' : '', 'lien' => route('admin.messages.index', ['etat' => 'non-lus'])],
+        ['valeur' => Contenu::prix($chiffres['ca_mois']), 'libelle' => 'Ventes du mois', 'icone' => 'fas fa-coins', 'style' => 'sombre', 'lien' => route('admin.commandes.index')],
     ];
     $contenus = [
-        ['valeur' => Contenu::prix($chiffres['ca_total']), 'libelle' => 'Chiffre d’affaires total', 'icone' => 'fas fa-chart-line', 'lien' => route('admin.commandes.index')],
         ['valeur' => $chiffres['produits'] . ($chiffres['ruptures'] ? ' · ' . $chiffres['ruptures'] . ' en rupture' : ''), 'libelle' => 'Produits en vente', 'icone' => 'icon-fruit-box', 'lien' => route('admin.produits.index')],
+        ['valeur' => $chiffres['projets'], 'libelle' => 'Programmes et projets publiés', 'icone' => 'icon-smart-farming', 'lien' => route('admin.projets.index')],
         ['valeur' => $chiffres['actualites'], 'libelle' => 'Articles publiés', 'icone' => 'far fa-newspaper', 'lien' => route('admin.actualites.index')],
-        ['valeur' => $chiffres['fermes'] . ' fermes · ' . $chiffres['projets'] . ' projets', 'libelle' => 'Réseau et programmes', 'icone' => 'icon-farm-house-1', 'lien' => route('admin.fermes.index')],
+        ['valeur' => $chiffres['fermes'], 'libelle' => 'Fermes écoles publiées', 'icone' => 'icon-farm-house-1', 'lien' => route('admin.fermes.index')],
     ];
 @endphp
 
@@ -35,6 +33,84 @@
                 </span>
             </a>
         @endforeach
+    </div>
+
+    {{-- À traiter : les éléments les plus anciens d'abord --}}
+    <div class="a-grille a-grille--4 a-section">
+        <div class="a-carte">
+            <div class="a-carte__entete">
+                <h2>Commandes en attente</h2>
+                <a href="{{ route('admin.commandes.index', ['statut' => 'en_attente']) }}" class="a-btn a-btn--clair a-btn--petit">Tout voir</a>
+            </div>
+            <ul class="a-liste-mini">
+                @forelse ($commandesEnAttente as $commande)
+                    <li>
+                        <a href="{{ route('admin.commandes.show', $commande) }}">
+                            <strong>{{ $commande->numero }}</strong>
+                            <small>{{ $commande->nom }} · {{ $commande->created_at->diffForHumans() }}</small>
+                        </a>
+                        <strong>{{ Contenu::prix($commande->total) }}</strong>
+                    </li>
+                @empty
+                    <li class="a-vide"><i class="fas fa-check-circle"></i> Aucune commande en attente.</li>
+                @endforelse
+            </ul>
+        </div>
+        <div class="a-carte">
+            <div class="a-carte__entete">
+                <h2>Nouvelles demandes</h2>
+                <a href="{{ route('admin.demandes.index', ['statut' => 'nouvelle']) }}" class="a-btn a-btn--clair a-btn--petit">Tout voir</a>
+            </div>
+            <ul class="a-liste-mini">
+                @forelse ($demandesNouvelles as $demande)
+                    <li>
+                        <a href="{{ route('admin.demandes.show', $demande) }}">
+                            <strong>{{ \Illuminate\Support\Str::limit($demande->objet, 34) }}</strong>
+                            <small>{{ $demande->nom }} · {{ $demande->created_at->diffForHumans() }}</small>
+                        </a>
+                    </li>
+                @empty
+                    <li class="a-vide"><i class="fas fa-check-circle"></i> Aucune nouvelle demande.</li>
+                @endforelse
+            </ul>
+        </div>
+        <div class="a-carte">
+            <div class="a-carte__entete">
+                <h2>Messages non lus</h2>
+                <a href="{{ route('admin.messages.index', ['etat' => 'non-lus']) }}" class="a-btn a-btn--clair a-btn--petit">Tout voir</a>
+            </div>
+            <ul class="a-liste-mini">
+                @forelse ($messagesNonLus as $message)
+                    <li>
+                        <a href="{{ route('admin.messages.show', $message) }}">
+                            <strong>{{ \Illuminate\Support\Str::limit($message->objet, 34) }}</strong>
+                            <small>{{ $message->nom }} · {{ $message->created_at->diffForHumans() }}</small>
+                        </a>
+                    </li>
+                @empty
+                    <li class="a-vide"><i class="fas fa-check-circle"></i> Aucun message non lu.</li>
+                @endforelse
+            </ul>
+        </div>
+        <div class="a-carte">
+            <div class="a-carte__entete">
+                <h2>Stocks à surveiller</h2>
+                <a href="{{ route('admin.produits.index') }}" class="a-btn a-btn--clair a-btn--petit">Produits</a>
+            </div>
+            <ul class="a-liste-mini">
+                @forelse ($ruptures as $produit)
+                    <li>
+                        <a href="{{ route('admin.produits.edit', $produit) }}">
+                            <strong>{{ $produit->nom }}</strong>
+                            <small>{{ $produit->stock <= 0 ? 'En rupture de stock' : 'Stock faible' }}</small>
+                        </a>
+                        <span class="a-badge a-badge--{{ $produit->stock <= 0 ? 'rouge' : 'jaune' }}">{{ $produit->stock }}</span>
+                    </li>
+                @empty
+                    <li class="a-vide"><i class="fas fa-check-circle"></i> Aucun stock faible.</li>
+                @endforelse
+            </ul>
+        </div>
     </div>
 
     <div class="a-grille a-grille--large a-section">
@@ -101,18 +177,17 @@
         </div>
         <div class="a-carte">
             <div class="a-carte__entete">
-                <div>
-                    <h2>Suivi des demandes</h2>
-                    <p>Répartition par statut</p>
-                </div>
+                <h2>Articles les plus lus</h2>
+                <a href="{{ route('admin.actualites.index') }}" class="a-btn a-btn--clair a-btn--petit">Articles</a>
             </div>
             <div class="a-carte__corps">
                 @include('admin.partials.graphique', [
-                    'type' => 'pie',
-                    'labels' => $g['demandes_statuts']->pluck('libelle'),
-                    'series' => [['label' => 'Demandes', 'data' => $g['demandes_statuts']->pluck('total')]],
-                    'couleurs' => $g['demandes_statuts']->pluck('couleur'),
+                    'type' => 'bar',
+                    'horizontal' => true,
+                    'labels' => $g['articles_lus']->pluck('title')->map(fn ($s) => \Illuminate\Support\Str::limit($s, 26)),
+                    'series' => [['label' => 'Lectures', 'data' => $g['articles_lus']->pluck('vues'), 'couleur' => 'vert']],
                     'hauteur' => 280,
+                    'vide_texte' => 'Le nombre de lectures s’affichera dès les premières visites.',
                 ])
             </div>
         </div>
@@ -167,66 +242,6 @@
                 </span>
             </a>
         @endforeach
-    </div>
-
-    <div class="a-grille a-grille--3 a-section">
-        <div class="a-carte">
-            <div class="a-carte__entete">
-                <h2>Dernières commandes</h2>
-                <a href="{{ route('admin.commandes.index') }}" class="a-btn a-btn--clair a-btn--petit">Tout voir</a>
-            </div>
-            <ul class="a-liste-mini">
-                @forelse ($dernieresCommandes as $commande)
-                    <li>
-                        <a href="{{ route('admin.commandes.show', $commande) }}">
-                            <strong>{{ $commande->numero }}</strong>
-                            <small>{{ $commande->nom }} · {{ $commande->created_at->diffForHumans() }}</small>
-                        </a>
-                        <span style="text-align: right">
-                            <strong>{{ Contenu::prix($commande->total) }}</strong>
-                            @include('admin.partials.badge', ['statuts' => Commande::STATUTS, 'valeur' => $commande->statut])
-                        </span>
-                    </li>
-                @empty
-                    <li class="a-vide">Aucune commande pour le moment.</li>
-                @endforelse
-            </ul>
-        </div>
-        <div class="a-carte">
-            <div class="a-carte__entete">
-                <h2>Dernières demandes</h2>
-                <a href="{{ route('admin.demandes.index') }}" class="a-btn a-btn--clair a-btn--petit">Tout voir</a>
-            </div>
-            <ul class="a-liste-mini">
-                @forelse ($dernieresDemandes as $demande)
-                    <li>
-                        <a href="{{ route('admin.demandes.show', $demande) }}">
-                            <strong>{{ \Illuminate\Support\Str::limit($demande->objet, 40) }}</strong>
-                            <small>{{ $demande->nom }} · {{ $demande->created_at->diffForHumans() }}</small>
-                        </a>
-                        @include('admin.partials.badge', ['statuts' => DemandeService::STATUTS, 'valeur' => $demande->statut])
-                    </li>
-                @empty
-                    <li class="a-vide">Aucune demande pour le moment.</li>
-                @endforelse
-            </ul>
-        </div>
-        <div class="a-carte">
-            <div class="a-carte__entete">
-                <h2>Articles les plus lus</h2>
-                <a href="{{ route('admin.actualites.index') }}" class="a-btn a-btn--clair a-btn--petit">Articles</a>
-            </div>
-            <div class="a-carte__corps">
-                @include('admin.partials.graphique', [
-                    'type' => 'bar',
-                    'horizontal' => true,
-                    'labels' => $g['articles_lus']->pluck('title')->map(fn ($s) => \Illuminate\Support\Str::limit($s, 26)),
-                    'series' => [['label' => 'Lectures', 'data' => $g['articles_lus']->pluck('vues'), 'couleur' => 'vert']],
-                    'hauteur' => 250,
-                    'vide_texte' => 'Le nombre de lectures s’affichera dès les premières visites.',
-                ])
-            </div>
-        </div>
     </div>
 
 @endsection

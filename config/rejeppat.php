@@ -89,12 +89,27 @@ return [
     ],
 
     'partenaires' => [
-        ['nom' => 'CTOP', 'image' => 'ctop.png'],
-        ['nom' => 'FAO', 'image' => 'fao.png'],
-        ['nom' => 'Andreas Hermes Akademie / DBV', 'image' => 'aha-dbv.png'],
-        ['nom' => 'AFDI', 'image' => 'afdi.png'],
-        ['nom' => 'FAR', 'image' => 'far.png'],
-        ['nom' => 'Federcasse', 'image' => 'federcasse.png'],
+        ['nom' => 'CTOP', 'image' => 'ctop.png', 'type' => 'institutionnel', 'description' => 'Coordination Togolaise des Organisations Paysannes et de producteurs agricoles, dont le REJEPPAT est membre.'],
+        ['nom' => 'FAO', 'image' => 'fao.png', 'type' => 'institutionnel'],
+        ['nom' => 'Andreas Hermes Akademie / DBV', 'image' => 'aha-dbv.png', 'type' => 'technique'],
+        ['nom' => 'AFDI', 'image' => 'afdi.png', 'type' => 'technique'],
+        ['nom' => 'FAR', 'image' => 'far.png', 'type' => 'technique'],
+        ['nom' => 'Federcasse', 'image' => 'federcasse.png', 'type' => 'financier'],
+    ],
+
+    /*
+    | Sections régionales (page de chaque région complétée ensuite par la région)
+    | « prefectures » : rattachement des fermes écoles d'après leur adresse.
+    */
+    'regions' => [
+        ['slug' => 'maritime', 'nom' => 'Région Maritime', 'chef_lieu' => 'Lomé', 'prefectures' => []],
+        ['slug' => 'plateaux', 'nom' => 'Région des Plateaux', 'chef_lieu' => 'Atakpamé', 'prefectures' => ['Amou', 'Haho']],
+        ['slug' => 'centrale', 'nom' => 'Région Centrale', 'chef_lieu' => 'Sokodé', 'prefectures' => ['Sotouboua', 'Tchaoudjo', 'Blitta', 'Tchamba'], 'presentation' => [
+            'La Région Centrale accueille le siège national du REJEPPAT, à Sokodé, et la plupart des fermes écoles du réseau.',
+            'La section accompagne les coopératives de jeunes des préfectures de Tchaoudjo, Sotouboua, Blitta et Tchamba dans la production agroécologique, la transformation et l’accès aux marchés.',
+        ]],
+        ['slug' => 'kara', 'nom' => 'Région de la Kara', 'chef_lieu' => 'Kara', 'prefectures' => []],
+        ['slug' => 'savanes', 'nom' => 'Région des Savanes', 'chef_lieu' => 'Dapaong', 'prefectures' => []],
     ],
 
 ];

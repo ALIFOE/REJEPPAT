@@ -40,7 +40,7 @@ class ProduitController extends Controller
 
     public function store(Request $request): RedirectResponse
     {
-        $this->enregistrer($request, new Produit());
+        $this->enregistrer($request, new Produit);
 
         return redirect()->route('admin.produits.index')->with('succes', 'Produit ajouté à la boutique.');
     }
@@ -61,6 +61,7 @@ class ProduitController extends Controller
     {
         // Les lignes de commande gardent le nom et le prix du produit (produit_id passe à null)
         $this->supprimerPhoto($produit->photo);
+        collect($produit->photos ?? [])->each(fn ($photo) => $this->supprimerPhoto($photo));
         $produit->delete();
 
         return redirect()->route('admin.produits.index')->with('succes', 'Produit supprimé.');
@@ -80,7 +81,9 @@ class ProduitController extends Controller
             'points_forts' => ['nullable', 'string'],
             'ordre' => ['nullable', 'integer', 'min:0'],
             'photo' => self::REGLE_IMAGE,
-        ], self::MESSAGES);
+            'photos' => ['nullable', 'array', 'max:'.Produit::PHOTOS_SUPPLEMENTAIRES],
+            'photos.*' => self::REGLE_IMAGE,
+        ] + $this->reglesTraductions(), self::MESSAGES);
 
         $produit->fill([
             'nom' => $donnees['nom'],
@@ -94,7 +97,9 @@ class ProduitController extends Controller
             'points_forts' => $this->lignes($donnees['points_forts'] ?? ''),
             'ordre' => (int) ($donnees['ordre'] ?? 0),
             'photo' => $this->photoDemandee($request, $produit, 'produits'),
+            'photos' => $this->galerieDemandee($request, $produit->photos, Produit::PHOTOS_SUPPLEMENTAIRES, 'produits'),
             'actif' => $request->boolean('actif'),
+            'traductions' => $this->traductions($request, Produit::class),
         ])->save();
     }
 }

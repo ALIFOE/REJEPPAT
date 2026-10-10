@@ -3,7 +3,9 @@
 namespace App\Providers;
 
 use App\Models\Commande;
+use App\Models\DemandePartenariat;
 use App\Models\DemandeService;
+use App\Models\Membre;
 use App\Models\MessageContact;
 use App\Models\User;
 use Illuminate\Auth\Notifications\ResetPassword;
@@ -34,6 +36,8 @@ class AppServiceProvider extends ServiceProvider
                 'commandes' => Commande::where('statut', 'en_attente')->count(),
                 'demandes' => DemandeService::where('statut', 'nouvelle')->count(),
                 'messages' => MessageContact::nonLu()->count(),
+                'partenariats' => DemandePartenariat::where('statut', 'nouvelle')->count(),
+                'membres' => Membre::where('publie', false)->count(),
             ]);
         });
 

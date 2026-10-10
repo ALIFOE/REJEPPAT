@@ -18,7 +18,12 @@
                 <p class="a-texte-long" style="margin: 0">{{ $contact->message }}</p>
             </div>
             <div class="a-form__pied" style="justify-content: flex-start">
-                <a href="mailto:{{ $contact->email }}?subject={{ rawurlencode('Re : ' . $contact->objet) }}" class="a-btn"><i class="fas fa-reply"></i> Répondre par e-mail</a>
+                @if ($contact->email)
+                    <a href="mailto:{{ $contact->email }}?subject={{ rawurlencode('Re : ' . $contact->objet) }}" class="a-btn"><i class="fas fa-reply"></i> Répondre par e-mail</a>
+                @endif
+                @if ($contact->telephone)
+                    <a href="https://wa.me/{{ (fn ($n) => strlen($n) === 8 ? '228' . $n : $n)(preg_replace('/\D+/', '', $contact->telephone)) }}" class="a-btn a-btn--vert" target="_blank" rel="noopener"><i class="fab fa-whatsapp"></i> Répondre sur WhatsApp</a>
+                @endif
                 <form action="{{ route('admin.messages.update', $contact) }}" method="post">
                     @csrf
                     @method('put')
@@ -33,7 +38,7 @@
                 <div class="a-carte__corps">
                     <dl class="a-details">
                         <dt>Nom</dt><dd>{{ $contact->nom }}</dd>
-                        <dt>E-mail</dt><dd><a href="mailto:{{ $contact->email }}">{{ $contact->email }}</a></dd>
+                        <dt>E-mail</dt><dd>@if ($contact->email)<a href="mailto:{{ $contact->email }}">{{ $contact->email }}</a>@else – @endif</dd>
                         <dt>Téléphone</dt><dd>@if ($contact->telephone)<a href="tel:{{ $contact->telephone }}">{{ $contact->telephone }}</a>@else – @endif</dd>
                     </dl>
                 </div>

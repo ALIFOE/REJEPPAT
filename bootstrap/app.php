@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Middleware\DefinirLangue;
 use App\Http\Middleware\EstAdministrateur;
 use Illuminate\Foundation\Application;
 use Illuminate\Foundation\Configuration\Exceptions;
@@ -14,11 +15,13 @@ return Application::configure(basePath: dirname(__DIR__))
     )
     ->withMiddleware(function (Middleware $middleware): void {
         $middleware->alias(['admin' => EstAdministrateur::class]);
-        // Visiteur non connecté : connexion de l'administration ou de l'espace client selon la page demandée
-        $middleware->redirectGuestsTo(fn (Request $request) => $request->is('admin', 'admin/*') ? route('admin.connexion') : route('connexion'));
-        $middleware->redirectUsersTo(fn (Request $request) => $request->is('admin', 'admin/*') && $request->user()?->estAdministrateur()
-            ? route('admin.tableau')
-            : route('compte.index'));
+        // Langue du site public : français ou anglais
+        $middleware->web(append: [DefinirLangue::class]);
+        // Rappel envoyé par PayGate Global après un paiement (serveur à serveur, sans jeton CSRF)
+        $middleware->preventRequestForgery(except: ['paiement/paygate/rappel']);
+        // Une seule page de connexion pour tous les rôles ; un utilisateur déjà connecté va sur son tableau de bord
+        $middleware->redirectGuestsTo(fn () => route('connexion'));
+        $middleware->redirectUsersTo(fn (Request $request) => $request->user()?->tableauDeBord() ?? route('home'));
     })
     ->withExceptions(function (Exceptions $exceptions): void {
         $exceptions->shouldRenderJsonWhen(

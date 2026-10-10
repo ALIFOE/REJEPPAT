@@ -4,6 +4,7 @@ namespace Tests\Feature;
 
 use App\Models\Commande;
 use App\Models\Produit;
+use App\Support\Contenu;
 use Database\Seeders\ContenuSeeder;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
@@ -33,8 +34,7 @@ class BoutiqueTest extends TestCase
             'mode_livraison' => 'sokode',
             'ville' => 'Sokodé',
             'adresse' => 'Quartier Komah',
-            'mode_paiement' => 'tmoney',
-            'reference_paiement' => 'TM123456',
+            'mode_paiement' => 'livraison',
         ]);
 
         $commande = Commande::with('lignes')->sole();
@@ -50,7 +50,7 @@ class BoutiqueTest extends TestCase
         $this->get(route('panier.index'))->assertSee('Votre panier est vide');
     }
 
-    public function test_reference_obligatoire_pour_le_mobile_money(): void
+    public function test_numero_obligatoire_pour_le_mobile_money(): void
     {
         $produit = Produit::first();
         $this->post(route('panier.ajouter', $produit->slug));
@@ -60,7 +60,8 @@ class BoutiqueTest extends TestCase
             'telephone' => '90000000',
             'mode_livraison' => 'retrait',
             'mode_paiement' => 'flooz',
-        ])->assertSessionHasErrors('reference_paiement');
+            'telephone_paiement' => '1234',
+        ])->assertSessionHasErrors(['telephone_paiement' => 'Indiquez un numéro togolais à 8 chiffres (ex. 90 12 34 56).']);
 
         $this->assertSame(0, Commande::count());
     }
@@ -82,5 +83,39 @@ class BoutiqueTest extends TestCase
         ]);
 
         $this->get(route('commande.confirmation', $commande->numero))->assertNotFound();
+    }
+
+    public function test_facture_de_la_commande(): void
+    {
+        $produit = Produit::where('slug', 'carotte-biologique')->first();
+        $this->post(route('panier.ajouter', $produit->slug), ['quantite' => 2]);
+        $this->post(route('commande.store'), [
+            'nom' => 'Yao Tchalim', 'telephone' => '91000000', 'mode_livraison' => 'retrait', 'mode_paiement' => 'livraison',
+        ]);
+        $commande = Commande::sole();
+
+        $this->get(route('commande.facture', $commande->numero))->assertOk()
+            ->assertSee('Facture')
+            ->assertSee($commande->numero)
+            ->assertSee('Yao Tchalim')
+            ->assertSee(Contenu::prix($commande->total))
+            ->assertSee('À payer');
+
+        // Un autre visiteur ne peut pas consulter la facture
+        $this->flushSession();
+        $this->get(route('commande.facture', $commande->numero))->assertNotFound();
+    }
+
+    public function test_les_produits_sont_classes_dans_les_categories_du_cahier_des_charges(): void
+    {
+        $this->assertSame(
+            ['fruits-legumes', 'tubercules-cereales', 'transformes', 'boissons-jus', 'miel', 'epices'],
+            array_keys(config('boutique.categories'))
+        );
+
+        $this->get(route('boutique.index', ['categorie' => 'fruits-legumes']))->assertOk()
+            ->assertSee('Fruits &amp; Légumes', false)
+            ->assertSee('Carotte biologique');
+        $this->get(route('boutique.index', ['categorie' => 'miel']))->assertViewHas('produits', fn ($produits) => $produits->isEmpty());
     }
 }

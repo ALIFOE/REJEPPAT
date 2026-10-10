@@ -21,7 +21,15 @@
                 @include('admin.partials.champ', ['nom' => 'points_forts', 'label' => 'Points forts', 'type' => 'textarea', 'lignes' => 5, 'valeur' => implode("\n", $produit->points_forts ?? []), 'aide' => 'Un point fort par ligne.'])
             </div>
             <div class="a-form">
-                @include('admin.partials.photo', ['modele' => $produit, 'label' => 'Photo du produit'])
+                @include('admin.partials.photo', ['modele' => $produit, 'label' => 'Photo principale du produit'])
+
+                @include('admin.partials.galerie', [
+                    'photos' => $produit->photos,
+                    'emplacements' => \App\Models\Produit::PHOTOS_SUPPLEMENTAIRES,
+                    'premier' => 2,
+                    'label' => 'Photos supplémentaires',
+                    'aide' => 'Cliquez sur un cadre pour choisir ou remplacer une photo. Elles s’affichent après la photo principale dans la galerie de la fiche produit. JPG, PNG ou WEBP, 4 Mo maximum chacune.',
+                ])
                 @include('admin.partials.champ', ['nom' => 'categorie', 'label' => 'Catégorie', 'type' => 'select', 'valeur' => $produit->categorie, 'options' => config('boutique.categories'), 'requis' => true])
                 <div class="a-grille a-grille--2" style="gap: 14px">
                     @include('admin.partials.champ', ['nom' => 'prix', 'label' => 'Prix (CFA)', 'type' => 'number', 'valeur' => $produit->prix, 'requis' => true, 'attributs' => 'min="0" step="1"'])
@@ -35,6 +43,8 @@
                 @include('admin.partials.interrupteur', ['nom' => 'actif', 'label' => 'En vente sur la boutique', 'valeur' => $produit->actif])
             </div>
         </div>
+
+        @include('admin.partials.traduction', ['modele' => $produit])
 
         <div class="a-form__pied">
             <a href="{{ route('admin.produits.index') }}" class="a-btn a-btn--clair">Annuler</a>

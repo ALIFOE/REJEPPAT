@@ -108,7 +108,7 @@ class CompteTest extends TestCase
     public function test_redirections_selon_l_etat_de_connexion(): void
     {
         $this->get(route('compte.index'))->assertRedirect(route('connexion'));
-        $this->get(route('admin.tableau'))->assertRedirect(route('admin.connexion'));
+        $this->get(route('admin.tableau'))->assertRedirect(route('connexion'));
 
         $this->actingAs(User::factory()->create())->get(route('connexion'))->assertRedirect(route('compte.index'));
         $this->actingAs(User::factory()->unverified()->create())->get(route('compte.index'))->assertRedirect(route('verification.notice'));

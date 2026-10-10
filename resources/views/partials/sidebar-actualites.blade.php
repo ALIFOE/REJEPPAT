@@ -5,7 +5,7 @@
         <div class="icon">
             <span class="icon-hat"></span>
         </div>
-        <h3>Actualités récentes</h3>
+        <h3>{{ __('Actualités récentes') }}</h3>
     </div>
     <ul class="sidebar-style1__recent-posts-list">
         @foreach ($actualites as $article)
@@ -18,7 +18,7 @@
                 </div>
                 <div class="text-box">
                     <p><span class="fa fa-solid fa-calendar-day"></span> {{ \App\Support\Contenu::date($article['date']) }}</p>
-                    <h4><a href="{{ route('actualites.show', $article['slug']) }}">{{ \Illuminate\Support\Str::limit($article['title'], 45) }}</a></h4>
+                    <h4><a href="{{ route('actualites.show', $article['slug']) }}">{{ \Illuminate\Support\Str::limit($article->tr('title'), 45) }}</a></h4>
                 </div>
             </li>
         @endforeach

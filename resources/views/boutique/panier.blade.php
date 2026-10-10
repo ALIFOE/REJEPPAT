@@ -1,14 +1,14 @@
 @extends('layouts.app')
 
-@section('title', 'Mon panier')
+@section('title', __('Mon panier'))
 
 @section('content')
 
         @include('partials.breadcrumb', [
-            'titre' => 'Mon panier',
-            'texte' => 'Achetez local et frais, directement chez les producteurs.',
+            'titre' => __('Mon panier'),
+            'texte' => __('Achetez local et frais, directement chez les producteurs.'),
             'image' => 'boutique.jpg',
-            'liens' => ['Boutique' => route('boutique.index')],
+            'liens' => [__('Boutique') => route('boutique.index')],
         ])
 
 
@@ -20,11 +20,11 @@
                 @if ($lignes->isEmpty())
                     <div class="panier-vide">
                         <span class="icon-empty-cart"></span>
-                        <h3>Votre panier est vide</h3>
-                        <p>Découvrez les produits frais et locaux des jeunes producteurs du réseau REJEPPAT.</p>
+                        <h3>{{ __('Votre panier est vide') }}</h3>
+                        <p>{{ __('Découvrez les produits frais et locaux des jeunes producteurs du réseau REJEPPAT.') }}</p>
                         <a class="btn-one" href="{{ route('boutique.index') }}">
                             <i class="icon-arrow"></i>
-                            <span class="txt">Voir la boutique</span>
+                            <span class="txt">{{ __('Voir la boutique') }}</span>
                         </a>
                     </div>
                 @else
@@ -36,10 +36,10 @@
                             <div class="cart-table-box">
                                 <div class="cart-info">
                                     <div class="left">
-                                        <h4>Votre panier : <span>{{ $lignes->sum('quantite') }} article(s)</span></h4>
+                                        <h4>{{ __('Votre panier :') }} <span>{{ trans_choice(':count article|:count articles', $lignes->sum('quantite')) }}</span></h4>
                                     </div>
                                     <div class="right">
-                                        <h4>Total :<span> {{ \App\Support\Contenu::prix($sousTotal) }}</span></h4>
+                                        <h4>{{ __('Total :') }}<span> {{ \App\Support\Contenu::prix($sousTotal) }}</span></h4>
                                     </div>
                                 </div>
 
@@ -47,12 +47,12 @@
                                     <table class="cart-table">
                                         <thead class="cart-header clearfix">
                                             <tr>
-                                                <th class="prod-column">Produit</th>
+                                                <th class="prod-column">{{ __('Produit') }}</th>
                                                 <th class="hide-me"></th>
-                                                <th>Quantité</th>
-                                                <th class="price">Prix</th>
-                                                <th>Total</th>
-                                                <th>Retirer</th>
+                                                <th>{{ __('Quantité') }}</th>
+                                                <th class="price">{{ __('Prix') }}</th>
+                                                <th>{{ __('Total') }}</th>
+                                                <th>{{ __('Retirer') }}</th>
                                             </tr>
                                         </thead>
                                         <tbody>
@@ -76,13 +76,13 @@
                                                 <td class="qty">
                                                     <div class="input-box">
                                                         <input class="quantity-spinner" type="text" value="{{ $ligne['quantite'] }}"
-                                                            name="quantites[{{ $produit->id }}]" aria-label="Quantité">
+                                                            name="quantites[{{ $produit->id }}]" aria-label="{{ __('Quantité') }}">
                                                     </div>
                                                 </td>
                                                 <td class="price">{{ \App\Support\Contenu::prix($produit->prix) }}</td>
                                                 <td class="sub-total">{{ \App\Support\Contenu::prix($ligne['total']) }}</td>
                                                 <td>
-                                                    <button type="submit" class="remove" form="retirer-{{ $produit->id }}" aria-label="Retirer {{ $produit->nom }}">
+                                                    <button type="submit" class="remove" form="retirer-{{ $produit->id }}" aria-label="{{ __('Retirer :nom', ['nom' => $produit->tr('nom')]) }}">
                                                         <span class="icon-forbidden-mark"></span>
                                                     </button>
                                                 </td>
@@ -102,18 +102,18 @@
                                     <div class="inner">
                                         <a class="btn-one" href="{{ route('boutique.index') }}">
                                             <i class="icon-arrow"></i>
-                                            <span class="txt">Continuer mes achats</span>
+                                            <span class="txt">{{ __('Continuer mes achats') }}</span>
                                         </a>
                                     </div>
                                 </div>
                                 <div class="update-cart-btn-box">
                                     <button class="btn-one black" type="submit">
                                         <i class="icon-arrow"></i>
-                                        <span class="txt">Mettre à jour</span>
+                                        <span class="txt">{{ __('Mettre à jour') }}</span>
                                     </button>
                                     <a class="btn-one" href="{{ route('commande.create') }}">
                                         <i class="icon-arrow"></i>
-                                        <span class="txt">Passer la commande</span>
+                                        <span class="txt">{{ __('Passer la commande') }}</span>
                                     </a>
                                 </div>
                             </div>

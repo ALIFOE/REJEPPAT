@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use App\Models\Concerns\AUnVisuel;
+use App\Models\Concerns\EstTraduisible;
 use App\Support\TexteRiche;
 use Illuminate\Database\Eloquent\Attributes\Fillable;
 use Illuminate\Database\Eloquent\Attributes\Table;
@@ -10,10 +11,15 @@ use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 
 #[Table('actualites')]
-#[Fillable(['slug', 'title', 'date', 'categories', 'image', 'photo', 'content', 'corps', 'tags', 'gallery', 'publie'])]
+#[Fillable(['slug', 'title', 'date', 'categories', 'image', 'photo', 'content', 'corps', 'tags', 'gallery', 'publie', 'traductions'])]
 class Actualite extends Model
 {
-    use AUnVisuel;
+    use AUnVisuel, EstTraduisible;
+
+    public const TRADUCTIONS = [
+        'title' => ['Titre', 'texte'],
+        'corps' => ['Texte de l’article', 'html'],
+    ];
 
     public const CATEGORIES = [
         'actualites' => 'Actualités',
@@ -29,6 +35,7 @@ class Actualite extends Model
             'tags' => 'array',
             'gallery' => 'array',
             'publie' => 'boolean',
+            'traductions' => 'array',
         ];
     }
 
@@ -49,7 +56,15 @@ class Actualite extends Model
     /** Texte mis en forme de l'article (déjà nettoyé à l'enregistrement). */
     public function corpsHtml(): string
     {
-        return $this->corps ?: TexteRiche::depuisParagraphes($this->content ?? []);
+        return $this->tr('corps') ?: TexteRiche::depuisParagraphes($this->content ?? []);
+    }
+
+    /** Paragraphes de l'article dans la langue du visiteur (extraits, durée de lecture). */
+    public function paragraphes(): array
+    {
+        $traduction = app()->getLocale() !== 'fr' ? $this->traduction('corps', app()->getLocale()) : null;
+
+        return filled($traduction) ? TexteRiche::paragraphes($traduction) : ($this->content ?? []);
     }
 
     /** @return array<int, array{mini: string, full: string}> */
@@ -58,7 +73,7 @@ class Actualite extends Model
         return collect($this->gallery ?? [])->map(function (string $photo) {
             // Photo envoyée depuis l'administration
             if (str_contains($photo, '/')) {
-                $url = asset(self::DOSSIER_UPLOADS . '/' . $photo);
+                $url = asset(self::DOSSIER_UPLOADS.'/'.$photo);
 
                 return ['mini' => $url, 'full' => $url];
             }

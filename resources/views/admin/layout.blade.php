@@ -24,12 +24,26 @@
         'Relations' => [
             ['route' => 'admin.demandes.index', 'actif' => 'admin.demandes.*', 'icone' => 'icon-handshake', 'libelle' => 'Demandes de services', 'compteur' => $aTraiter['demandes']],
             ['route' => 'admin.messages.index', 'actif' => 'admin.messages.*', 'icone' => 'icon-mail', 'libelle' => 'Messages de contact', 'compteur' => $aTraiter['messages']],
+            ['route' => 'admin.partenariats.index', 'actif' => 'admin.partenariats.*', 'icone' => 'fas fa-hands-helping', 'libelle' => 'Demandes de partenariat', 'compteur' => $aTraiter['partenariats']],
+            ['route' => 'admin.abonnes.index', 'actif' => ['admin.abonnes.*', 'admin.lettres.*'], 'icone' => 'far fa-paper-plane', 'libelle' => 'Newsletter'],
         ],
         'Contenus' => [
             ['route' => 'admin.actualites.index', 'actif' => 'admin.actualites.*', 'icone' => 'far fa-newspaper', 'libelle' => 'Articles & événements'],
             ['route' => 'admin.offres.index', 'actif' => 'admin.offres.*', 'icone' => 'icon-seedling', 'libelle' => 'Offres & services'],
             ['route' => 'admin.fermes.index', 'actif' => 'admin.fermes.*', 'icone' => 'icon-farm-house-1', 'libelle' => 'Fermes écoles'],
             ['route' => 'admin.projets.index', 'actif' => 'admin.projets.*', 'icone' => 'icon-smart-farming', 'libelle' => 'Programmes & projets'],
+            ['route' => 'admin.evenements.index', 'actif' => 'admin.evenements.*', 'icone' => 'far fa-calendar-alt', 'libelle' => 'Agenda'],
+            ['route' => 'admin.medias.index', 'actif' => 'admin.medias.*', 'icone' => 'fas fa-photo-video', 'libelle' => 'Médiathèque'],
+        ],
+        'Réseau' => [
+            ['route' => 'admin.regions.index', 'actif' => 'admin.regions.*', 'icone' => 'fas fa-map-marked-alt', 'libelle' => 'Sections régionales'],
+            ['route' => 'admin.partenaires.index', 'actif' => 'admin.partenaires.*', 'icone' => 'icon-handshake', 'libelle' => 'Partenaires'],
+        ],
+        'Espace Jeunes' => [
+            ['route' => 'admin.membres.index', 'actif' => 'admin.membres.*', 'icone' => 'fas fa-address-book', 'libelle' => 'Annuaire des membres', 'compteur' => $aTraiter['membres']],
+            ['route' => 'admin.temoignages.index', 'actif' => 'admin.temoignages.*', 'icone' => 'far fa-comment-dots', 'libelle' => 'Témoignages & stories'],
+            ['route' => 'admin.opportunites.index', 'actif' => 'admin.opportunites.*', 'icone' => 'fas fa-bullhorn', 'libelle' => 'Opportunités'],
+            ['route' => 'admin.ressources.index', 'actif' => 'admin.ressources.*', 'icone' => 'fas fa-file-download', 'libelle' => 'Ressources'],
         ],
         'Réglages' => array_values(array_filter([
             auth()->user()->can('gerer-utilisateurs')
@@ -87,7 +101,7 @@
                 <div class="a-utilisateur">
                     <span class="a-utilisateur__avatar">{{ \Illuminate\Support\Str::upper(\Illuminate\Support\Str::substr($utilisateur->name, 0, 1)) }}</span>
                     <a href="{{ route('admin.profil') }}" class="a-utilisateur__nom" title="Mon profil">{{ $utilisateur->name }}<small>{{ $utilisateur->roleLibelle() }} · {{ $utilisateur->email }}</small></a>
-                    <form action="{{ route('admin.deconnexion') }}" method="post">
+                    <form action="{{ route('deconnexion') }}" method="post">
                         @csrf
                         <button type="submit" class="a-btn a-btn--clair a-btn--icone" title="Se déconnecter" aria-label="Se déconnecter">
                             <i class="fas fa-sign-out-alt"></i>

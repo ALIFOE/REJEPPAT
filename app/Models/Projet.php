@@ -3,16 +3,34 @@
 namespace App\Models;
 
 use App\Models\Concerns\AUnVisuel;
+use App\Models\Concerns\EstTraduisible;
 use Illuminate\Database\Eloquent\Attributes\Fillable;
 use Illuminate\Database\Eloquent\Attributes\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 
 #[Table('projets')]
-#[Fillable(['slug', 'titre', 'titre_court', 'icone', 'categories', 'date', 'resume', 'description', 'actions', 'resultats', 'points', 'image', 'photo', 'ordre', 'publie'])]
+#[Fillable(['slug', 'titre', 'titre_court', 'icone', 'categories', 'date', 'statut', 'resume', 'description', 'actions', 'resultats', 'points', 'image', 'photo', 'ordre', 'publie', 'traductions'])]
 class Projet extends Model
 {
-    use AUnVisuel;
+    use AUnVisuel, EstTraduisible;
+
+    /** État d'avancement => [libellé, couleur du badge dans l'administration] */
+    public const STATUTS = [
+        'en_cours' => ['En cours', 'vert'],
+        'a_venir' => ['À venir', 'jaune'],
+        'termine' => ['Terminé', 'gris'],
+    ];
+
+    public const TRADUCTIONS = [
+        'titre' => ['Titre', 'texte'],
+        'titre_court' => ['Titre court', 'texte'],
+        'resume' => ['Résumé', 'textarea'],
+        'description' => ['Description', 'lignes'],
+        'actions' => ['Actions', 'paires'],
+        'resultats' => ['Résultats obtenus', 'lignes'],
+        'points' => ['Points clés', 'lignes'],
+    ];
 
     /** Icônes du template proposées dans l'administration */
     public const ICONES = [
@@ -39,7 +57,13 @@ class Projet extends Model
             'resultats' => 'array',
             'points' => 'array',
             'publie' => 'boolean',
+            'traductions' => 'array',
         ];
+    }
+
+    public function statutLibelle(): string
+    {
+        return __(self::STATUTS[$this->statut][0] ?? $this->statut);
     }
 
     public function scopePublie(Builder $query): void

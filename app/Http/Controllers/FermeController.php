@@ -17,8 +17,11 @@ class FermeController extends Controller
 
     public function show(string $slug): View
     {
+        $ferme = Contenu::ferme($slug)->load('region');
+
         return view('fermes.show', [
-            'ferme' => Contenu::ferme($slug),
+            'ferme' => $ferme,
+            'temoignages' => $ferme->temoignages()->publie()->get(),
             'fermes' => Contenu::fermes(),
             'actualites' => Contenu::actualites()->take(4),
         ]);

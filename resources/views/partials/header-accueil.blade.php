@@ -6,7 +6,7 @@
                         <div class="main-header-logo-style4">
                             <a href="{{ route('home') }}">
                                 <div class="main-header-logo-style4__shape"
-                                    style="background-image: url({{ asset('assets/images/shapes/main-header-logo-style4-shape.png?v=vert') }});">
+                                    style="background-image: url({{ asset('assets/images/shapes/main-header-logo-style4-shape.png') }}?v=vert);">
                                 </div>
                                 <img src="{{ asset('assets/images/rejeppat/logo/logo-rejeppat-officiel.png') }}" alt="{{ config('rejeppat.name') }}">
                             </a>
@@ -21,7 +21,7 @@
                                                 <i class="icon-wheat"></i>
                                             </div>
                                             <div class="text">
-                                                <p><a href="{{ route('offres') }}">Nos offres &amp; services</a>
+                                                <p><a href="{{ route('offres') }}">{{ __('Nos offres & services') }}</a>
                                                 </p>
                                             </div>
                                         </li>
@@ -30,7 +30,7 @@
                                                 <i class="icon-arrow"></i>
                                             </div>
                                             <div class="text">
-                                                <p><a href="{{ route('demande') }}">Faire une demande de service</a></p>
+                                                <p><a href="{{ route('demande') }}">{{ __('Faire une demande de service') }}</a></p>
                                             </div>
                                         </li>
                                     </ul>
@@ -62,30 +62,31 @@
                                         </ul>
                                         <div class="main-header-style4__search-box">
                                             <a href="#" class="search-toggler">
-                                                Rechercher
+                                                {{ __('Rechercher') }}
                                                 <span class="icon-search"></span>
                                             </a>
                                         </div>
                                         <div class="main-header-style4__cart-box">
                                             <a href="{{ route('panier.index') }}">
                                                 <span class="icon-empty-cart"></span>
-                                                Panier
+                                                {{ __('Panier') }}
                                                 <div class="main-header-style4__cart-count">({{ \App\Support\Panier::nombre() }})</div>
                                             </a>
                                         </div>
                                         <div class="main-header-style4__cart-box main-header-style4__compte-box">
                                             @auth
-                                                <a href="{{ route('compte.index') }}">
+                                                <a href="{{ auth()->user()->tableauDeBord() }}">
                                                     <i class="fas fa-user-check"></i>
-                                                    Mon compte
+                                                    {{ __('Mon compte') }}
                                                 </a>
                                             @else
                                                 <a href="{{ route('connexion') }}">
                                                     <i class="far fa-user"></i>
-                                                    Connexion
+                                                    {{ __('Connexion') }}
                                                 </a>
                                             @endauth
                                         </div>
+                                        @include('partials.langues', ['classe' => 'rj-langues--entete'])
                                     </div>
                                 </div>
                             </div>
@@ -98,7 +99,7 @@
                                         <span class="icon-incoming-call"></span>
                                     </div>
                                     <div class="content">
-                                        <h4>Téléphone</h4>
+                                        <h4>{{ __('Téléphone') }}</h4>
                                         <p><a href="tel:{{ config('rejeppat.phones.0.tel') }}">{{ config('rejeppat.phones.0.label') }}</a></p>
                                     </div>
                                 </li>
@@ -107,7 +108,7 @@
                                         <span class="icon-map-point"></span>
                                     </div>
                                     <div class="content">
-                                        <h4>Adresse</h4>
+                                        <h4>{{ __('Adresse') }}</h4>
                                         <p>{{ config('rejeppat.address_short') }}</p>
                                     </div>
                                 </li>
@@ -118,7 +119,7 @@
                                         <span class="icon-mail"></span>
                                     </div>
                                     <div class="content">
-                                        <h4>Email</h4>
+                                        <h4>{{ __('Email') }}</h4>
                                         <p><a href="mailto:{{ config('rejeppat.emails.0') }}">{{ config('rejeppat.emails.0') }}</a></p>
                                     </div>
                                 </li>
@@ -127,7 +128,7 @@
                                         <span class="icon-map-point"></span>
                                     </div>
                                     <div class="content">
-                                        <h4>Boîte postale</h4>
+                                        <h4>{{ __('Boîte postale') }}</h4>
                                         <p>{{ config('rejeppat.po_box') }}</p>
                                     </div>
                                 </li>

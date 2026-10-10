@@ -14,6 +14,7 @@
 
 @section('actions')
     <a href="{{ route('admin.commandes.index') }}" class="a-btn a-btn--clair"><i class="fas fa-arrow-left"></i> Commandes</a>
+    <a href="{{ route('admin.commandes.facture', $commande) }}" class="a-btn a-btn--clair" target="_blank" rel="noopener"><i class="fas fa-file-invoice"></i> Facture</a>
 @endsection
 
 @section('content')
@@ -96,6 +97,45 @@
                     </div>
                 </div>
             </div>
+
+            @if ($commande->paiements->isNotEmpty())
+                <div class="a-carte a-section">
+                    <div class="a-carte__entete">
+                        <div><h2>Paiements Mobile Money en ligne</h2><p>Via PayGate Global, du plus récent au plus ancien</p></div>
+                        @if ($commande->paiements->contains('statut', 'en_attente'))
+                            <form action="{{ route('admin.commandes.verifier-paiement', $commande) }}" method="post">
+                                @csrf
+                                <button type="submit" class="a-btn a-btn--clair a-btn--petit"><i class="fas fa-sync-alt"></i> Vérifier auprès de l’opérateur</button>
+                            </form>
+                        @endif
+                    </div>
+                    <div class="a-table-conteneur">
+                        <table class="a-table">
+                            <thead>
+                                <tr><th>Date</th><th>Opérateur</th><th>Numéro</th><th>Références</th><th>Statut</th><th class="num">Montant</th></tr>
+                            </thead>
+                            <tbody>
+                                @foreach ($commande->paiements as $paiement)
+                                    <tr>
+                                        <td><small>{{ $paiement->created_at->format('d/m/Y H:i') }}</small></td>
+                                        <td>{{ $paiement->operateurLibelle() }}</td>
+                                        <td>{{ $paiement->telephone }}</td>
+                                        <td>
+                                            <small>PayGate : {{ $paiement->tx_reference ?: '–' }}</small><br>
+                                            <small>Opérateur : {{ $paiement->reference_operateur ?: '–' }}</small>
+                                        </td>
+                                        <td>
+                                            @include('admin.partials.badge', ['statuts' => \App\Models\Paiement::STATUTS, 'valeur' => $paiement->statut])
+                                            @if ($paiement->message)<br><small>{{ $paiement->message }}</small>@endif
+                                        </td>
+                                        <td class="num">{{ Contenu::prix($paiement->montant) }}</td>
+                                    </tr>
+                                @endforeach
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            @endif
 
             @if ($commande->note)
                 <div class="a-carte a-section">

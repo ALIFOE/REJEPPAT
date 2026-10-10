@@ -1,12 +1,12 @@
 @extends('layouts.app')
 
-@section('title', 'Nos offres & services')
+@section('title', __('Nos offres & services'))
 
 @section('content')
 
         @include('partials.breadcrumb', [
-            'titre' => 'Nos offres & services',
-            'texte' => 'Des services adaptés aux jeunes producteurs et aux acteurs du monde rural.',
+            'titre' => __('Nos offres & services'),
+            'texte' => __('Des services adaptés aux jeunes producteurs et aux acteurs du monde rural.'),
             'image' => 'offres.jpg',
         ])
 
@@ -21,7 +21,7 @@
 
                     <div class="col-xl-5 col-lg-5">
                         <div class="service-one__img">
-                            <img src="{{ asset('assets/images/rejeppat/offres/service-one.jpg') }}" alt="Jeunes producteurs en formation">
+                            <img src="{{ asset('assets/images/rejeppat/offres/service-one.jpg') }}" alt="{{ __('Jeunes producteurs en formation') }}">
                             <div class="service-one__img-percent">
                                 <img src="{{ asset('assets/images/service/service-one-percent.png') }}" alt="Percent">
                             </div>
@@ -35,25 +35,22 @@
                                     <div class="icon">
                                         <img src="{{ asset('assets/images/icon/sec-title-two-icon.png') }}" alt="">
                                     </div>
-                                    <h4>Notre accompagnement</h4>
+                                    <h4>{{ __('Notre accompagnement') }}</h4>
                                 </div>
-                                <h2 class="title-animation">Des services pour renforcer les capacités et soutenir les initiatives locales</h2>
+                                <h2 class="title-animation">{{ __('Des services pour renforcer les capacités et soutenir les initiatives locales') }}</h2>
                             </div>
                             <div class="service-one__content-text">
                                 <p>
-                                    Le REJEPPAT propose des services et des solutions adaptés aux besoins des jeunes
-                                    producteurs, des organisations et des acteurs du monde rural.
+                                    {{ __('Le REJEPPAT propose des services et des solutions adaptés aux besoins des jeunes producteurs, des organisations et des acteurs du monde rural.') }}
                                 </p>
                                 <p>
-                                    À travers ses différents domaines d’intervention, le REJEPPAT accompagne les jeunes
-                                    et les acteurs ruraux dans le développement de leurs activités, le renforcement de
-                                    leurs compétences et la création d’opportunités durables.
+                                    {{ __('À travers ses différents domaines d’intervention, le REJEPPAT accompagne les jeunes et les acteurs ruraux dans le développement de leurs activités, le renforcement de leurs compétences et la création d’opportunités durables.') }}
                                 </p>
                             </div>
                             <div class="service-one__content-btn">
                                 <a class="btn-one" href="{{ route('demande') }}">
                                     <i class="icon-arrow"></i>
-                                    <span class="txt">Faire une demande de service</span>
+                                    <span class="txt">{{ __('Faire une demande de service') }}</span>
                                 </a>
                             </div>
                         </div>
@@ -73,9 +70,9 @@
                         <div class="icon">
                             <img src="{{ asset('assets/images/icon/sec-title-two-icon.png') }}" alt="">
                         </div>
-                        <h4>Nos domaines d’intervention</h4>
+                        <h4>{{ __('Nos domaines d’intervention') }}</h4>
                     </div>
-                    <h2 class="title-animation">Nos principales offres et services</h2>
+                    <h2 class="title-animation">{{ __('Nos principales offres et services') }}</h2>
                 </div>
 
                 <div class="row">
@@ -88,8 +85,8 @@
                                 <img src="{{ asset('assets/images/icon/grown-with-care__icon-' . $loop->iteration . '.png') }}" alt="Icon">
                             </div>
                             <div class="single-grown-with-care__content">
-                                <h3><a href="{{ route('demande') }}">{{ $offre['titre'] }}</a></h3>
-                                <p>{{ $offre['texte'] }}</p>
+                                <h3><a href="{{ route('demande') }}">{{ $offre->tr('titre') }}</a></h3>
+                                <p>{{ $offre->tr('texte') }}</p>
                             </div>
                         </div>
                     </div>
@@ -101,7 +98,7 @@
                 <div class="grown-with-care__btn">
                     <a class="btn-one" href="{{ route('demande') }}">
                         <i class="icon-arrow"></i>
-                        <span class="txt">Besoin d’un service du REJEPPAT ?</span>
+                        <span class="txt">{{ __('Besoin d’un service du REJEPPAT ?') }}</span>
                     </a>
                 </div>
 
@@ -123,15 +120,15 @@
                     <div class="col-xl-3">
                         <div class="single-service-two">
                             <div class="single-service-two__img">
-                                <img src="{{ asset('assets/images/rejeppat/offres/domaine-' . $domaine['slug'] . '.jpg') }}" alt="{{ $domaine['titre'] }}">
+                                <img src="{{ asset('assets/images/rejeppat/offres/domaine-' . $domaine['slug'] . '.jpg') }}" alt="{{ __($domaine['titre']) }}">
                                 <div class="single-service-two__img-category">
-                                    <h6>{{ $domaine['titre'] }}</h6>
+                                    <h6>{{ __($domaine['titre']) }}</h6>
                                     <div class="single-service-two__img-category-img">
                                         <img src="{{ asset('assets/images/shapes/single-service-two__shape.png') }}" alt="Shape">
                                     </div>
                                 </div>
                                 <div class="single-service-two__img-overlay-title">
-                                    <h2>{{ $domaine['court'] }}</h2>
+                                    <h2>{{ __($domaine['court']) }}</h2>
                                 </div>
                             </div>
                         </div>
@@ -156,11 +153,11 @@
                         <div class="icon">
                             <i class="icon-hat"></i>
                         </div>
-                        <h4>Projets</h4>
+                        <h4>{{ __('Projets') }}</h4>
                     </div>
-                    <h2 class="title-animation">Nos Programmes &amp; Projets</h2>
+                    <h2 class="title-animation">{{ __('Nos Programmes & Projets') }}</h2>
                     <div class="text">
-                        <p>Des initiatives au service des jeunes agriculteurs, des femmes rurales <br>et de la protection de l’environnement.</p>
+                        <p>{!! __('Des initiatives au service des jeunes agriculteurs, des femmes rurales <br>et de la protection de l’environnement.') !!}</p>
                     </div>
                 </div>
                 <div class="row">
@@ -169,22 +166,22 @@
                     @php
                         $grand = $loop->index < 2;
                         $lien = route('projets.show', $projet['slug']);
-                        $categorie = config('projets.categories')[$projet['categories'][0]];
+                        $categorie = __(config('projets.categories')[$projet['categories'][0]]);
                     @endphp
                     <!-- Start Single Project Style1 -->
                     <div class="{{ $grand ? 'col-xl-6' : 'col-xl-4' }} col-lg-6 col-md-6">
                         <div class="single-project-style1">
                             <div class="single-project-style1__img">
-                                <img src="{{ $projet->visuel($grand ? '-large' : '-small') }}" alt="{{ $projet['titre_court'] }}">
+                                <img src="{{ $projet->visuel($grand ? '-large' : '-small') }}" alt="{{ $projet->tr('titre_court') }}">
                                 <div class="single-project-style1__img-category">
                                     <span>{{ $categorie }}</span>
                                 </div>
                                 <div class="single-project-style1__img-title">
-                                    <h3><a href="{{ $lien }}">{{ $projet['titre_court'] }}</a></h3>
+                                    <h3><a href="{{ $lien }}">{{ $projet->tr('titre_court') }}</a></h3>
                                 </div>
                                 <div class="single-project-style1__img-title-overlay">
-                                    <h3><a href="{{ $lien }}">{{ $projet['titre_court'] }}</a></h3>
-                                    <p>{{ $projet['resume'] }}</p>
+                                    <h3><a href="{{ $lien }}">{{ $projet->tr('titre_court') }}</a></h3>
+                                    <p>{{ $projet->tr('resume') }}</p>
                                 </div>
                                 <div class="single-project-style1__img-icon">
                                     <a href="{{ $lien }}">
@@ -201,7 +198,7 @@
                 <div class="project-style1__btn text-center">
                     <a href="{{ route('projets.index') }}">
                         <i class="icon-arrow"></i>
-                        Voir tous les projets
+                        {{ __('Voir tous les projets') }}
                     </a>
                 </div>
             </div>

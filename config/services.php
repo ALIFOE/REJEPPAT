@@ -3,6 +3,18 @@
 return [
 
     /*
+    | PayGate Global (https://paygateglobal.com) : paiements Mixx by Yas et Moov Money Flooz.
+    | Mode « live » : vrais paiements avec la clé API du compte marchand.
+    | Mode « simulation » : parcours complet sans argent réel, pour tester (jamais en production).
+    */
+    'paygate' => [
+        'token' => env('PAYGATE_AUTH_TOKEN'),
+        'mode' => env('PAYGATE_MODE', env('PAYGATE_AUTH_TOKEN') ? 'live' : 'simulation'),
+        'url' => env('PAYGATE_URL', 'https://paygateglobal.com'),
+        'timeout' => 30,
+    ],
+
+    /*
     |--------------------------------------------------------------------------
     | Third Party Services
     |--------------------------------------------------------------------------

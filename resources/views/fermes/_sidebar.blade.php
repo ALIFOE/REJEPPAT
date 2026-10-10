@@ -7,11 +7,11 @@
             <div class="icon">
                 <span class="icon-hat"></span>
             </div>
-            <h3>Nos fermes écoles</h3>
+            <h3>{{ __('Nos fermes écoles') }}</h3>
         </div>
         <ul class="sidebar-style1__services-list">
             <li class="{{ $actif === null ? 'active' : '' }}">
-                <a href="{{ route('fermes.index') }}">Présentation</a>
+                <a href="{{ route('fermes.index') }}">{{ __('Présentation') }}</a>
             </li>
             @foreach ($fermes as $item)
                 <li class="{{ $actif === $item['slug'] ? 'active' : '' }}">

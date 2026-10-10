@@ -12,21 +12,32 @@ class RolesTest extends TestCase
 {
     use RefreshDatabase;
 
-    public function test_un_client_ne_peut_pas_se_connecter_a_l_administration(): void
+    public function test_la_connexion_commune_envoie_chaque_role_sur_son_tableau_de_bord(): void
     {
-        $client = User::factory()->create();
+        foreach ([
+            [User::factory()->superAdmin()->create(), route('admin.tableau')],
+            [User::factory()->admin()->create(), route('admin.tableau')],
+            [User::factory()->create(), route('compte.index')],
+        ] as [$user, $tableau]) {
+            $this->post(route('connexion'), ['email' => $user->email, 'password' => 'password'])->assertRedirect($tableau);
+            $this->assertAuthenticatedAs($user);
+            $this->post(route('deconnexion'));
+        }
+    }
 
-        $this->post(route('admin.connexion'), ['email' => $client->email, 'password' => 'password'])
-            ->assertSessionHasErrors(['email' => 'Adresse e-mail ou mot de passe incorrect.']);
-        $this->assertGuest();
+    public function test_l_ancienne_adresse_de_connexion_de_l_administration_redirige(): void
+    {
+        $this->get('/admin/connexion')->assertRedirect('/connexion');
+    }
+
+    public function test_un_utilisateur_connecte_qui_ouvre_la_connexion_va_sur_son_tableau_de_bord(): void
+    {
+        $this->actingAs(User::factory()->admin()->create())->get(route('connexion'))->assertRedirect(route('admin.tableau'));
     }
 
     public function test_un_administrateur_accede_a_l_administration_mais_pas_aux_comptes(): void
     {
         $admin = User::factory()->admin()->create();
-
-        $this->post(route('admin.connexion'), ['email' => $admin->email, 'password' => 'password'])
-            ->assertRedirect(route('admin.tableau'));
 
         $this->actingAs($admin)->get(route('admin.tableau'))->assertOk()->assertDontSee('Utilisateurs &amp; rôles', false);
         $this->actingAs($admin)->get(route('admin.utilisateurs.index'))->assertForbidden();
@@ -100,6 +111,37 @@ class RolesTest extends TestCase
         $this->assertSame(User::SUPER_ADMIN, $superAdmin->fresh()->role);
     }
 
+    public function test_chaque_role_a_son_tableau_de_bord(): void
+    {
+        $this->actingAs(User::factory()->superAdmin()->create())->get(route('admin.tableau'))
+            ->assertOk()->assertViewIs('admin.tableaux.super-admin')->assertSee('Comptes par rôle')->assertSee('Équipe d’administration');
+
+        $this->actingAs(User::factory()->admin()->create())->get(route('admin.tableau'))
+            ->assertOk()->assertViewIs('admin.tableaux.administrateur')->assertSee('Commandes en attente')->assertDontSee('Comptes par rôle');
+
+        $this->actingAs(User::factory()->create())->get(route('compte.index'))
+            ->assertOk()->assertViewIs('compte.index')->assertSee('Commandes passées');
+    }
+
+    public function test_tableau_de_bord_client_avec_une_commande_en_cours(): void
+    {
+        $client = User::factory()->create();
+        $commande = $client->commandes()->create([
+            'numero' => 'RJ-261009-ENCO',
+            'nom' => $client->name,
+            'telephone' => '90000000',
+            'mode_livraison' => 'retrait',
+            'sous_total' => 2500,
+            'total' => 2500,
+            'mode_paiement' => 'livraison',
+            'statut' => 'confirmee',
+        ]);
+
+        $this->actingAs($client)->get(route('compte.index'))
+            ->assertOk()->assertSee('Ma commande en cours')->assertSee($commande->numero)->assertSee('2 500 CFA');
+        $this->actingAs($client)->get(route('compte.commandes'))->assertOk()->assertSee($commande->numero);
+    }
+
     public function test_profil_de_l_administrateur(): void
     {
         $admin = User::factory()->admin()->create();
@@ -129,7 +171,7 @@ class RolesTest extends TestCase
 
     public function test_un_client_n_a_pas_de_profil_dans_l_administration(): void
     {
-        $this->actingAs(User::factory()->create())->get(route('admin.profil'))->assertRedirect(route('admin.connexion'));
+        $this->actingAs(User::factory()->create())->get(route('admin.profil'))->assertRedirect(route('compte.index'));
         $this->actingAs(User::factory()->create())->get(route('compte.profil'))->assertOk()->assertSee('Mon rôle')->assertSee('Client');
     }
 

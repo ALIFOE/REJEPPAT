@@ -4,12 +4,22 @@ namespace Tests\Feature;
 
 use App\Models\Actualite;
 use App\Models\Commande;
+use App\Models\DemandePartenariat;
 use App\Models\DemandeService;
+use App\Models\Evenement;
 use App\Models\Ferme;
+use App\Models\Lettre;
+use App\Models\Media;
+use App\Models\Membre;
 use App\Models\MessageContact;
 use App\Models\Offre;
+use App\Models\Opportunite;
+use App\Models\Partenaire;
 use App\Models\Produit;
 use App\Models\Projet;
+use App\Models\Region;
+use App\Models\Ressource;
+use App\Models\Temoignage;
 use App\Models\User;
 use Database\Seeders\ContenuSeeder;
 use Illuminate\Foundation\Testing\RefreshDatabase;
@@ -33,15 +43,18 @@ class AdministrationTest extends TestCase
 
     public function test_l_administration_est_protegee(): void
     {
-        $this->get(route('admin.tableau'))->assertRedirect(route('admin.connexion'));
+        $this->get(route('admin.tableau'))->assertRedirect(route('connexion'));
 
-        $this->actingAs(User::factory()->create())
-            ->get(route('admin.tableau'))->assertRedirect(route('admin.connexion'));
+        $client = User::factory()->create();
+        $this->actingAs($client)->get(route('admin.tableau'))
+            ->assertRedirect(route('compte.index'))
+            ->assertSessionHas('erreur', 'Votre compte n’a pas accès à l’administration.');
+        $this->assertAuthenticatedAs($client);
     }
 
     public function test_connexion_administrateur(): void
     {
-        $this->post(route('admin.connexion'), ['email' => $this->admin->email, 'password' => 'password'])
+        $this->post(route('connexion'), ['email' => $this->admin->email, 'password' => 'password'])
             ->assertRedirect(route('admin.tableau'));
         $this->assertAuthenticatedAs($this->admin);
     }
@@ -51,6 +64,13 @@ class AdministrationTest extends TestCase
         $commande = $this->commande();
         $demande = DemandeService::create(['nom' => 'A', 'telephone' => '90000000', 'service' => 'Autre besoin', 'objet' => 'Objet', 'besoin' => 'Texte']);
         $message = MessageContact::create(['nom' => 'B', 'email' => 'b@example.com', 'objet' => 'Soutien', 'message' => 'Bonjour']);
+        $partenariat = DemandePartenariat::create(['organisation' => 'ONG', 'nom' => 'C', 'email' => 'c@example.com', 'type' => 'technique', 'message' => 'Bonjour']);
+        $membre = Membre::create(['slug' => 'afi', 'nom' => 'Afi', 'filiere' => 'maraichage', 'presentation' => ['Texte']]);
+        $opportunite = Opportunite::create(['slug' => 'bourse', 'titre' => 'Bourse', 'type' => 'bourse', 'description' => ['Texte']]);
+        $ressource = Ressource::create(['titre' => 'Guide', 'categorie' => 'guide', 'fichier' => 'ressources/guide.pdf']);
+        $evenement = Evenement::create(['slug' => 'foire', 'titre' => 'Foire', 'type' => 'foire', 'debut' => now()->addWeek(), 'lieu' => 'Sokodé', 'description' => ['Texte']]);
+        $media = Media::create(['titre' => 'Vidéo', 'type' => 'video', 'date' => today(), 'url' => 'https://youtu.be/0bCiARbU0R4']);
+        $lettre = Lettre::create(['sujet' => 'Nouvelles', 'contenu' => '<p>Bonjour</p>']);
 
         $ecrans = [
             route('admin.tableau'),
@@ -64,6 +84,17 @@ class AdministrationTest extends TestCase
             route('admin.projets.index'), route('admin.projets.create'), route('admin.projets.edit', Projet::first()),
             route('admin.utilisateurs.index'), route('admin.utilisateurs.create'), route('admin.utilisateurs.edit', $this->admin),
             route('admin.profil'),
+            route('admin.commandes.facture', $commande),
+            route('admin.regions.index'), route('admin.regions.create'), route('admin.regions.edit', Region::first()),
+            route('admin.partenaires.index'), route('admin.partenaires.create'), route('admin.partenaires.edit', Partenaire::first()),
+            route('admin.partenariats.index'), route('admin.partenariats.show', $partenariat),
+            route('admin.membres.index'), route('admin.membres.create'), route('admin.membres.edit', $membre),
+            route('admin.temoignages.index'), route('admin.temoignages.create'), route('admin.temoignages.edit', Temoignage::first()),
+            route('admin.opportunites.index'), route('admin.opportunites.create'), route('admin.opportunites.edit', $opportunite),
+            route('admin.ressources.index'), route('admin.ressources.create'), route('admin.ressources.edit', $ressource),
+            route('admin.evenements.index'), route('admin.evenements.create'), route('admin.evenements.edit', $evenement),
+            route('admin.medias.index'), route('admin.medias.create'), route('admin.medias.edit', $media),
+            route('admin.abonnes.index'), route('admin.lettres.index'), route('admin.lettres.create'), route('admin.lettres.edit', $lettre),
         ];
 
         foreach ($ecrans as $ecran) {
@@ -158,11 +189,51 @@ class AdministrationTest extends TestCase
         $projet = Projet::first();
         $this->put(route('admin.projets.update', $projet), [
             'titre' => $projet->titre, 'titre_court' => $projet->titre_court, 'slug' => $projet->slug, 'icone' => 'icon-farmer',
-            'categories' => ['formation'], 'date' => '2026-01-01', 'resume' => 'Résumé', 'description' => 'Texte',
+            'categories' => ['formation'], 'date' => '2026-01-01', 'statut' => 'termine', 'resume' => 'Résumé', 'description' => 'Texte',
             'actions' => 'Action 1 | Détail 1', 'publie' => '0',
         ])->assertRedirect(route('admin.projets.index'));
         $this->assertSame([['titre' => 'Action 1', 'texte' => 'Détail 1']], $projet->fresh()->actions);
+        $this->assertSame('termine', $projet->fresh()->statut);
         $this->get(route('projets.show', $projet->slug))->assertNotFound();
+    }
+
+    public function test_photos_supplementaires_d_un_produit(): void
+    {
+        Storage::fake('uploads');
+        $produit = Produit::first();
+        $donnees = [
+            'nom' => $produit->nom, 'slug' => $produit->slug, 'categorie' => $produit->categorie, 'prix' => $produit->prix,
+            'resume' => $produit->resume, 'description' => 'Description', 'actif' => '1',
+        ];
+
+        $this->actingAs($this->admin)->put(route('admin.produits.update', $produit), $donnees + [
+            'photos' => [0 => UploadedFile::fake()->image('a.jpg'), 2 => UploadedFile::fake()->image('c.jpg')],
+        ])->assertRedirect(route('admin.produits.index'));
+
+        $photos = $produit->fresh()->photos;
+        $this->assertCount(2, $photos);
+        Storage::disk('uploads')->assertExists($photos);
+        $this->get(route('boutique.show', $produit->slug))->assertOk()->assertSee('uploads/'.$photos[0])->assertSee('uploads/'.$photos[1]);
+        $this->get(route('admin.produits.edit', $produit))->assertOk()->assertSee('uploads/'.$photos[1]);
+
+        // Retirer la première photo
+        $this->put(route('admin.produits.update', $produit), $donnees + ['retirer_photos' => ['0']]);
+
+        $this->assertSame([$photos[1]], $produit->fresh()->photos);
+        Storage::disk('uploads')->assertMissing($photos[0]);
+    }
+
+    public function test_un_produit_ne_peut_pas_avoir_plus_de_trois_photos_supplementaires(): void
+    {
+        $produit = Produit::first();
+
+        $this->actingAs($this->admin)->put(route('admin.produits.update', $produit), [
+            'nom' => $produit->nom, 'categorie' => $produit->categorie, 'prix' => $produit->prix,
+            'resume' => $produit->resume, 'description' => 'Description',
+            'photos' => array_map(fn ($i) => UploadedFile::fake()->image("p{$i}.jpg"), range(1, 4)),
+        ])->assertSessionHasErrors('photos');
+
+        $this->assertEmpty($produit->fresh()->photos);
     }
 
     public function test_annuler_une_commande_remet_le_stock(): void

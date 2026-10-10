@@ -26,6 +26,7 @@ class ProjetController extends Controller
             'date' => now(),
             'categories' => [],
             'icone' => 'icon-farm-house-1',
+            'statut' => 'en_cours',
             'ordre' => Projet::max('ordre') + 1,
             'publie' => true,
         ])]);
@@ -33,7 +34,7 @@ class ProjetController extends Controller
 
     public function store(Request $request): RedirectResponse
     {
-        $this->enregistrer($request, new Projet());
+        $this->enregistrer($request, new Projet);
 
         return redirect()->route('admin.projets.index')->with('succes', 'Projet ajouté.');
     }
@@ -68,6 +69,7 @@ class ProjetController extends Controller
             'categories' => ['required', 'array'],
             'categories.*' => [Rule::in(array_keys(config('projets.categories')))],
             'date' => ['required', 'date'],
+            'statut' => ['required', Rule::in(array_keys(Projet::STATUTS))],
             'resume' => ['required', 'string', 'max:1000'],
             'description' => ['required', 'string'],
             'actions' => ['nullable', 'string'],
@@ -75,7 +77,7 @@ class ProjetController extends Controller
             'points' => ['nullable', 'string'],
             'ordre' => ['nullable', 'integer', 'min:0'],
             'photo' => self::REGLE_IMAGE,
-        ], self::MESSAGES + ['categories.required' => 'Choisissez au moins une catégorie.']);
+        ] + $this->reglesTraductions(), self::MESSAGES + ['categories.required' => 'Choisissez au moins une catégorie.']);
 
         $projet->fill([
             'titre' => $donnees['titre'],
@@ -84,6 +86,7 @@ class ProjetController extends Controller
             'icone' => $donnees['icone'],
             'categories' => array_values($donnees['categories']),
             'date' => $donnees['date'],
+            'statut' => $donnees['statut'],
             'resume' => $donnees['resume'],
             'description' => $this->lignes($donnees['description']),
             'actions' => $this->paires($donnees['actions'] ?? ''),
@@ -92,6 +95,7 @@ class ProjetController extends Controller
             'ordre' => (int) ($donnees['ordre'] ?? 0),
             'photo' => $this->photoDemandee($request, $projet, 'projets'),
             'publie' => $request->boolean('publie'),
+            'traductions' => $this->traductions($request, Projet::class),
         ])->save();
     }
 }

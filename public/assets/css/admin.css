@@ -822,6 +822,65 @@ a.a-utilisateur__nom {
     background: var(--a-fond-2);
 }
 
+/* Photos supplémentaires d'un produit : un emplacement par photo */
+.a-photos {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 12px;
+}
+
+.a-photos__emplacement {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    min-width: 0;
+}
+
+.a-champ label.a-photos__apercu,
+.a-photos__apercu {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 96px;
+    margin: 0;
+    overflow: hidden;
+    border: 2px dashed var(--a-bordure);
+    border-radius: 8px;
+    background: var(--a-fond-2);
+    color: var(--a-vert-doux);
+    font-size: 13px;
+    cursor: pointer;
+}
+
+.a-photos__apercu:hover {
+    border-color: var(--a-vert);
+}
+
+.a-photos__apercu img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+/* Le champ fichier reste accessible au clavier mais c'est l'aperçu (cliquable) qui est affiché */
+.a-photos__emplacement input[type="file"] {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    opacity: 0;
+}
+
+.a-photos__emplacement input[type="file"]:focus-visible + .a-photos__apercu {
+    outline: 2px solid var(--a-vert);
+}
+
+.a-photos__emplacement .a-case {
+    align-self: flex-start;
+    padding: 4px 10px;
+    font-size: 13px;
+}
+
 .a-galerie {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(110px, 1fr));
@@ -992,95 +1051,6 @@ a.a-utilisateur__nom {
     color: var(--a-blanc);
 }
 
-/* ---------- Connexion ---------- */
-.a-connexion {
-    display: grid;
-    min-height: 100vh;
-    grid-template-columns: minmax(0, 1.1fr) minmax(360px, .9fr);
-}
-
-.a-connexion__visuel {
-    position: relative;
-    display: flex;
-    flex-direction: column;
-    justify-content: flex-end;
-    padding: 48px;
-    background-size: cover;
-    background-position: center;
-    color: var(--a-blanc);
-}
-
-.a-connexion__visuel::before {
-    content: "";
-    position: absolute;
-    inset: 0;
-    background: linear-gradient(180deg, rgba(31, 74, 44, .15), rgba(12, 34, 19, .88));
-}
-
-.a-connexion__visuel > * {
-    position: relative;
-}
-
-.a-connexion__visuel h2 {
-    max-width: 520px;
-    margin-bottom: 12px;
-    color: var(--a-blanc) !important;
-    font-size: 34px;
-}
-
-.a-connexion__visuel p {
-    max-width: 520px;
-    margin: 0;
-    color: rgba(255, 255, 255, .85);
-    font-size: 17px;
-}
-
-.a-connexion__formulaire {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    padding: 40px 24px;
-    background: var(--a-blanc);
-}
-
-.a-connexion__boite {
-    width: 100%;
-    max-width: 380px;
-}
-
-.a-connexion__boite img {
-    display: block;
-    width: 220px;
-    margin-bottom: 30px;
-}
-
-.a-connexion__boite h1 {
-    margin-bottom: 6px;
-    font-size: 26px;
-}
-
-.a-connexion__boite > p {
-    margin: 0 0 26px;
-}
-
-.a-connexion .a-btn {
-    width: 100%;
-    padding: 13px 18px;
-    font-size: 15px;
-}
-
-.a-connexion__retour {
-    display: inline-block;
-    margin-top: 22px;
-    font-size: 14px;
-}
-
-.a-connexion__oubli {
-    float: right;
-    margin-top: 9px;
-    font-size: 14px;
-}
-
 /* ---------- Écrans moyens et petits ---------- */
 @media (max-width: 1280px) {
     .a-grille--4 { grid-template-columns: repeat(2, minmax(0, 1fr)); }
@@ -1110,14 +1080,6 @@ a.a-utilisateur__nom {
     }
 
     .a-grille--2 { grid-template-columns: minmax(0, 1fr); }
-
-    .a-connexion {
-        grid-template-columns: minmax(0, 1fr);
-    }
-
-    .a-connexion__visuel {
-        display: none;
-    }
 }
 
 @media (max-width: 640px) {
@@ -1153,4 +1115,44 @@ a.a-utilisateur__nom {
 
 .a-voile.ouvert {
     display: block;
+}
+
+/* ---------- Version anglaise facultative des contenus ---------- */
+.a-traduction {
+    margin: 0 24px 20px;
+    border: 1px dashed var(--a-bordure);
+    border-radius: var(--a-rayon);
+    background: var(--a-fond);
+}
+
+.a-traduction summary {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    padding: 14px 18px;
+    cursor: pointer;
+    font-weight: 600;
+    color: var(--a-vert-titre);
+}
+
+.a-traduction summary small {
+    font-weight: 400;
+    color: var(--a-vert-doux);
+}
+
+.a-traduction[open] summary {
+    border-bottom: 1px dashed var(--a-bordure);
+}
+
+.a-traduction__corps {
+    padding: 18px;
+}
+
+/* ---------- Facture imprimable ---------- */
+.a-lien-document {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    word-break: break-all;
 }

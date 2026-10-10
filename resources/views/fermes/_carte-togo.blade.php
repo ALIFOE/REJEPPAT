@@ -12,13 +12,13 @@
 
 <div class="carte-fermes">
     <div class="carte-fermes__title">
-        <h3>Nos fermes écoles sur la carte</h3>
-        <p>Survolez un point rouge pour voir l’adresse d’une ferme école, cliquez dessus pour découvrir sa page.</p>
+        <h3>{{ __('Nos fermes écoles sur la carte') }}</h3>
+        <p>{{ __('Survolez un point rouge pour voir l’adresse d’une ferme école, cliquez dessus pour découvrir sa page.') }}</p>
     </div>
     <div class="row">
         <div class="col-md-6">
             <div class="carte-fermes__map" id="carte-fermes" role="img"
-                aria-label="Carte du Togo montrant l’emplacement des {{ $points->count() }} fermes écoles du REJEPPAT"></div>
+                aria-label="{{ __('Carte du Togo montrant l’emplacement des :nombre fermes écoles du REJEPPAT', ['nombre' => $points->count()]) }}"></div>
         </div>
         <div class="col-md-6">
             <ul class="carte-fermes__liste">

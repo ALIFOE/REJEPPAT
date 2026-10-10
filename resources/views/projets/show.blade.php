@@ -1,19 +1,21 @@
 @extends('layouts.app')
 
-@section('title', $projet['titre'])
+@section('title', $projet->tr('titre'))
 
 @php
-    $nomsCategories = collect($projet['categories'])->map(fn ($c) => $categories[$c])->implode(', ');
+    $nomsCategories = collect($projet['categories'])->map(fn ($c) => __($categories[$c]))->implode(', ');
     $partage = urlencode(route('projets.show', $projet['slug']));
+    $actions = $projet->tr('actions') ?? [];
+    $resultats = $projet->tr('resultats') ?? [];
 @endphp
 
 @section('content')
 
         @include('partials.breadcrumb', [
-            'titre' => $projet['titre_court'],
-            'texte' => $projet['resume'],
+            'titre' => $projet->tr('titre_court'),
+            'texte' => $projet->tr('resume'),
             'image' => 'projets.jpg',
-            'liens' => ['Programmes & Projets' => route('projets.index')],
+            'liens' => [__('Programmes & Projets') => route('projets.index')],
         ])
 
 
@@ -23,36 +25,40 @@
                 <div class="row">
                     <div class="col-xl-8 col-lg-7">
                         <div class="project-details-style1__img">
-                            <img src="{{ $projet->visuel('-detail') }}" alt="{{ $projet['titre'] }}">
+                            <img src="{{ $projet->visuel('-detail') }}" alt="{{ $projet->tr('titre') }}">
                         </div>
                     </div>
                     <div class="col-xl-4 col-lg-5">
                         <div class="project-details-style1__info">
                             <ul class="project-details-style1__info-list">
                                 <li>
-                                    <span>Porteur :</span>
+                                    <span>{{ __('Porteur :') }}</span>
                                     <p>REJEPPAT</p>
                                 </li>
                                 <li>
-                                    <span>Catégorie :</span>
+                                    <span>{{ __('Avancement :') }}</span>
+                                    <p>{{ $projet->statutLibelle() }}</p>
+                                </li>
+                                <li>
+                                    <span>{{ __('Catégorie :') }}</span>
                                     <p>{{ $nomsCategories }}</p>
                                 </li>
                                 <li>
-                                    <span>Publié le :</span>
+                                    <span>{{ __('Publié le :') }}</span>
                                     <p>{{ \App\Support\Contenu::date($projet['date'], 'j F Y') }}</p>
                                 </li>
                                 <li>
-                                    <span>Zone :</span>
+                                    <span>{{ __('Zone :') }}</span>
                                     <p>Togo</p>
                                 </li>
                                 <li>
-                                    <span>Contact :</span>
+                                    <span>{{ __('Contact :') }}</span>
                                     <p><a href="mailto:{{ config('rejeppat.emails.0') }}">{{ config('rejeppat.emails.0') }}</a></p>
                                 </li>
                             </ul>
                             <div class="project-details-style1__social">
                                 <div class="project-details-style1__social-title">
-                                    <h6>Partager le projet</h6>
+                                    <h6>{{ __('Partager le projet') }}</h6>
                                 </div>
                                 <ul>
                                     <li><a href="https://www.facebook.com/sharer/sharer.php?u={{ $partage }}" target="_blank" rel="noopener"><i class="icon-facebook"></i></a></li>
@@ -68,10 +74,10 @@
                     <div class="col-xl-12">
                         <div class="project-details-style1__content">
                             <div class="project-details-style1__content-title">
-                                <h2>Description du projet</h2>
+                                <h2>{{ __('Description du projet') }}</h2>
                             </div>
                             <div class="project-details-style1__content-text">
-                                @foreach ($projet['description'] as $paragraphe)
+                                @foreach ($projet->tr('description') ?? [] as $paragraphe)
                                     <p>{{ $paragraphe }}</p>
                                 @endforeach
                             </div>
@@ -82,7 +88,7 @@
         </section>
         <!-- End Project Details Style1 -->
 
-        @if (count($projet['actions']))
+        @if (count($actions))
         <!-- Start Project Details Style2 -->
         <section class="project-details-style2">
             <div class="container">
@@ -90,13 +96,13 @@
                     <div class="col-xl-8 col-lg-7">
                         <div class="project-details-style2__content">
                             <div class="project-details-style2__content-title">
-                                <h2>Nos actions</h2>
+                                <h2>{{ __('Nos actions') }}</h2>
                             </div>
                             <div class="project-details-style2__content-text">
-                                <p>{{ $projet['resume'] }}</p>
+                                <p>{{ $projet->tr('resume') }}</p>
                             </div>
                             <ul class="project-details-style2__content-list">
-                                @foreach ($projet['actions'] as $action)
+                                @foreach ($actions as $action)
                                 <li>
                                     <div class="box"></div>
                                     <div class="text">
@@ -110,7 +116,7 @@
                     </div>
                     <div class="col-xl-4 col-lg-5">
                         <div class="project-details-style2__img">
-                            <img src="{{ $projet->visuel('-side') }}" alt="{{ $projet['titre_court'] }}">
+                            <img src="{{ $projet->visuel('-side') }}" alt="{{ $projet->tr('titre_court') }}">
                         </div>
                     </div>
                 </div>
@@ -125,17 +131,17 @@
             <div class="container">
                 <div class="project-details-style3__content">
                     <div class="project-details-style3__content-title">
-                        <h2>Résultats &amp; points clés</h2>
+                        <h2>{{ __('Résultats obtenus & points clés') }}</h2>
                     </div>
-                    @if (count($projet['resultats']))
+                    @if (count($resultats))
                     <div class="project-details-style3__content-text">
-                        @foreach ($projet['resultats'] as $paragraphe)
+                        @foreach ($resultats as $paragraphe)
                             <p>{{ $paragraphe }}</p>
                         @endforeach
                     </div>
                     @endif
                     <ul class="project-details-style3__content-list">
-                        @foreach ($projet['points'] as $point)
+                        @foreach ($projet->tr('points') ?? [] as $point)
                         <li>
                             <div class="dot"></div>
                             <div class="text">

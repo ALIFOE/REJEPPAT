@@ -26,7 +26,7 @@ class ProfilController extends Controller
             'name' => ['required', 'string', 'max:120'],
             'email' => ['required', 'email', 'max:160', Rule::unique('users')->ignore($user)],
             'telephone' => ['nullable', 'string', 'max:40'],
-        ], self::MESSAGES);
+        ], $this->messages(self::MESSAGES));
 
         $user->fill($donnees);
 
@@ -43,7 +43,7 @@ class ProfilController extends Controller
             return redirect()->route('verification.notice');
         }
 
-        return back()->with('succes', 'Vos informations ont été enregistrées.');
+        return back()->with('succes', __('Vos informations ont été enregistrées.'));
     }
 
     public function motDePasse(Request $request): RedirectResponse
@@ -51,23 +51,23 @@ class ProfilController extends Controller
         $donnees = $request->validateWithBag('motDePasse', [
             'current_password' => ['required', 'current_password'],
             'password' => $this->regleMotDePasse(),
-        ], self::MESSAGES);
+        ], $this->messages(self::MESSAGES));
 
         $request->user()->update(['password' => $donnees['password']]);
 
-        return back()->with('succes', 'Votre mot de passe a été modifié.');
+        return back()->with('succes', __('Votre mot de passe a été modifié.'));
     }
 
     public function destroy(Request $request): RedirectResponse
     {
         $request->validateWithBag('suppression', [
             'password' => ['required', 'current_password'],
-        ], self::MESSAGES);
+        ], $this->messages(self::MESSAGES));
 
         $user = $request->user();
 
         if ($user->estAdministrateur()) {
-            return back()->withErrors(['password' => 'Un compte administrateur se supprime depuis l’administration.'], 'suppression');
+            return back()->withErrors(['password' => __('Un compte administrateur se supprime depuis l’administration.')], 'suppression');
         }
 
         Auth::logout();

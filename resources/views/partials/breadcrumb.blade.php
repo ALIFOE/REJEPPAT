@@ -12,11 +12,11 @@
                 <div class="inner-content">
                     <div class="title">
                         <h2>{{ $titre }}</h2>
-                        <p>{{ $texte ?? 'Pour une agriculture durable portée par la jeunesse.' }}</p>
+                        <p>{{ $texte ?? __('Pour une agriculture durable portée par la jeunesse.') }}</p>
                     </div>
                     <div class="breadcrumb-menu">
                         <ul class="clearfix">
-                            <li><a href="{{ route('home') }}">Accueil</a></li>
+                            <li><a href="{{ route('home') }}">{{ __('Accueil') }}</a></li>
                             @foreach ($liens ?? [] as $libelle => $url)
                                 <li><span class="icon-arrow"></span></li>
                                 <li><a href="{{ $url }}">{{ $libelle }}</a></li>

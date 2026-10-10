@@ -20,7 +20,7 @@ class MotDePasseController extends Controller
 
     public function envoyerLien(Request $request): RedirectResponse
     {
-        $request->validate(['email' => ['required', 'email']], self::MESSAGES);
+        $request->validate(['email' => ['required', 'email']], $this->messages(self::MESSAGES));
 
         $statut = Password::sendResetLink(['email' => Str::lower(trim($request->input('email')))]);
 
@@ -29,7 +29,7 @@ class MotDePasseController extends Controller
         }
 
         // Même réponse que le compte existe ou non : on ne révèle pas les adresses inscrites
-        return back()->with('succes', 'Si un compte existe avec cette adresse, vous allez recevoir un e-mail contenant un lien pour choisir un nouveau mot de passe.');
+        return back()->with('succes', __('Si un compte existe avec cette adresse, vous allez recevoir un e-mail contenant un lien pour choisir un nouveau mot de passe.'));
     }
 
     public function edit(Request $request, string $token): View
@@ -43,7 +43,7 @@ class MotDePasseController extends Controller
             'token' => ['required'],
             'email' => ['required', 'email'],
             'password' => $this->regleMotDePasse(),
-        ], self::MESSAGES);
+        ], $this->messages(self::MESSAGES));
 
         $statut = Password::reset(
             $request->only('email', 'password', 'password_confirmation', 'token'),

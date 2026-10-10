@@ -96,7 +96,7 @@ class ActualiteController extends Controller
             'galerie' => ['nullable', 'array', 'max:12'],
             'galerie.*' => self::REGLE_IMAGE,
             'retirer_galerie' => ['nullable', 'array'],
-        ], self::MESSAGES + ['categories.required' => 'Choisissez au moins une catégorie.']);
+        ] + $this->reglesTraductions(), self::MESSAGES + ['categories.required' => 'Choisissez au moins une catégorie.']);
 
         $corps = TexteRiche::nettoyer($donnees['corps']);
         $paragraphes = TexteRiche::paragraphes($corps);
@@ -131,6 +131,7 @@ class ActualiteController extends Controller
             'gallery' => $galerie,
             'photo' => $this->photoDemandee($request, $actualite, 'actualites'),
             'publie' => $request->boolean('publie'),
+            'traductions' => $this->traductions($request, Actualite::class),
         ])->save();
     }
 }

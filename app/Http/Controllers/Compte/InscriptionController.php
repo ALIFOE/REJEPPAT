@@ -27,7 +27,7 @@ class InscriptionController extends Controller
             'telephone' => ['nullable', 'string', 'max:40'],
             'password' => $this->regleMotDePasse(),
             'accord' => ['accepted'],
-        ], self::MESSAGES);
+        ], $this->messages(self::MESSAGES));
 
         $user = User::create([
             'name' => $donnees['name'],

@@ -1,12 +1,12 @@
 @extends('layouts.app')
 
-@section('title', 'Confirmez votre adresse e-mail')
+@section('title', __('Confirmez votre adresse e-mail'))
 
 @section('content')
 
         @include('partials.breadcrumb', [
-            'titre' => 'Confirmez votre e-mail',
-            'texte' => 'Une dernière étape avant d’accéder à votre espace client.',
+            'titre' => __('Confirmez votre e-mail'),
+            'texte' => __('Une dernière étape avant d’accéder à votre espace client.'),
             'image' => 'fermes.jpg',
         ])
 
@@ -15,10 +15,9 @@
                 <div class="compte-carte">
                     <div class="compte-carte__entete">
                         <span><i class="fas fa-envelope-open-text"></i></span>
-                        <h2>Vérifiez votre boîte de réception</h2>
+                        <h2>{{ __('Vérifiez votre boîte de réception') }}</h2>
                         <p>
-                            Nous avons envoyé un lien de confirmation à <strong>{{ auth()->user()->email }}</strong>.
-                            Cliquez dessus pour activer votre espace client. Pensez à regarder dans vos courriers indésirables.
+                            {!! __('Nous avons envoyé un lien de confirmation à <strong>:email</strong>. Cliquez dessus pour activer votre espace client. Pensez à regarder dans vos courriers indésirables.', ['email' => e(auth()->user()->email)]) !!}
                         </p>
                     </div>
 
@@ -30,13 +29,13 @@
                         @csrf
                         <button type="submit" class="btn-one compte-form__bouton">
                             <i class="icon-arrow"></i>
-                            <span class="txt">Renvoyer l’e-mail</span>
+                            <span class="txt">{{ __('Renvoyer l’e-mail') }}</span>
                         </button>
                     </form>
 
                     <form action="{{ route('deconnexion') }}" method="post" class="compte-carte__pied">
                         @csrf
-                        Mauvaise adresse ? <button type="submit" class="compte-lien">Se déconnecter</button> et créer un nouveau compte.
+                        {{ __('Mauvaise adresse ?') }} <button type="submit" class="compte-lien">{{ __('Se déconnecter') }}</button> {{ __('et créer un nouveau compte.') }}
                     </form>
                 </div>
             </div>

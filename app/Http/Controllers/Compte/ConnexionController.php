@@ -19,16 +19,17 @@ class ConnexionController extends Controller
         $identifiants = $request->validate([
             'email' => ['required', 'email'],
             'password' => ['required', 'string'],
-        ], self::MESSAGES);
+        ], $this->messages(self::MESSAGES));
 
         if (! Auth::attempt($identifiants, $request->boolean('remember'))) {
             return back()->withInput($request->only('email', 'remember'))
-                ->withErrors(['email' => 'Adresse e-mail ou mot de passe incorrect.']);
+                ->withErrors(['email' => __('Adresse e-mail ou mot de passe incorrect.')]);
         }
 
         $request->session()->regenerate();
 
-        return redirect()->intended(route('compte.index'));
+        // Chaque rôle arrive sur son tableau de bord (ou sur la page demandée avant la connexion)
+        return redirect()->intended($request->user()->tableauDeBord());
     }
 
     public function destroy(Request $request): RedirectResponse

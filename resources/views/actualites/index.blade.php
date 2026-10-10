@@ -2,10 +2,10 @@
 
 @php
     $noms = \App\Support\Contenu::CATEGORIES_ACTUALITES;
-    $titre = $noms[$categorie] ?? 'Actualités & Événements';
+    $titre = __($noms[$categorie] ?? 'Actualités & Événements');
     $texte = $recherche !== ''
-        ? 'Résultats de recherche pour « ' . $recherche . ' »'
-        : 'Retrouvez ici nos actualités et événements.';
+        ? __('Résultats de recherche pour « :recherche »', ['recherche' => $recherche])
+        : __('Retrouvez ici nos actualités et événements.');
 @endphp
 
 @section('title', $titre)
@@ -16,7 +16,7 @@
             'titre' => $titre,
             'texte' => $texte,
             'image' => 'actualites.jpg',
-            'liens' => isset($noms[$categorie]) ? ['Actualités & Événements' => route('actualites.index')] : [],
+            'liens' => isset($noms[$categorie]) ? [__('Actualités & Événements') => route('actualites.index')] : [],
         ])
 
 
@@ -33,12 +33,12 @@
                     <div class="col-xl-4 col-lg-6 col-md-6">
                         <div class="single-blog-style1">
                             <div class="single-blog-style1__img">
-                                <img src="{{ $article->visuel('') }}" alt="{{ $article['title'] }}">
+                                <img src="{{ $article->visuel('') }}" alt="{{ $article->tr('title') }}">
                                 <div class="single-blog-style1__img-overlay-icon">
                                     <a href="{{ $lien }}"><i class="icon-resize"></i></a>
                                 </div>
                                 <div class="single-blog-style1__img-category">
-                                    <h6>{{ $noms[$article['categories'][0]] }}</h6>
+                                    <h6>{{ __($noms[$article['categories'][0]]) }}</h6>
                                 </div>
                             </div>
                             <div class="single-blog-style1__content">
@@ -54,16 +54,16 @@
                                 </ul>
                                 <div class="single-blog-style1__content-title">
                                     <h3>
-                                        <a href="{{ $lien }}">{{ $article['title'] }}</a>
+                                        <a href="{{ $lien }}">{{ $article->tr('title') }}</a>
                                     </h3>
                                 </div>
                                 <div class="single-blog-style1__content-text">
-                                    <p>{{ \App\Support\Contenu::extrait($article['content'], 90) }}</p>
+                                    <p>{{ \App\Support\Contenu::extrait($article->paragraphes(), 90) }}</p>
                                 </div>
                                 <div class="single-blog-style1__content-btn">
                                     <a href="{{ $lien }}">
                                         <i class="fa fa-regular fa-clock"></i>
-                                        {{ \App\Support\Contenu::lecture($article['content']) }} min de lecture
+                                        {{ __(':minutes min de lecture', ['minutes' => \App\Support\Contenu::lecture($article->paragraphes())]) }}
                                     </a>
                                 </div>
                             </div>
@@ -72,8 +72,8 @@
                     <!-- End Single Blog Style1 -->
                     @empty
                     <div class="col-xl-12">
-                        <p class="text-center">Aucune publication ne correspond à votre recherche.
-                            <a href="{{ route('actualites.index') }}">Voir toutes les actualités</a>.</p>
+                        <p class="text-center">{{ __('Aucune publication ne correspond à votre recherche.') }}
+                            <a href="{{ route('actualites.index') }}">{{ __('Voir toutes les actualités') }}</a>.</p>
                     </div>
                     @endforelse
 

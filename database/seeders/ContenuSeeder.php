@@ -5,8 +5,11 @@ namespace Database\Seeders;
 use App\Models\Actualite;
 use App\Models\Ferme;
 use App\Models\Offre;
+use App\Models\Partenaire;
 use App\Models\Produit;
 use App\Models\Projet;
+use App\Models\Region;
+use App\Models\Temoignage;
 use App\Support\TexteRiche;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Seeder;
@@ -48,6 +51,40 @@ class ContenuSeeder extends Seeder
 
         foreach (config('boutique.produits') as $ordre => $produit) {
             $this->importer(Produit::class, $produit + ['ordre' => $ordre]);
+        }
+
+        $this->regions();
+
+        if (Partenaire::doesntExist()) {
+            foreach (config('rejeppat.partenaires') as $ordre => $partenaire) {
+                Partenaire::create($partenaire + ['ordre' => $ordre]);
+            }
+        }
+
+        if (Temoignage::doesntExist()) {
+            foreach (config('rejeppat.temoignages') as $ordre => $temoignage) {
+                Temoignage::create($temoignage + ['type' => 'temoignage', 'accueil' => true, 'ordre' => $ordre]);
+            }
+        }
+    }
+
+    /** Les 5 sections régionales, et le rattachement des fermes écoles d'après la préfecture de leur adresse. */
+    private function regions(): void
+    {
+        foreach (config('rejeppat.regions') as $ordre => $donnees) {
+            $region = Region::firstOrCreate(['slug' => $donnees['slug']], [
+                'nom' => $donnees['nom'],
+                'chef_lieu' => $donnees['chef_lieu'],
+                'presentation' => $donnees['presentation'] ?? [],
+                'filieres' => [],
+                'ordre' => $ordre,
+            ]);
+
+            $motif = '/préfecture d(e |’|\')('.implode('|', array_map('preg_quote', $donnees['prefectures'])).')\b/u';
+
+            Ferme::whereNull('region_id')->get()
+                ->filter(fn (Ferme $ferme) => $donnees['prefectures'] && preg_match($motif, $ferme->carte['adresse'] ?? ''))
+                ->each(fn (Ferme $ferme) => $ferme->update(['region_id' => $region->id]));
         }
     }
 

@@ -15,7 +15,7 @@
         <div class="sidebar-style1__contact-info-btn">
             <a class="btn-one" href="{{ route('contact') }}">
                 <i class="icon-arrow"></i>
-                <span class="txt">Nous contacter</span>
+                <span class="txt">{{ __('Nous contacter') }}</span>
             </a>
         </div>
     </div>

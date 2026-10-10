@@ -301,6 +301,216 @@
     font-size: 15px;
 }
 
+/* Tableau de bord du client */
+.compte-bienvenue {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: 20px;
+    margin-bottom: 25px;
+    padding: 28px 30px;
+    border-radius: var(--thm-border-radius);
+    background: linear-gradient(120deg, var(--rej-green-title), var(--rej-green-dark));
+    color: var(--rej-blanc-casse);
+}
+
+.compte-bienvenue h3 {
+    margin-bottom: 6px;
+    color: #fff;
+    font-size: 26px;
+}
+
+.compte-bienvenue p {
+    margin: 0;
+    color: var(--rej-blanc-casse);
+}
+
+.compte-bienvenue .btn-one {
+    border: 0;
+}
+
+.compte-chiffres {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 16px;
+    margin-bottom: 30px;
+}
+
+.compte-chiffre {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    padding: 20px;
+    border: 1px solid var(--thm-border-color-1);
+    border-radius: var(--thm-border-radius);
+    background: var(--thm-white);
+}
+
+.compte-chiffre span {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 42px;
+    height: 42px;
+    margin-bottom: 8px;
+    border-radius: 50%;
+    background: var(--rej-green-50);
+    color: var(--rej-green-dark);
+}
+
+.compte-chiffre strong {
+    color: var(--rej-green-title);
+    font-size: 24px;
+    line-height: 1.2;
+}
+
+.compte-chiffre small {
+    font-size: 14px;
+    line-height: 1.4;
+}
+
+.compte-bloc__entete {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 10px;
+    margin-bottom: 20px;
+}
+
+.compte-bloc__entete h3 {
+    margin: 0;
+}
+
+.compte-bloc__entete a {
+    color: var(--rej-green-dark);
+    font-size: 15px;
+    font-weight: 600;
+}
+
+/* Étapes de la commande en cours */
+.compte-suivi {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    margin: 10px 0 0;
+    padding: 0;
+    list-style: none;
+    counter-reset: etape;
+}
+
+.compte-suivi li {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+    color: var(--rej-green-muted);
+    font-size: 14px;
+    text-align: center;
+}
+
+.compte-suivi li::before {
+    position: absolute;
+    top: 17px;
+    left: -50%;
+    width: 100%;
+    height: 3px;
+    background: var(--rej-green-150);
+    content: '';
+}
+
+.compte-suivi li:first-child::before {
+    display: none;
+}
+
+.compte-suivi li span {
+    position: relative;
+    z-index: 1;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 36px;
+    height: 36px;
+    border: 2px solid var(--rej-green-150);
+    border-radius: 50%;
+    background: var(--thm-white);
+    font-weight: 700;
+}
+
+.compte-suivi li.fait {
+    color: var(--rej-green-title);
+    font-weight: 600;
+}
+
+.compte-suivi li.fait::before {
+    background: var(--rej-green-dark);
+}
+
+.compte-suivi li.fait span {
+    border-color: var(--rej-green-dark);
+    background: var(--rej-green-dark);
+    color: #fff;
+}
+
+.compte-suivi li.actuel span {
+    box-shadow: 0 0 0 5px var(--rej-green-100);
+}
+
+.compte-raccourcis {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 16px;
+}
+
+.compte-raccourcis a {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    padding: 20px;
+    border: 1px solid var(--thm-border-color-1);
+    border-radius: var(--thm-border-radius);
+    background: var(--rej-green-50);
+    transition: border-color .2s ease, transform .2s ease;
+}
+
+.compte-raccourcis a:hover {
+    border-color: var(--rej-green-dark);
+    transform: translateY(-2px);
+}
+
+.compte-raccourcis i {
+    margin-bottom: 6px;
+    color: var(--rej-green-dark);
+    font-size: 22px;
+}
+
+.compte-raccourcis strong {
+    color: var(--rej-green-title);
+}
+
+.compte-raccourcis small {
+    color: var(--rej-green-text);
+    font-size: 14px;
+}
+
+@media (max-width: 1199px) {
+    .compte-chiffres,
+    .compte-raccourcis {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+}
+
+@media (max-width: 575px) {
+    .compte-suivi li {
+        font-size: 12px;
+    }
+
+    .compte-bienvenue {
+        padding: 22px 18px;
+    }
+}
+
 .compte-role__entete {
     display: flex;
     flex-wrap: wrap;

@@ -122,39 +122,41 @@
     padding-right: 42px !important;
 }
 
-/* En-tête et slider d'accueil posés sur les photos : petits textes en blanc cassé ;
+/* En-tête et slider d'accueil posés sur les photos : petits textes en blanc pur ;
    seul le grand titre du slider, vert sombre, garde un contour blanc transparent */
 .main-header-style4__top-left-content li .text p,
 .main-header-style4__top-left-content li .text p a,
+.main-header-style4__social li a,
 .main-header-style4__search-box a,
 .main-header-style4__cart-box a,
 .main-header-style4__content-contact-info-list li .content h4,
 .main-header-style4__content-contact-info-list li .content p,
 .main-header-style4__content-contact-info-list li .content p a {
-    color: var(--rej-blanc-casse);
+    color: #ffffff;
     font-weight: 600;
 }
 
 .main-header-style4__top-left-content li:hover .text p a,
+.main-header-style4__social li a:hover,
 .main-header-style4__search-box a:hover,
 .main-header-style4__cart-box a:hover,
 .main-header-style4__content-contact-info-list li:hover .content p a {
     color: var(--thm-primary-color);
 }
 
-/* Couche noire transparente uniforme (15 %) sur les photos du slider */
+/* Couche noire transparente uniforme (45 %) sur les photos du slider */
 .main-slider-style4 .image-layer::after {
     content: "";
     position: absolute;
     inset: 0;
-    background-color: rgba(0, 0, 0, 0.15);
+    background-color: rgba(0, 0, 0, 0.45);
     pointer-events: none;
 }
 
-/* Menu et flèches du slider en blanc cassé, comme les autres textes de l'en-tête */
+/* Menu et flèches du slider en blanc pur, comme les autres textes de l'en-tête */
 .main-menu.main-menu-style4 .main-menu__list > li > a {
-    color: var(--rej-blanc-casse);
-    border-color: rgba(236, 231, 218, 0.5);
+    color: #ffffff;
+    border-color: rgba(255, 255, 255, 0.5);
 }
 
 .main-menu.main-menu-style4 .main-menu__list > li.current > a,
@@ -163,8 +165,8 @@
 }
 
 .main-slider-style4 .main-slider-nav__control {
-    color: var(--rej-blanc-casse);
-    border-color: rgba(236, 231, 218, 0.5);
+    color: #ffffff;
+    border-color: rgba(255, 255, 255, 0.5);
 }
 
 .main-slider-style4 .content-box .big-title h2 {
@@ -177,7 +179,7 @@
 
 .main-slider-style4 .content-box .sub-title h5,
 .main-slider-style4 .content-box .text-box p {
-    color: var(--rej-blanc-casse);
+    color: #ffffff;
     font-weight: 600;
 }
 

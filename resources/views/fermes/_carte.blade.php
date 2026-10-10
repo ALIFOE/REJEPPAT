@@ -7,18 +7,18 @@
                         <div class="single-team-style1">
                             <div class="single-team-style1__img">
                                 <div class="single-team-style1__img-inner">
-                                    <img src="{{ $ferme->visuel('') }}" alt="Ferme école {{ $ferme['nom'] }}">
+                                    <img src="{{ $ferme->visuel('') }}" alt="{{ __('Ferme école :nom', ['nom' => $ferme['nom']]) }}">
                                 </div>
                                 <div class="single-team-style1__img-designation">
                                     <div class="single-team-style1__img-designation-inner">
-                                        <span>{{ $ferme['specialite'] }}</span>
+                                        <span>{{ $ferme->tr('specialite') }}</span>
                                     </div>
                                 </div>
                             </div>
                             <div class="single-team-style1__content">
                                 <div class="single-team-style1__content-top">
                                     <h3><a href="{{ $lien }}">{{ $ferme['nom'] }}</a></h3>
-                                    <p>{{ $ferme['localisation'] ?? 'Ferme école du réseau' }}</p>
+                                    <p>{{ $ferme['localisation'] ?? __('Ferme école du réseau') }}</p>
                                 </div>
                                 <div class="single-team-style1__content-bottom">
                                     <div class="single-team-style1__content-bottom-btn">
@@ -27,7 +27,7 @@
                                         </a>
                                         <a class="btn-one" href="{{ $lien }}">
                                             <i class="icon-arrow"></i>
-                                            <span class="txt">Découvrir</span>
+                                            <span class="txt">{{ __('Découvrir') }}</span>
                                         </a>
                                     </div>
                                     <div class="single-team-style1__content-bottom-social">

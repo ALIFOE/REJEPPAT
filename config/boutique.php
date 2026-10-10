@@ -12,11 +12,16 @@
 
 return [
 
+    /*
+    | Catégories du cahier des charges du site.
+    */
     'categories' => [
-        'bio' => 'Bio',
-        'cereales' => 'Céréales & légumineuses',
+        'fruits-legumes' => 'Fruits & Légumes',
+        'tubercules-cereales' => 'Tubercules & Céréales',
         'transformes' => 'Produits transformés',
-        'elevage' => 'Élevage',
+        'boissons-jus' => 'Boissons & Jus',
+        'miel' => 'Miel & Dérivés',
+        'epices' => 'Épices',
     ],
 
     /*
@@ -30,23 +35,26 @@ return [
     ],
 
     /*
-    | Modes de paiement. Mobile Money : le client envoie le montant puis
-    | indique la référence de la transaction, vérifiée depuis l'administration.
+    | Modes de paiement. Mobile Money : paiement en ligne via PayGate Global
+    | (« reseau » : valeur attendue par l'API). Le client valide le paiement
+    | sur son téléphone avec son code secret.
     */
     'paiements' => [
         'livraison' => [
             'label' => 'Paiement à la livraison / au retrait',
             'texte' => 'Vous payez en espèces ou par Mobile Money à la réception de votre commande.',
         ],
-        'tmoney' => [
-            'label' => 'T-Money (Togocom)',
-            'texte' => 'Envoyez le montant total au (+228) 91 87 33 16, puis indiquez la référence de la transaction.',
-            'reference' => true,
+        'mixx' => [
+            'label' => 'Mixx by Yas',
+            'texte' => 'Payez maintenant : vous recevez une demande de paiement sur votre téléphone Mixx (Yas).',
+            'logo' => 'assets/images/rejeppat/paiement/mixx.png',
+            'reseau' => 'TMONEY',
         ],
         'flooz' => [
-            'label' => 'Flooz (Moov Africa)',
-            'texte' => 'Envoyez le montant total au (+228) 98 92 63 50, puis indiquez la référence de la transaction.',
-            'reference' => true,
+            'label' => 'Moov Money Flooz',
+            'texte' => 'Payez maintenant : vous recevez une demande de paiement sur votre téléphone Flooz (Moov Africa).',
+            'logo' => 'assets/images/rejeppat/paiement/flooz.png',
+            'reseau' => 'FLOOZ',
         ],
     ],
 
@@ -54,7 +62,7 @@ return [
         [
             'slug' => 'carotte-biologique',
             'nom' => 'Carotte biologique',
-            'categorie' => 'bio',
+            'categorie' => 'fruits-legumes',
             'image' => 'carotte-biologique.png',
             'prix' => 2500,
             'prix_initial' => 3000,
@@ -74,7 +82,7 @@ return [
         [
             'slug' => 'oignon-bio',
             'nom' => 'Oignon – pour une vie saine',
-            'categorie' => 'bio',
+            'categorie' => 'fruits-legumes',
             'image' => 'oignon.png',
             'prix' => 33,
             'prix_initial' => 43,
@@ -94,7 +102,7 @@ return [
         [
             'slug' => 'tomates',
             'nom' => 'Tomates',
-            'categorie' => 'bio',
+            'categorie' => 'fruits-legumes',
             'image' => 'tomates.png',
             'prix' => 300,
             'prix_initial' => 500,
