@@ -24,6 +24,7 @@ class RegionController extends Controller
             'regions' => Contenu::regions(),
             'fermes' => $region->fermes()->publie()->orderBy('ordre')->get(),
             'membres' => $region->membresAnnuaire()->publie()->orderBy('nom')->take(6)->get(),
+            'evenements' => $region->evenements()->publie()->aVenir()->get(),
         ]);
     }
 }

@@ -9,6 +9,10 @@
     $resultats = $projet->tr('resultats') ?? [];
 @endphp
 
+{{-- Lien partagé : la photo et le résumé du projet s'affichent dans l'aperçu au lieu du logo --}}
+@section('og_image', $projet->visuel('-detail'))
+@section('description', \Illuminate\Support\Str::limit(trim(strip_tags((string) $projet->tr('resume'))), 200))
+
 @section('content')
 
         @include('partials.breadcrumb', [

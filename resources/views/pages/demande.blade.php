@@ -2,6 +2,8 @@
 
 @section('title', __('Demande de service'))
 
+@section('body_class', 'body-bg-1 page-reseau')
+
 @php
     $etapes = [
         ['image' => 'demande-personnalisee.jpg', 'titre' => __('Demande personnalisée'), 'texte' => __('Votre demande est étudiée en fonction de vos besoins.')],

@@ -122,8 +122,7 @@
     padding-right: 42px !important;
 }
 
-/* En-tête et slider d'accueil posés sur les photos : petits textes en blanc pur ;
-   seul le grand titre du slider, vert sombre, garde un contour blanc transparent */
+/* En-tête et slider d'accueil posés sur les photos : textes en blanc pur */
 .main-header-style4__top-left-content li .text p,
 .main-header-style4__top-left-content li .text p a,
 .main-header-style4__social li a,
@@ -169,12 +168,15 @@
     border-color: rgba(255, 255, 255, 0.5);
 }
 
+/* Grand titre du slider en blanc plein avec une ombre portée : le vert sombre détouré
+   de blanc transparent se perdait sur les photos assombries */
 .main-slider-style4 .content-box .big-title h2 {
     background: none;
     -webkit-background-clip: border-box;
-    color: var(--rej-green-title);
-    -webkit-text-stroke: 12px rgba(255, 255, 255, 0.55);
-    paint-order: stroke fill;
+    -webkit-text-fill-color: #ffffff;
+    color: #ffffff;
+    -webkit-text-stroke: 0;
+    text-shadow: 0 4px 18px rgba(0, 0, 0, 0.55), 0 2px 4px rgba(0, 0, 0, 0.4);
 }
 
 .main-slider-style4 .content-box .sub-title h5,
@@ -194,9 +196,9 @@
     }
 }
 
-/* Sous 1600px, le bouton « Demande de service » de droite laisse la place au menu
-   (le lien reste dans le sous-menu « Nos offres » et dans l'en-tête collant) */
-@media only screen and (max-width: 1599px) {
+/* Sous 1800px, le bouton « Demande de service » de droite laisse la place au menu
+   (le lien reste dans le sous-menu « Le Réseau » et dans l'en-tête collant) */
+@media only screen and (max-width: 1799px) {
     .main-header-style1__content-bottom-right > .header-btn-style1 {
         display: none;
     }
@@ -614,4 +616,154 @@
 .single-team-style1:hover .single-team-style1__img-inner::before {
     background-color: var(--rej-green-dark);
     opacity: .08;
+}
+
+/* Sous-titre des bandeaux de page (fil d'Ariane) : en blanc pour être lisible sur toutes les photos */
+.breadcrumb-style1 .title p {
+    color: #ffffff;
+    text-shadow: 0 2px 8px rgba(12, 34, 19, .55);
+}
+
+/* ---------- Menu en verre dépoli (fond transparent et flou) ----------
+   Le flou de la barre est porté par un pseudo-élément : un parent avec backdrop-filter
+   empêcherait les sous-menus qu'il contient de flouter la photo située dessous. */
+
+/* Sous-menus déroulants */
+.main-menu .main-menu__list>li>ul,
+.main-menu .main-menu__list>li>ul>li>ul,
+.stricky-header .main-menu__list>li>ul,
+.stricky-header .main-menu__list>li>ul>li>ul {
+    background-color: rgba(255, 255, 255, 0.55);
+    -webkit-backdrop-filter: blur(20px) saturate(160%);
+    backdrop-filter: blur(20px) saturate(160%);
+    border: 1px solid rgba(255, 255, 255, 0.55);
+}
+
+.main-menu .main-menu__list>li>ul:before,
+.main-menu .main-menu__list>li>ul>li>ul:before,
+.stricky-header .main-menu__list>li>ul:before,
+.stricky-header .main-menu__list>li>ul>li>ul:before {
+    background-color: transparent;
+    box-shadow: 0 12px 32px rgba(12, 34, 19, 0.18);
+}
+
+/* Barre de menu blanche des pages internes */
+.main-header-style1__content-bottom {
+    background-color: transparent;
+    isolation: isolate;
+}
+
+.main-header-style1__content-bottom::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+    border-radius: inherit;
+    background-color: rgba(255, 255, 255, 0.55);
+    -webkit-backdrop-filter: blur(20px) saturate(160%);
+    backdrop-filter: blur(20px) saturate(160%);
+    border: 1px solid rgba(255, 255, 255, 0.55);
+    box-shadow: 0 10px 30px rgba(12, 34, 19, 0.12);
+}
+
+/* Sur ce fond clair translucide, l'entrée active ou survolée passe du jaune au vert foncé pour rester lisible */
+.main-menu.main-menu-style1 .main-menu__list > li.current > a,
+.main-menu.main-menu-style1 .main-menu__list > li:hover > a,
+.main-menu.main-menu-style1 .main-menu__list > li.current.dropdown > a:after,
+.main-menu.main-menu-style1 .main-menu__list > li:hover.dropdown > a:after {
+    color: var(--rej-green-dark);
+}
+
+/* En-tête collant (au défilement) : vert du site, translucide et flou */
+.stricky-header--style1.main-menu,
+.stricky-header--style1 .main-menu__wrapper,
+.stricky-header--style1 .main-menu__wrapper-inner {
+    background-color: transparent;
+}
+
+.stricky-header--style1.main-menu::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+    background-color: rgba(31, 74, 44, 0.6);
+    -webkit-backdrop-filter: blur(20px) saturate(160%);
+    backdrop-filter: blur(20px) saturate(160%);
+}
+
+/* Logo, 8 entrées et bouton « Demande de service » ne tiennent pas dans les 1200px du modèle :
+   l'en-tête collant s'élargit, puis le bouton se réduit à sa flèche, puis s'efface
+   (la demande de service reste dans le sous-menu « Le Réseau ») */
+.stricky-header--style1 .main-menu__wrapper {
+    max-width: 1640px;
+    padding: 0 30px;
+}
+
+@media only screen and (max-width: 1599px) {
+    .stricky-header .header-sticky-btn-one .btn-one .txt {
+        display: none;
+    }
+}
+
+@media only screen and (max-width: 1365px) {
+    .stricky-header .main-menu__wrapper-inner .header-sticky-btn-one {
+        display: none;
+    }
+
+    .stricky-header--style1 .main-menu__wrapper {
+        padding: 0 15px;
+    }
+
+    .stricky-header .main-menu__wrapper-inner .sticky-logo-box-style1 {
+        margin-right: 15px;
+    }
+}
+
+/* Flèches des sous-menus visibles sur le vert de l'en-tête collant */
+.stricky-header--style1 .main-menu__list > li.dropdown > a:after {
+    color: rgba(255, 255, 255, 0.75);
+}
+
+.stricky-header--style1 .main-menu__list > li.current.dropdown > a:after,
+.stricky-header--style1 .main-menu__list > li:hover.dropdown > a:after {
+    color: var(--thm-primary-color);
+}
+
+/* Boutons du menu de l'accueil, posés sur la photo du slider */
+.main-menu.main-menu-style4 .main-menu__list > li > a {
+    background-color: rgba(255, 255, 255, 0.08);
+    -webkit-backdrop-filter: blur(10px) saturate(150%);
+    backdrop-filter: blur(10px) saturate(150%);
+}
+
+/* Pages « Le Réseau » (offres, demande de service, partenaires) : sous-titres en blanc au lieu du jaune */
+.page-reseau .sec-title .sub-title h4 {
+    color: #ffffff;
+}
+
+/* Icônes des offres & services : pictogramme Font Awesome sur une pastille jaune, comme les icônes du modèle */
+.single-grown-with-care__icon--police {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 64px;
+    height: 64px;
+    font-size: 30px;
+    line-height: 1;
+    color: var(--thm-black);
+}
+
+.single-grown-with-care__icon--police::before {
+    content: "";
+    position: absolute;
+    right: 0;
+    bottom: 2px;
+    width: 46px;
+    height: 46px;
+    border-radius: 50%;
+    background: var(--thm-primary-color);
+}
+
+.single-grown-with-care__icon--police i {
+    position: relative;
 }

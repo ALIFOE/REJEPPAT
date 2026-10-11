@@ -123,7 +123,7 @@ class EspaceJeunesTest extends TestCase
             'titre' => 'Manuel de maraîchage', 'categorie' => 'manuel',
             'fichier' => UploadedFile::fake()->create('manuel.pdf', 200, 'application/pdf'), 'publie' => '1',
         ])->assertRedirect(route('admin.ressources.index'));
-        Storage::disk('uploads')->assertExists(Ressource::sole()->fichier);
+        Storage::disk('uploads')->assertExists(Ressource::where('titre', 'Manuel de maraîchage')->sole()->fichier);
 
         $this->post(route('admin.ressources.store'), [
             'titre' => 'Script', 'categorie' => 'guide', 'fichier' => UploadedFile::fake()->create('virus.exe', 10),

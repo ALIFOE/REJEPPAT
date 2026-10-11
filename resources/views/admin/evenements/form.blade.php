@@ -29,6 +29,7 @@
             <div class="a-form">
                 @include('admin.partials.photo', ['modele' => $evenement, 'label' => 'Visuel de l’événement'])
                 @include('admin.partials.champ', ['nom' => 'type', 'label' => 'Type', 'type' => 'select', 'valeur' => $evenement->type, 'options' => Evenement::TYPES, 'requis' => true])
+                @include('admin.partials.champ', ['nom' => 'region_id', 'label' => 'Section régionale', 'type' => 'select', 'valeur' => $evenement->region_id, 'options' => ['' => '– Activité nationale –'] + \App\Models\Region::orderBy('ordre')->pluck('nom', 'id')->all(), 'aide' => 'L’activité apparaît aussi dans la section régionale, sur la page d’accueil.'])
                 @include('admin.partials.champ', ['nom' => 'slug', 'label' => 'Adresse (slug)', 'valeur' => $evenement->slug])
                 @include('admin.partials.interrupteur', ['nom' => 'publie', 'label' => 'Publié dans l’agenda', 'valeur' => $evenement->publie])
             </div>

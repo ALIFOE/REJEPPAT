@@ -1,0 +1,407 @@
+/*
+ * Lecteur vidéo du REJEPPAT (site public et administration) et section « Le REJEPPAT en vidéo » de l'accueil.
+ */
+.rj-lecteur {
+    --lecteur-vert: #2e6b3a;
+    --lecteur-vert-nuit: #0c2213;
+    --lecteur-jaune: #f4ca4e;
+    position: relative;
+    overflow: hidden;
+    aspect-ratio: 16 / 9;
+    border-radius: 16px;
+    background: var(--lecteur-vert-nuit);
+    box-shadow: 0 25px 60px rgba(12, 34, 19, .25);
+    outline: none;
+    user-select: none;
+    -webkit-user-select: none;
+    -webkit-touch-callout: none;
+}
+
+.rj-lecteur:focus-visible {
+    box-shadow: 0 0 0 3px var(--lecteur-jaune), 0 25px 60px rgba(12, 34, 19, .25);
+}
+
+.rj-lecteur__video {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    background: var(--lecteur-vert-nuit);
+    cursor: pointer;
+}
+
+.rj-lecteur--plein-ecran {
+    border-radius: 0;
+    aspect-ratio: auto;
+}
+
+/* Bandeau titre */
+.rj-lecteur__entete {
+    position: absolute;
+    top: 0;
+    right: 0;
+    left: 0;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 18px 22px 40px;
+    background: linear-gradient(180deg, rgba(12, 34, 19, .8) 0%, rgba(12, 34, 19, 0) 100%);
+    color: #fff;
+    pointer-events: none;
+    transition: opacity .3s ease;
+}
+
+.rj-lecteur__entete strong {
+    font-size: 18px;
+    line-height: 1.3;
+    text-shadow: 0 1px 4px rgba(0, 0, 0, .4);
+}
+
+.rj-lecteur__logo {
+    flex-shrink: 0;
+    padding: 4px 6px;
+    border-radius: 8px;
+    background: #fff;
+}
+
+.rj-lecteur__logo img {
+    display: block;
+    height: 30px;
+}
+
+/* Grand bouton central */
+.rj-lecteur__grand-bouton {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 92px;
+    height: 92px;
+    padding-left: 6px;
+    border: 0;
+    border-radius: 50%;
+    background: var(--lecteur-jaune);
+    color: var(--lecteur-vert-nuit);
+    font-size: 32px;
+    box-shadow: 0 0 0 12px rgba(244, 202, 78, .3);
+    transform: translate(-50%, -50%);
+    transition: transform .2s ease, opacity .3s ease;
+    cursor: pointer;
+    animation: rj-lecteur-pulse 2.2s ease-out infinite;
+}
+
+.rj-lecteur__grand-bouton:hover {
+    transform: translate(-50%, -50%) scale(1.08);
+}
+
+@keyframes rj-lecteur-pulse {
+    0% { box-shadow: 0 0 0 0 rgba(244, 202, 78, .55); }
+    100% { box-shadow: 0 0 0 26px rgba(244, 202, 78, 0); }
+}
+
+.rj-lecteur--lecture .rj-lecteur__grand-bouton {
+    opacity: 0;
+    pointer-events: none;
+}
+
+/* Indicateur de chargement */
+.rj-lecteur__chargement {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    display: none;
+    width: 54px;
+    height: 54px;
+    margin: -27px 0 0 -27px;
+    border: 4px solid rgba(255, 255, 255, .25);
+    border-top-color: var(--lecteur-jaune);
+    border-radius: 50%;
+    animation: rj-lecteur-rotation .8s linear infinite;
+}
+
+.rj-lecteur--chargement .rj-lecteur__chargement {
+    display: block;
+}
+
+@keyframes rj-lecteur-rotation {
+    to { transform: rotate(360deg); }
+}
+
+/* Barre de commandes */
+.rj-lecteur__commandes {
+    position: absolute;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    padding: 30px 18px 12px;
+    background: linear-gradient(0deg, rgba(12, 34, 19, .9) 0%, rgba(12, 34, 19, 0) 100%);
+    opacity: 0;
+    transform: translateY(8px);
+    transition: opacity .3s ease, transform .3s ease;
+}
+
+.rj-lecteur--demarre .rj-lecteur__commandes {
+    opacity: 1;
+    transform: none;
+}
+
+.rj-lecteur--demarre.rj-lecteur--lecture:not(.rj-lecteur--actif) .rj-lecteur__commandes,
+.rj-lecteur--demarre.rj-lecteur--lecture:not(.rj-lecteur--actif) .rj-lecteur__entete {
+    opacity: 0;
+    transform: translateY(8px);
+}
+
+.rj-lecteur--demarre.rj-lecteur--lecture:not(.rj-lecteur--actif) {
+    cursor: none;
+}
+
+.rj-lecteur__progression {
+    position: relative;
+    height: 6px;
+    margin-bottom: 10px;
+    border-radius: 6px;
+    background: rgba(255, 255, 255, .25);
+    cursor: pointer;
+    touch-action: none;
+    transition: height .15s ease;
+}
+
+.rj-lecteur__progression:hover {
+    height: 8px;
+}
+
+.rj-lecteur__charge,
+.rj-lecteur__avance {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    width: 0;
+    border-radius: 6px;
+}
+
+.rj-lecteur__charge {
+    background: rgba(255, 255, 255, .35);
+}
+
+.rj-lecteur__avance {
+    background: var(--lecteur-jaune);
+}
+
+.rj-lecteur__curseur {
+    position: absolute;
+    top: 50%;
+    left: 0;
+    width: 16px;
+    height: 16px;
+    margin: -8px 0 0 -8px;
+    border: 3px solid #fff;
+    border-radius: 50%;
+    background: var(--lecteur-jaune);
+    box-shadow: 0 1px 4px rgba(0, 0, 0, .4);
+}
+
+.rj-lecteur__barre {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    color: #fff;
+}
+
+.rj-lecteur__barre button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 40px;
+    height: 40px;
+    padding: 0;
+    border: 0;
+    border-radius: 50%;
+    background: transparent;
+    color: #fff;
+    font-size: 17px;
+    cursor: pointer;
+    transition: background .2s ease, color .2s ease;
+}
+
+.rj-lecteur__barre button:hover,
+.rj-lecteur__barre button:focus-visible {
+    background: rgba(255, 255, 255, .15);
+    color: var(--lecteur-jaune);
+    outline: none;
+}
+
+.rj-lecteur__barre button[data-lecteur="lecture"] {
+    background: var(--lecteur-jaune);
+    color: var(--lecteur-vert-nuit);
+}
+
+.rj-lecteur__volume {
+    width: 90px;
+    height: 4px;
+    accent-color: var(--lecteur-jaune);
+    cursor: pointer;
+}
+
+.rj-lecteur__temps {
+    margin-left: 8px;
+    font-size: 14px;
+    font-variant-numeric: tabular-nums;
+    white-space: nowrap;
+}
+
+.rj-lecteur__espace {
+    flex: 1;
+}
+
+@media (max-width: 575px) {
+    .rj-lecteur {
+        border-radius: 12px;
+    }
+
+    .rj-lecteur__grand-bouton {
+        width: 68px;
+        height: 68px;
+        font-size: 24px;
+    }
+
+    .rj-lecteur__entete {
+        padding: 12px 14px 30px;
+    }
+
+    .rj-lecteur__entete strong {
+        font-size: 15px;
+    }
+
+    .rj-lecteur__logo img {
+        height: 22px;
+    }
+
+    .rj-lecteur__commandes {
+        padding: 24px 10px 8px;
+    }
+
+    .rj-lecteur__barre button {
+        width: 34px;
+        height: 34px;
+        font-size: 15px;
+    }
+
+    .rj-lecteur__volume,
+    .rj-lecteur__barre button[data-lecteur="reculer"],
+    .rj-lecteur__barre button[data-lecteur="avancer"] {
+        display: none;
+    }
+}
+
+/* ---------- Section « Le REJEPPAT en vidéo » (accueil) ---------- */
+.rj-videos-accueil {
+    position: relative;
+    padding: 100px 0 110px;
+    background: #1f4a2c;
+    color: rgba(255, 255, 255, .85);
+}
+
+.rj-videos-accueil .sec-title h2,
+.rj-videos-accueil .sec-title .text p {
+    color: #fff;
+}
+
+.rj-videos-accueil__grille {
+    display: grid;
+    grid-template-columns: minmax(0, 2.2fr) minmax(0, 1fr);
+    gap: 30px;
+    align-items: start;
+}
+
+.rj-videos-accueil__grille--seule {
+    grid-template-columns: minmax(0, 1fr);
+    max-width: 980px;
+    margin: 0 auto;
+}
+
+.rj-videos-accueil__description {
+    margin: 18px 0 0;
+    text-align: center;
+}
+
+.rj-videos-liste {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+
+.rj-videos-liste button {
+    display: flex;
+    gap: 14px;
+    align-items: center;
+    width: 100%;
+    padding: 10px;
+    border: 1px solid rgba(255, 255, 255, .12);
+    border-radius: 12px;
+    background: rgba(255, 255, 255, .06);
+    color: #fff;
+    text-align: left;
+    transition: background .2s ease, border-color .2s ease;
+}
+
+.rj-videos-liste button:hover,
+.rj-videos-liste button.actif {
+    border-color: #f4ca4e;
+    background: rgba(244, 202, 78, .12);
+}
+
+.rj-videos-liste__vignette {
+    position: relative;
+    flex-shrink: 0;
+    width: 120px;
+    aspect-ratio: 16 / 9;
+    overflow: hidden;
+    border-radius: 8px;
+    background: #0c2213;
+}
+
+.rj-videos-liste__vignette img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.rj-videos-liste__vignette i {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    color: #f4ca4e;
+    font-size: 22px;
+    transform: translate(-50%, -50%);
+}
+
+.rj-videos-liste strong {
+    display: block;
+    font-size: 15px;
+    line-height: 1.35;
+}
+
+.rj-videos-liste small {
+    color: rgba(255, 255, 255, .65);
+    font-size: 13px;
+}
+
+@media (max-width: 991px) {
+    .rj-videos-accueil {
+        padding: 70px 0 80px;
+    }
+
+    .rj-videos-accueil__grille {
+        grid-template-columns: minmax(0, 1fr);
+    }
+}
+
+.rj-videos-accueil .rj-videos-accueil__description {
+    color: rgba(255, 255, 255, .8);
+}

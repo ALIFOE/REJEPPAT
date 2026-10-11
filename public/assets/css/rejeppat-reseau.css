@@ -1245,3 +1245,312 @@
         height: 52px;
     }
 }
+
+/* ---------- Sections régionales sur l'accueil ---------- */
+.rj-regions-accueil {
+    background: var(--rej-green-50);
+}
+
+.rj-regions-onglets {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 10px;
+    margin: 0 0 30px;
+}
+
+.rj-regions-onglets button {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 12px 22px;
+    border: 1px solid var(--thm-border-color-1);
+    border-radius: 30px;
+    background: var(--thm-white);
+    color: var(--thm-heading-font-color);
+    font-size: 16px;
+    font-weight: 700;
+    transition: all .2s ease;
+}
+
+.rj-regions-onglets button:hover,
+.rj-regions-onglets button.actif {
+    border-color: var(--rej-green-dark);
+    background: var(--rej-green-dark);
+    color: var(--thm-white);
+}
+
+.rj-region-panneau {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1.2fr;
+    overflow: hidden;
+    border-radius: 14px;
+    background: var(--thm-white);
+    box-shadow: 0 20px 50px rgba(23, 77, 42, .1);
+}
+
+.rj-region-panneau[hidden] {
+    display: none;
+}
+
+.rj-region-panneau__visuel {
+    position: relative;
+    display: flex;
+    align-items: flex-end;
+    min-height: 340px;
+    background-position: center;
+    background-size: cover;
+}
+
+.rj-region-panneau__visuel::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(180deg, rgba(12, 34, 19, 0) 25%, rgba(12, 34, 19, .85) 100%);
+}
+
+.rj-region-panneau__titre {
+    position: relative;
+    padding: 28px;
+    color: var(--thm-white);
+}
+
+.rj-region-panneau__titre h3 {
+    margin: 0 0 8px;
+    color: var(--thm-white);
+    font-size: 28px;
+}
+
+.rj-region-panneau__titre .rj-meta {
+    margin-bottom: 16px;
+    color: rgba(255, 255, 255, .85);
+}
+
+.rj-region-panneau__titre .rj-meta i {
+    color: var(--thm-primary-color);
+}
+
+.rj-region-panneau__bloc {
+    padding: 30px 28px;
+}
+
+.rj-region-panneau__bloc + .rj-region-panneau__bloc {
+    border-left: 1px solid var(--thm-border-color-1);
+}
+
+.rj-region-panneau__bloc h4 {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin: 0 0 20px;
+    font-size: 20px;
+}
+
+.rj-region-panneau__bloc h4 i {
+    color: var(--rej-green-dark);
+}
+
+.rj-region-panneau__vide {
+    margin: 0;
+    color: var(--rej-green-muted);
+    font-size: 15px;
+    font-style: italic;
+}
+
+.rj-gouverneur {
+    display: flex;
+    gap: 14px;
+    align-items: center;
+}
+
+.rj-gouverneur + .rj-gouverneur {
+    margin-top: 18px;
+}
+
+.rj-gouverneur .rj-avatar {
+    width: 72px;
+    height: 72px;
+    font-size: 24px;
+}
+
+.rj-gouverneur strong {
+    display: block;
+    color: var(--thm-heading-font-color);
+    font-size: 17px;
+    line-height: 1.3;
+}
+
+.rj-gouverneur span,
+.rj-gouverneur a {
+    display: block;
+    font-size: 14px;
+    line-height: 1.5;
+}
+
+.rj-region-activites {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+
+.rj-region-activites li {
+    position: relative;
+    padding: 0 0 14px 70px;
+    font-size: 15px;
+    line-height: 1.45;
+}
+
+.rj-region-activites li + li {
+    padding-top: 14px;
+    border-top: 1px dashed var(--thm-border-color-1);
+}
+
+.rj-region-activites__date {
+    position: absolute;
+    left: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 56px;
+    height: 44px;
+    border-radius: 8px;
+    background: var(--rej-green-100);
+    color: var(--rej-green-dark);
+    font-size: 13px;
+    font-weight: 700;
+    text-align: center;
+    text-transform: uppercase;
+}
+
+.rj-region-activites a {
+    display: block;
+    color: var(--thm-heading-font-color);
+    font-weight: 700;
+}
+
+.rj-region-activites small {
+    color: var(--rej-green-muted);
+}
+
+@media (max-width: 991px) {
+    .rj-region-panneau {
+        grid-template-columns: 1fr 1fr;
+    }
+
+    .rj-region-panneau__visuel {
+        grid-column: 1 / -1;
+        min-height: 240px;
+    }
+
+    .rj-region-panneau__bloc + .rj-region-panneau__bloc {
+        border-left: 0;
+    }
+
+    .rj-region-panneau__bloc:last-child {
+        border-left: 1px solid var(--thm-border-color-1);
+    }
+}
+
+@media (max-width: 767px) {
+    .rj-region-panneau {
+        grid-template-columns: 1fr;
+    }
+
+    .rj-region-panneau__bloc:last-child {
+        border-top: 1px solid var(--thm-border-color-1);
+        border-left: 0;
+    }
+
+    .rj-regions-onglets button {
+        padding: 10px 16px;
+        font-size: 14px;
+    }
+}
+
+/* Lien mis en exergue dans un texte (ex. « Découvrir les sections régionales » sur l'accueil) */
+.rj-lien-exergue {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    color: #1d6fd1;
+    font-weight: 700;
+    text-decoration: underline;
+    text-decoration-thickness: 2px;
+    text-underline-offset: 4px;
+}
+
+.rj-lien-exergue:hover,
+.rj-lien-exergue:focus {
+    color: #0f4c99;
+}
+
+.rj-lien-exergue i {
+    font-size: .85em;
+    text-decoration: none;
+}
+
+/* Fermes écoles de chaque section régionale (accueil) */
+.rj-region-panneau__fermes {
+    display: grid;
+    grid-column: 1 / -1;
+    grid-template-columns: repeat(auto-fill, minmax(230px, 1fr));
+    gap: 12px;
+    padding: 24px 28px 28px;
+    border-top: 1px solid var(--thm-border-color-1);
+    background: var(--rej-green-50);
+}
+
+.rj-region-panneau__fermes h4 {
+    display: flex;
+    grid-column: 1 / -1;
+    align-items: center;
+    gap: 10px;
+    margin: 0 0 4px;
+    font-size: 20px;
+}
+
+.rj-region-panneau__fermes h4 i {
+    color: var(--rej-green-dark);
+}
+
+.rj-region-panneau__fermes .rj-region-panneau__vide {
+    grid-column: 1 / -1;
+}
+
+.rj-region-ferme {
+    display: flex;
+    gap: 12px;
+    align-items: center;
+    padding: 8px;
+    border: 1px solid var(--thm-border-color-1);
+    border-radius: 10px;
+    background: var(--thm-white);
+    transition: border-color .2s ease, transform .2s ease;
+}
+
+.rj-region-ferme:hover {
+    border-color: var(--rej-green-dark);
+    transform: translateY(-2px);
+}
+
+.rj-region-ferme img {
+    flex-shrink: 0;
+    width: 58px;
+    height: 58px;
+    border-radius: 8px;
+    background: var(--thm-white);
+    object-fit: contain;
+}
+
+.rj-region-ferme strong {
+    display: block;
+    color: var(--thm-heading-font-color);
+    font-size: 15px;
+    line-height: 1.3;
+}
+
+.rj-region-ferme small {
+    color: var(--rej-green-muted);
+    font-size: 13px;
+    line-height: 1.4;
+}

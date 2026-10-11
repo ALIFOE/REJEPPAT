@@ -2,6 +2,8 @@
 
 @section('title', __('Sections régionales'))
 
+@section('body_class', 'body-bg-1 page-reseau')
+
 @section('content')
 
         @include('partials.breadcrumb', [

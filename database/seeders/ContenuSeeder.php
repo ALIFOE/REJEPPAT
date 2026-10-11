@@ -4,6 +4,7 @@ namespace Database\Seeders;
 
 use App\Models\Actualite;
 use App\Models\Ferme;
+use App\Models\Media;
 use App\Models\Offre;
 use App\Models\Partenaire;
 use App\Models\Produit;
@@ -14,6 +15,7 @@ use App\Support\TexteRiche;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Arr;
+use Illuminate\Support\Facades\Storage;
 
 /**
  * Importe les contenus d'origine du site (config/*.php) dans la base.
@@ -58,6 +60,13 @@ class ContenuSeeder extends Seeder
         if (Partenaire::doesntExist()) {
             foreach (config('rejeppat.partenaires') as $ordre => $partenaire) {
                 Partenaire::create($partenaire + ['ordre' => $ordre]);
+            }
+        }
+
+        // Vidéos d'origine présentes sur le serveur (fichiers non versionnés)
+        foreach (config('rejeppat.videos') as $ordre => $video) {
+            if (Storage::disk(Media::DISQUE_VIDEOS)->exists($video['fichier']) && Media::where('fichier', $video['fichier'])->doesntExist()) {
+                Media::create($video + ['type' => 'video', 'date' => today(), 'accueil' => true, 'ordre' => $ordre, 'publie' => true]);
             }
         }
 

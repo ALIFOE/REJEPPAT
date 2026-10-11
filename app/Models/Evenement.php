@@ -8,10 +8,11 @@ use Illuminate\Database\Eloquent\Attributes\Fillable;
 use Illuminate\Database\Eloquent\Attributes\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 /** Rendez-vous de l'agenda : atelier, formation, panel, foire… */
 #[Table('evenements')]
-#[Fillable(['slug', 'titre', 'type', 'debut', 'fin', 'lieu', 'description', 'lien_inscription', 'photo', 'publie', 'traductions'])]
+#[Fillable(['slug', 'titre', 'type', 'region_id', 'debut', 'fin', 'lieu', 'description', 'lien_inscription', 'photo', 'publie', 'traductions'])]
 class Evenement extends Model
 {
     use AUnVisuel, EstTraduisible;
@@ -54,6 +55,12 @@ class Evenement extends Model
     public function scopePasse(Builder $query): void
     {
         $query->where('debut', '<', today())->where(fn ($q) => $q->whereNull('fin')->orWhere('fin', '<', now()))->orderByDesc('debut');
+    }
+
+    /** Section régionale qui organise l'activité (facultatif). */
+    public function region(): BelongsTo
+    {
+        return $this->belongsTo(Region::class);
     }
 
     public function typeLibelle(): string

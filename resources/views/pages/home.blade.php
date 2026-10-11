@@ -38,13 +38,13 @@
             'image' => 'mission.jpg',
             'icon' => 'icon-seedling',
             'title' => __('Notre mission'),
-            'text' => __('Contribuer à l’épanouissement économique et social des organisations paysannes, des producteurs et professionnels agricoles membres pour un développement durable et inclusif au Togo.'),
+            'text' => __('Être un réseau crédible de jeunes agriculteurs, fortement ancré à la base, qui promeut une agriculture durable, faisant d’elle un métier viable et prospère.'),
         ],
         [
             'image' => 'vision.jpg',
             'icon' => 'icon-eco-friendly',
             'title' => __('Notre vision'),
-            'text' => __('Un réseau crédible de jeunes agriculteurs, fortement ancré à la base, qui promeut une agriculture durable, faisant d’elle un métier viable et prospère.'),
+            'text' => __('Contribuer à l’épanouissement économique et social des organisations paysannes, des producteurs et professionnels agricoles membres pour un développement durable et inclusif au Togo.'),
         ],
         [
             'image' => 'valeurs.jpg',
@@ -120,6 +120,10 @@
 
         </section>
         <!-- End Main Slider Style4 -->
+
+        @include('regions._accueil', ['regions' => $regions])
+
+        @include('partials.videos-accueil', ['videos' => $videos])
 
 
         <!-- Start Products Style1 -->
@@ -235,7 +239,7 @@
                                 <h2 class="title-animation">{{ __('À propos du REJEPPAT-Togo') }}</h2>
                             </div>
                             <p class="about-style4__text">{{ __('Le Réseau des Jeunes Producteurs et Professionnels Agricoles du Togo est une faîtière des organisations paysannes de jeunes créée le 10 juillet 2010 et membre de la CTOP. Il rassemble 185 coopératives réparties sur tout le territoire national et représentées par 5 sections régionales.') }}
-                                <a href="{{ route('regions.index') }}">{{ __('Découvrir les sections régionales') }}</a>.</p>
+                                <a href="{{ route('regions.index') }}" class="rj-lien-exergue">{{ __('Découvrir les sections régionales') }} <i class="icon-arrow"></i></a></p>
                             <div class="about-style4__points-box">
                                 <h5 class="about-style4__points-title">{{ __('Notre engagement') }}</h5>
                                 <p class="about-style4__points-text">{!! __('Promouvoir l’agroécologie et <br> l’installation des jeunes.') !!}</p>
@@ -448,7 +452,7 @@
                             </div>
                             <div class="farmed-style1__points-box">
                                 <ul class="farmed-style1__points">
-                                    @foreach ([__('Formation &amp; <br> renforcement'), __('Accompagnement <br> des initiatives'), __('Mise en réseau <br> &amp; partenariats')] as $point)
+                                    @foreach ([__('Coaching <br> entrepreneurial'), __('Appui <br> REJEPPAT-Fina'), __('Mise en réseau <br> &amp; partenariats')] as $point)
                                     <li>
                                         <div class="icon">
                                             <span class="icon-check-mark"><span class="path1"></span><span

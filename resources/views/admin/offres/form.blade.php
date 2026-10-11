@@ -16,6 +16,7 @@
         <div class="a-carte__corps a-form">
             @include('admin.partials.champ', ['nom' => 'titre', 'label' => 'Titre de l’offre', 'valeur' => $offre->titre, 'requis' => true, 'aide' => 'Apparaît aussi dans la liste « Service souhaité » du formulaire de demande.'])
             @include('admin.partials.champ', ['nom' => 'texte', 'label' => 'Description', 'type' => 'textarea', 'lignes' => 5, 'valeur' => $offre->texte, 'requis' => true])
+            @include('admin.partials.champ', ['nom' => 'icone', 'label' => 'Icône', 'type' => 'select', 'valeur' => $offre->icone, 'options' => \App\Models\Offre::ICONES, 'aide' => 'Illustre l’offre sur la page « Nos offres & services ».'])
             <div class="a-grille a-grille--2" style="gap: 14px">
                 @include('admin.partials.champ', ['nom' => 'ordre', 'label' => 'Ordre d’affichage', 'type' => 'number', 'valeur' => $offre->ordre, 'attributs' => 'min="0"'])
                 @include('admin.partials.interrupteur', ['nom' => 'actif', 'label' => 'Affichée sur le site', 'valeur' => $offre->actif])

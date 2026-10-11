@@ -105,6 +105,17 @@ class Contenu
         return Carbon::parse($date)->locale(app()->getLocale())->translatedFormat($format);
     }
 
+    /**
+     * Adresse d'une feuille de style ou d'un script du site, avec sa date de modification :
+     * après une mise à jour, les navigateurs et le cache de l'hébergeur chargent la nouvelle version.
+     */
+    public static function asset(string $chemin): string
+    {
+        $fichier = public_path($chemin);
+
+        return asset($chemin).(is_file($fichier) ? '?v='.filemtime($fichier) : '');
+    }
+
     public static function prix(int $montant): string
     {
         return number_format($montant, 0, ',', ' ').' CFA';

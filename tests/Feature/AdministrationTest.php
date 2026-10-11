@@ -176,8 +176,9 @@ class AdministrationTest extends TestCase
         ])->assertRedirect(route('admin.produits.index'));
         $this->get(route('boutique.show', 'miel-de-kpete'))->assertOk()->assertSee('12 en stock');
 
-        $this->post(route('admin.offres.store'), ['titre' => 'Appui conseil', 'texte' => 'Conseil', 'actif' => '1'])->assertRedirect();
+        $this->post(route('admin.offres.store'), ['titre' => 'Appui conseil', 'texte' => 'Conseil', 'icone' => 'fas fa-leaf', 'actif' => '1'])->assertRedirect();
         $this->get(route('demande'))->assertSee('Appui conseil');
+        $this->get(route('offres'))->assertSee('fas fa-leaf');
 
         $ferme = Ferme::first();
         $this->put(route('admin.fermes.update', $ferme), [

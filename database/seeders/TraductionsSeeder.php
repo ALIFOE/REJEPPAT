@@ -4,6 +4,7 @@ namespace Database\Seeders;
 
 use App\Models\Actualite;
 use App\Models\Ferme;
+use App\Models\Media;
 use App\Models\Offre;
 use App\Models\Produit;
 use App\Models\Projet;
@@ -23,8 +24,8 @@ class TraductionsSeeder extends Seeder
         'fermes-ecoles-agroecologiques' => ['titre' => 'Agroecological Farm Schools Project', 'titre_court' => 'Agroecological Farm Schools', 'resume' => 'REJEPPAT has set up several agroecological farm schools for the hands-on training of young farmers.'],
         'formation-insertion-jeunes-agriculteurs' => ['titre' => 'Young Farmers Training and Integration Project', 'titre_court' => 'Training and Integration of Young People', 'resume' => 'This project supports young people into employment through training and entrepreneurial coaching.'],
         'promotion-agroecologie' => ['titre' => 'Agroecology Promotion Project', 'titre_court' => 'Promoting Agroecology', 'resume' => 'REJEPPAT raises farmers’ awareness of agroecological practices to promote sustainable agriculture.'],
-        'reboisement-protection-environnement' => ['titre' => 'Reforestation and Environmental Protection Project', 'titre_court' => 'Reforestation and Environment', 'resume' => 'To fight environmental degradation, REJEPPAT is stepping up reforestation and land restoration initiatives.'],
-        'autonomisation-femmes-rurales' => ['titre' => 'Rural Women Empowerment Project', 'titre_court' => 'Empowering Rural Women', 'resume' => 'REJEPPAT works to include rural women in farming activities and value chains.'],
+        'reboisement-protection-environnement' => ['titre' => 'Forest Education Project', 'titre_court' => 'Forest Education', 'resume' => 'To fight environmental degradation, REJEPPAT is stepping up reforestation and land restoration initiatives.'],
+        'autonomisation-femmes-rurales' => ['titre' => 'Young Rural Women Empowerment Project', 'titre_court' => 'Empowering Young Rural Women', 'resume' => 'REJEPPAT works to include rural women in farming activities and value chains.'],
         'agriculture-intelligente-climat' => ['titre' => 'Climate-Smart Agriculture Project', 'titre_court' => 'Climate-Smart Agriculture', 'resume' => 'This project helps farmers adopt farming practices adapted to climate change.'],
     ];
 
@@ -93,12 +94,13 @@ class TraductionsSeeder extends Seeder
 
     /** Offres d'origine : titre français => version anglaise */
     private const OFFRES = [
-        'Formation et renforcement des capacités' => ['titre' => 'Training and capacity building', 'texte' => 'Training courses, workshops and hands-on sessions to develop the technical, professional and entrepreneurial skills of young people and rural stakeholders.'],
-        'Accompagnement des initiatives' => ['titre' => 'Support for initiatives', 'texte' => 'Support for project leaders and organisations in structuring, implementing and developing their initiatives.'],
-        'Agriculture et élevage' => ['titre' => 'Farming and livestock', 'texte' => 'Support for producers in improving farming and livestock practices and developing sustainable activities adapted to local realities.'],
+        'Formation aux pratiques résilientes aux changements climatiques' => ['titre' => 'Training in climate-resilient practices', 'texte' => 'Training courses, workshops and hands-on sessions enabling young people and rural stakeholders to adopt farming practices that are resilient to climate change.'],
+        'REJEPPAT-Fina' => ['titre' => 'REJEPPAT-Fina', 'texte' => 'An internal mechanism providing materials and equipment to young project leaders.'],
+        'Coaching sur le parcours entrepreneurial' => ['titre' => 'Coaching along the entrepreneurial journey', 'texte' => 'Support for producers in improving their farming and farm management practices, to build sustainable agricultural businesses adapted to local realities.'],
         'Transformation agroalimentaire' => ['titre' => 'Food processing', 'texte' => 'Promoting the processing and adding value to local agricultural products to increase their value and create new opportunities.'],
         'Entrepreneuriat des jeunes' => ['titre' => 'Youth entrepreneurship', 'texte' => 'Support for young entrepreneurs in developing their businesses, building their skills and consolidating their economic initiatives.'],
         'Mise en réseau et partenariats' => ['titre' => 'Networking and partnerships', 'texte' => 'Connecting young people, producers, organisations, institutions and partners to encourage exchanges, collaboration and opportunities.'],
+        'Le plaidoyer' => ['titre' => 'Advocacy', 'texte' => 'REJEPPAT advocates for better living and working conditions for young people, for access to land, suitable financing, decision-making bodies and innovation, and for inclusion and gender equity.'],
     ];
 
     public function run(): void
@@ -126,6 +128,8 @@ class TraductionsSeeder extends Seeder
         foreach (self::OFFRES as $titre => $anglais) {
             $this->traduire(Offre::where('titre', $titre)->first(), $anglais);
         }
+
+        $this->traduire(Media::where('fichier', 'videos/videojournal.mp4')->first(), ['titre' => 'REJEPPAT video news', 'description' => 'The network’s activities in pictures.']);
 
         $this->traduire(Region::where('slug', 'centrale')->first(), ['presentation' => [
             'The Central Region is home to REJEPPAT’s national headquarters in Sokodé and to most of the network’s farm schools.',

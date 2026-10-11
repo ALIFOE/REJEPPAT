@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Models\Media;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Validation\Rule;
 use Illuminate\Validation\ValidationException;
 use Illuminate\View\View;
@@ -55,7 +56,7 @@ class MediaController extends Controller
     public function destroy(Media $media): RedirectResponse
     {
         $this->supprimerPhoto($media->photo);
-        $this->supprimerPhoto($media->fichier);
+        $this->supprimerFichierMedia($media);
         $media->delete();
 
         return redirect()->route('admin.medias.index')->with('succes', 'Média supprimé.');
@@ -70,8 +71,14 @@ class MediaController extends Controller
             'description' => ['nullable', 'string', 'max:2000'],
             'url' => ['nullable', 'url:http,https', 'max:255'],
             'photo' => self::REGLE_IMAGE,
-            'fichier' => ['nullable', 'file', 'mimes:mp3,m4a,ogg,wav', 'max:40960'],
-        ] + $this->reglesTraductions(), self::MESSAGES + ['fichier.mimes' => 'Formats audio acceptés : MP3, M4A, OGG ou WAV.']);
+            'fichier' => $request->input('type') === 'video'
+                ? ['nullable', 'file', 'mimetypes:video/mp4,video/webm', 'max:307200']
+                : ['nullable', 'file', 'mimes:mp3,m4a,ogg,wav', 'max:40960'],
+            'ordre' => ['nullable', 'integer', 'min:0'],
+        ] + $this->reglesTraductions(), self::MESSAGES + [
+            'fichier.mimes' => 'Formats audio acceptés : MP3, M4A, OGG ou WAV.',
+            'fichier.mimetypes' => 'Formats vidéo acceptés : MP4 ou WEBM.',
+        ]);
 
         $media->fill([
             'titre' => $donnees['titre'],
@@ -80,7 +87,9 @@ class MediaController extends Controller
             'description' => $donnees['description'] ?? null,
             'url' => $donnees['url'] ?? null,
             'photo' => $this->photoDemandee($request, $media, 'medias'),
-            'fichier' => $this->enregistrerFichier($request->file('fichier'), 'medias/audio', $media->fichier),
+            'fichier' => $this->fichierDemande($request, $media, $donnees['type']),
+            'accueil' => $donnees['type'] === 'video' && $request->boolean('accueil'),
+            'ordre' => (int) ($donnees['ordre'] ?? 0),
             'publie' => $request->boolean('publie'),
             'traductions' => $this->traductions($request, Media::class),
         ]);
@@ -88,7 +97,7 @@ class MediaController extends Controller
         // Chaque type a besoin de son contenu : une photo, une vidéo YouTube, un fichier ou un lien audio
         $erreur = match ($media->type) {
             'photo' => $media->photo ? null : ['photo' => 'Choisissez la photo à publier.'],
-            'video' => $media->youtubeId() ? null : ['url' => 'Indiquez le lien d’une vidéo YouTube (ex. https://www.youtube.com/watch?v=…).'],
+            'video' => $media->youtubeId() || $media->fichier ? null : ['url' => 'Envoyez le fichier vidéo ou indiquez le lien d’une vidéo YouTube (ex. https://www.youtube.com/watch?v=…).'],
             'podcast' => $media->fichier || $media->url ? null : ['fichier' => 'Envoyez le fichier audio ou indiquez le lien d’écoute.'],
         };
 
@@ -97,5 +106,40 @@ class MediaController extends Controller
         }
 
         $media->save();
+    }
+
+    /**
+     * Fichier du média : une vidéo est stockée hors du dossier public (diffusée par un lien signé),
+     * un podcast dans public/uploads. Changer de type ou de fichier supprime l'ancien.
+     */
+    private function fichierDemande(Request $request, Media $media, string $type): ?string
+    {
+        $nouveau = $request->file('fichier');
+        $changeDeType = $media->exists && $media->fichier && $media->getOriginal('type') !== $type;
+
+        if (! $nouveau && ! $changeDeType && ! $request->boolean('retirer_fichier')) {
+            return $media->fichier;
+        }
+
+        $this->supprimerFichierMedia($media);
+
+        if (! $nouveau) {
+            return null;
+        }
+
+        return $type === 'video'
+            ? $nouveau->store(Media::DOSSIER_VIDEOS, Media::DISQUE_VIDEOS)
+            : $nouveau->store('medias/audio', 'uploads');
+    }
+
+    private function supprimerFichierMedia(Media $media): void
+    {
+        if (! $media->getOriginal('fichier')) {
+            return;
+        }
+
+        $media->getOriginal('type') === 'video'
+            ? Storage::disk(Media::DISQUE_VIDEOS)->delete($media->getOriginal('fichier'))
+            : $this->supprimerPhoto($media->getOriginal('fichier'));
     }
 }

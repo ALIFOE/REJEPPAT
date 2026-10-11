@@ -45,12 +45,13 @@ return [
     | Nos offres & services (https://rejeppat.org/nos-offres-services/)
     */
     'offres' => [
-        ['titre' => 'Formation et renforcement des capacités', 'texte' => 'Organisation de formations, d’ateliers et de sessions pratiques pour développer les compétences techniques, professionnelles et entrepreneuriales des jeunes et des acteurs ruraux.'],
-        ['titre' => 'Accompagnement des initiatives', 'texte' => 'Appui aux porteurs de projets et aux organisations dans la structuration, la mise en œuvre et le développement de leurs initiatives.'],
-        ['titre' => 'Agriculture et élevage', 'texte' => 'Accompagnement des producteurs dans l’amélioration des pratiques agricoles et d’élevage et dans le développement d’activités durables adaptées aux réalités locales.'],
-        ['titre' => 'Transformation agroalimentaire', 'texte' => 'Promotion de la transformation et de la valorisation des produits agricoles locaux afin d’améliorer leur valeur ajoutée et de créer de nouvelles opportunités.'],
-        ['titre' => 'Entrepreneuriat des jeunes', 'texte' => 'Soutien aux jeunes entrepreneurs dans le développement de leurs activités, le renforcement de leurs capacités et la consolidation de leurs initiatives économiques.'],
-        ['titre' => 'Mise en réseau et partenariats', 'texte' => 'Mise en relation des jeunes, producteurs, organisations, institutions et partenaires afin de favoriser les échanges, la collaboration et les opportunités.'],
+        ['titre' => 'Formation aux pratiques résilientes aux changements climatiques', 'icone' => 'fas fa-cloud-sun-rain', 'texte' => 'Organisation de formations, d’ateliers et de sessions pratiques pour permettre aux jeunes et aux acteurs ruraux d’adopter des pratiques agricoles résilientes face aux changements climatiques.'],
+        ['titre' => 'REJEPPAT-Fina', 'icone' => 'fas fa-tools', 'texte' => 'Un mécanisme interne d’appui en matériels et en équipements pour les jeunes porteurs de projets.'],
+        ['titre' => 'Coaching sur le parcours entrepreneurial', 'icone' => 'fas fa-chalkboard-teacher', 'texte' => 'Accompagnement des producteurs dans l’amélioration des pratiques agricoles et de gestion de leurs exploitations, pour le développement d’entreprises agricoles durables adaptées aux réalités locales.'],
+        ['titre' => 'Transformation agroalimentaire', 'icone' => 'fas fa-mortar-pestle', 'texte' => 'Promotion de la transformation et de la valorisation des produits agricoles locaux afin d’améliorer leur valeur ajoutée et de créer de nouvelles opportunités.'],
+        ['titre' => 'Entrepreneuriat des jeunes', 'icone' => 'fas fa-briefcase', 'texte' => 'Soutien aux jeunes entrepreneurs dans le développement de leurs activités, le renforcement de leurs capacités et la consolidation de leurs initiatives économiques.'],
+        ['titre' => 'Mise en réseau et partenariats', 'icone' => 'fas fa-handshake', 'texte' => 'Mise en relation des jeunes, producteurs, organisations, institutions et partenaires afin de favoriser les échanges, la collaboration et les opportunités.'],
+        ['titre' => 'Le plaidoyer', 'icone' => 'fas fa-bullhorn', 'texte' => 'Le REJEPPAT conduit des plaidoyers pour l’amélioration des conditions de vie et de travail des jeunes, ainsi que pour l’accès à la terre, aux financements adaptés, aux cadres de décision et aux innovations, et pour l’inclusion et l’équité de genre.'],
     ],
 
     /*
@@ -67,12 +68,13 @@ return [
     | Formulaire de demande de services
     */
     'services_demande' => [
-        'Formation et renforcement des capacités',
-        'Accompagnement des initiatives',
-        'Agriculture et élevage',
+        'Formation aux pratiques résilientes aux changements climatiques',
+        'REJEPPAT-Fina',
+        'Coaching sur le parcours entrepreneurial',
         'Transformation agroalimentaire',
         'Entrepreneuriat des jeunes',
         'Mise en réseau et partenariats',
+        'Le plaidoyer',
         'Autre besoin',
     ],
 
@@ -95,6 +97,17 @@ return [
         ['nom' => 'AFDI', 'image' => 'afdi.png', 'type' => 'technique'],
         ['nom' => 'FAR', 'image' => 'far.png', 'type' => 'technique'],
         ['nom' => 'Federcasse', 'image' => 'federcasse.png', 'type' => 'financier'],
+        ['nom' => 'Ministère de l’Agriculture', 'type' => 'institutionnel'],
+        ['nom' => 'FFF (Forest and Farm Facility)', 'type' => 'technique'],
+        ['nom' => 'GIZ', 'type' => 'technique', 'site' => 'https://www.giz.de'],
+    ],
+
+    /*
+    | Vidéos d'origine du site, à placer dans storage/app/private/videos (hors du dossier public)
+    | puis importées dans la médiathèque et mises en avant sur l'accueil (ContenuSeeder).
+    */
+    'videos' => [
+        ['titre' => 'Journal vidéo du REJEPPAT', 'fichier' => 'videos/videojournal.mp4', 'description' => 'Les activités du réseau en images.'],
     ],
 
     /*

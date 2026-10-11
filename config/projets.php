@@ -98,8 +98,8 @@ return [
         ],
         [
             'slug' => 'reboisement-protection-environnement',
-            'titre' => 'Projet de Reboisement et de Protection de l’Environnement',
-            'titre_court' => 'Reboisement et Environnement',
+            'titre' => 'Projet d’Éducation Forestière',
+            'titre_court' => 'Éducation Forestière',
             'icone' => 'icon-eco-friendly',
             'categories' => ['environnement'],
             'date' => '2025-06-12',
@@ -124,8 +124,8 @@ return [
         ],
         [
             'slug' => 'autonomisation-femmes-rurales',
-            'titre' => 'Projet d’Autonomisation des Femmes Rurales',
-            'titre_court' => 'Autonomisation des Femmes Rurales',
+            'titre' => 'Projet d’Autonomisation des Jeunes Femmes Rurales',
+            'titre_court' => 'Autonomisation des Jeunes Femmes Rurales',
             'icone' => 'icon-handshake',
             'categories' => ['inclusion'],
             'date' => '2025-06-12',

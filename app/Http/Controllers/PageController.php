@@ -3,7 +3,10 @@
 namespace App\Http\Controllers;
 
 use App\Models\DemandeService;
+use App\Models\Media;
 use App\Models\MessageContact;
+use App\Models\Region;
+use App\Models\Ressource;
 use App\Support\Contenu;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\RedirectResponse;
@@ -23,6 +26,11 @@ class PageController extends Controller
             'fermes' => Contenu::fermes()->where('accueil', true)->take(4)->values(),
             'temoignages' => Contenu::temoignagesAccueil()->take(3),
             'evenements' => Contenu::prochainsEvenements(),
+            'regions' => Region::publie()->with([
+                'evenements' => fn ($q) => $q->publie()->aVenir(),
+                'fermes' => fn ($q) => $q->publie()->orderBy('ordre')->orderBy('id'),
+            ])->get(),
+            'videos' => Media::videosAccueil()->get(),
         ]);
     }
 
@@ -30,6 +38,15 @@ class PageController extends Controller
     {
         return view('pages.offres', [
             'projets' => Contenu::projets()->take(5),
+        ]);
+    }
+
+    /** Axes stratégiques du réseau : ses domaines d'intervention. */
+    public function axes(): View
+    {
+        return view('pages.axes', [
+            'axes' => config('rejeppat.domaines'),
+            'presentation' => Ressource::publie()->where('fichier', Ressource::PRESENTATION_REJEPPAT)->first(),
         ]);
     }
 

@@ -19,12 +19,14 @@ use App\Http\Controllers\PartenaireController;
 use App\Http\Controllers\ProjetController;
 use App\Http\Controllers\RegionController;
 use App\Http\Controllers\RessourceController;
+use App\Http\Controllers\VideoController;
 use Illuminate\Support\Facades\Route;
 
 // Pages du site, identiques au menu de https://rejeppat.org
 Route::get('/', [PageController::class, 'accueil'])->name('home');
 
 Route::get('/nos-offres-services', [PageController::class, 'offres'])->name('offres');
+Route::get('/axes-strategiques', [PageController::class, 'axes'])->name('axes');
 Route::get('/formulaire-de-demande-de-services', [PageController::class, 'demande'])->name('demande');
 Route::post('/formulaire-de-demande-de-services', [PageController::class, 'envoyerDemande'])->middleware('throttle:5,1')->name('demande.envoyer');
 
@@ -41,6 +43,8 @@ Route::get('/actualites-evenements/{slug}', [ActualiteController::class, 'show']
 Route::get('/agenda', [AgendaController::class, 'index'])->name('agenda.index');
 Route::get('/agenda/{slug}', [AgendaController::class, 'show'])->name('agenda.show');
 Route::get('/mediatheque', [MediathequeController::class, 'index'])->name('mediatheque');
+// Vidéos envoyées sur le site : lien signé et temporaire, lu uniquement par le lecteur du site
+Route::get('/videos/{media}/lecture', [VideoController::class, 'lecture'])->whereNumber('media')->middleware('signed')->name('video.lecture');
 
 // Sections régionales et partenaires
 Route::get('/sections-regionales', [RegionController::class, 'index'])->name('regions.index');

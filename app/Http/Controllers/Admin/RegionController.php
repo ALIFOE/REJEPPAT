@@ -49,6 +49,7 @@ class RegionController extends Controller
     {
         // Les fermes et les membres de la région restent, sans région
         $this->supprimerPhoto($region->photo);
+        collect($region->gouverneurs ?? [])->each(fn ($gouverneur) => $this->supprimerPhoto($gouverneur['photo'] ?? null));
         $region->delete();
 
         return redirect()->route('admin.regions.index')->with('succes', 'Section régionale supprimée.');
@@ -62,6 +63,13 @@ class RegionController extends Controller
             'chef_lieu' => ['nullable', 'string', 'max:120'],
             'presentation' => ['nullable', 'string', 'max:10000'],
             'filieres' => ['nullable', 'string', 'max:2000'],
+            'activites' => ['nullable', 'string', 'max:10000'],
+            'gouverneurs' => ['nullable', 'array', 'max:'.Region::GOUVERNEURS],
+            'gouverneurs.*.nom' => ['nullable', 'string', 'max:160'],
+            'gouverneurs.*.fonction' => ['nullable', 'string', 'max:160'],
+            'gouverneurs.*.telephone' => ['nullable', 'string', 'max:40'],
+            'photos_gouverneurs' => ['nullable', 'array', 'max:'.Region::GOUVERNEURS],
+            'photos_gouverneurs.*' => self::REGLE_IMAGE,
             'nb_cooperatives' => ['nullable', 'integer', 'min:0'],
             'nb_membres' => ['nullable', 'integer', 'min:0'],
             'responsable' => ['nullable', 'string', 'max:160'],
@@ -77,6 +85,8 @@ class RegionController extends Controller
             'chef_lieu' => $donnees['chef_lieu'] ?? null,
             'presentation' => $this->lignes($donnees['presentation'] ?? ''),
             'filieres' => $this->lignes($donnees['filieres'] ?? ''),
+            'gouverneurs' => $this->gouverneurs($request, $region),
+            'activites' => $this->lignes($donnees['activites'] ?? ''),
             'nb_cooperatives' => $donnees['nb_cooperatives'] ?? null,
             'nb_membres' => $donnees['nb_membres'] ?? null,
             'responsable' => $donnees['responsable'] ?? null,
@@ -87,5 +97,42 @@ class RegionController extends Controller
             'publie' => $request->boolean('publie'),
             'traductions' => $this->traductions($request, Region::class),
         ])->save();
+    }
+
+    /**
+     * Le ou les gouverneurs de la section (emplacements « gouverneurs[i] » et « photos_gouverneurs[i] ») :
+     * un emplacement sans nom est retiré avec sa photo.
+     *
+     * @return array<int, array{nom: string, fonction: ?string, telephone: ?string, photo: ?string}>
+     */
+    private function gouverneurs(Request $request, Region $region): array
+    {
+        $actuels = array_values($region->gouverneurs ?? []);
+        $retirer = array_map('strval', (array) $request->input('retirer_photos_gouverneurs', []));
+
+        return collect(range(0, Region::GOUVERNEURS - 1))
+            ->map(function (int $i) use ($request, $actuels, $retirer) {
+                $saisie = (array) $request->input("gouverneurs.{$i}", []);
+                $photo = $actuels[$i]['photo'] ?? null;
+
+                if (blank($saisie['nom'] ?? null) || ($photo && in_array((string) $i, $retirer, true))) {
+                    $this->supprimerPhoto($photo);
+                    $photo = null;
+                }
+
+                if (blank($saisie['nom'] ?? null)) {
+                    return null;
+                }
+
+                return [
+                    'nom' => trim($saisie['nom']),
+                    'fonction' => filled($saisie['fonction'] ?? null) ? trim($saisie['fonction']) : null,
+                    'telephone' => filled($saisie['telephone'] ?? null) ? trim($saisie['telephone']) : null,
+                    'photo' => $this->enregistrerPhoto($request->file("photos_gouverneurs.{$i}"), 'regions/gouverneurs', $photo),
+                ];
+            })
+            ->filter()
+            ->values()
+            ->all();
     }
 }

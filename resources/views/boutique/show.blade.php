@@ -8,6 +8,10 @@
     $galerie = $produit->galerie();
 @endphp
 
+{{-- Lien partagé : la photo et le résumé du produit s'affichent dans l'aperçu au lieu du logo --}}
+@section('og_image', $galerie[0]['grande'])
+@section('description', \Illuminate\Support\Str::limit(trim(strip_tags((string) $produit->tr('resume'))), 200))
+
 @section('content')
 
         @include('partials.breadcrumb', [

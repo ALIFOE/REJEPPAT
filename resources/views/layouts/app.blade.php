@@ -13,6 +13,16 @@
     <link rel="icon" type="image/png" sizes="192x192" href="{{ asset('assets/images/rejeppat/favicons/android-chrome-192x192.png?v=logo') }}" />
     <link rel="shortcut icon" href="{{ asset('favicon.ico?v=logo') }}" />
     <meta name="description" content="@yield('description', __(config('rejeppat.full_name')) . ' (REJEPPAT) : ' . __('faîtière des organisations paysannes de jeunes, créée le 10 juillet 2010, pour une agriculture durable et inclusive au Togo.'))" />
+    {{-- Aperçu affiché quand un lien du site est partagé (WhatsApp, Facebook, LinkedIn, X…) --}}
+    <meta property="og:site_name" content="{{ config('rejeppat.name') }}" />
+    <meta property="og:locale" content="{{ app()->getLocale() === 'en' ? 'en_US' : 'fr_FR' }}" />
+    <meta property="og:type" content="@yield('og_type', 'website')" />
+    <meta property="og:url" content="{{ url()->current() }}" />
+    <meta property="og:title" content="@yield('title', __(config('rejeppat.tagline')))" />
+    <meta property="og:description" content="@yield('description', __(config('rejeppat.full_name')) . ' (REJEPPAT) : ' . __('faîtière des organisations paysannes de jeunes, créée le 10 juillet 2010, pour une agriculture durable et inclusive au Togo.'))" />
+    <meta property="og:image" content="@yield('og_image', asset('assets/images/rejeppat/logo/logo-rejeppat-officiel.png'))" />
+    <meta property="og:image:alt" content="@yield('title', __(config('rejeppat.tagline')))" />
+    <meta name="twitter:card" content="summary_large_image" />
 
     <link rel="stylesheet" href="{{ asset('assets/vendors/animate/animate.min.css') }}" />
     <link rel="stylesheet" href="{{ asset('assets/vendors/animate/custom-animate.css') }}" />
@@ -47,11 +57,12 @@
     <!-- Template styles -->
     <link rel="stylesheet" href="{{ asset('assets/css/style.css') }}" />
     <link rel="stylesheet" href="{{ asset('assets/css/responsive.css') }}" />
-    <link rel="stylesheet" href="{{ asset('assets/css/rejeppat.css') }}" />
-    <link rel="stylesheet" href="{{ asset('assets/css/rejeppat-boutique.css') }}" />
-    <link rel="stylesheet" href="{{ asset('assets/css/rejeppat-articles.css') }}" />
-    <link rel="stylesheet" href="{{ asset('assets/css/rejeppat-compte.css') }}" />
-    <link rel="stylesheet" href="{{ asset('assets/css/rejeppat-reseau.css') }}" />
+    <link rel="stylesheet" href="{{ \App\Support\Contenu::asset('assets/css/rejeppat.css') }}" />
+    <link rel="stylesheet" href="{{ \App\Support\Contenu::asset('assets/css/rejeppat-boutique.css') }}" />
+    <link rel="stylesheet" href="{{ \App\Support\Contenu::asset('assets/css/rejeppat-articles.css') }}" />
+    <link rel="stylesheet" href="{{ \App\Support\Contenu::asset('assets/css/rejeppat-compte.css') }}" />
+    <link rel="stylesheet" href="{{ \App\Support\Contenu::asset('assets/css/rejeppat-reseau.css') }}" />
+    <link rel="stylesheet" href="{{ \App\Support\Contenu::asset('assets/css/rejeppat-video.css') }}" />
     <link rel="alternate" hreflang="fr" href="{{ request()->fullUrlWithQuery(['lang' => 'fr']) }}" />
     <link rel="alternate" hreflang="en" href="{{ request()->fullUrlWithQuery(['lang' => 'en']) }}" />
 
@@ -141,9 +152,10 @@
 
 
     <!-- Template js -->
-    <script src="{{ asset('assets/js/custom.js') }}"></script>
-    <script src="{{ asset('assets/js/boutique.js') }}"></script>
-    <script src="{{ asset('assets/js/rejeppat-aide.js') }}"></script>
+    <script src="{{ \App\Support\Contenu::asset('assets/js/custom.js') }}"></script>
+    <script src="{{ \App\Support\Contenu::asset('assets/js/boutique.js') }}"></script>
+    <script src="{{ \App\Support\Contenu::asset('assets/js/rejeppat-aide.js') }}"></script>
+    <script src="{{ \App\Support\Contenu::asset('assets/js/rejeppat-video.js') }}"></script>
 
     @stack('scripts')
 

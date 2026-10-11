@@ -1156,3 +1156,20 @@ a.a-utilisateur__nom {
     gap: 8px;
     word-break: break-all;
 }
+
+/* ---------- Gouverneurs d'une section régionale ---------- */
+.a-gouverneur + .a-gouverneur {
+    padding-top: 16px;
+    border-top: 1px dashed var(--a-bordure);
+}
+
+.a-gouverneur .a-photo {
+    align-items: flex-start;
+}
+
+.a-gouverneur .a-photo img {
+    width: 90px;
+    height: 90px;
+    border-radius: 50%;
+    object-fit: cover;
+}

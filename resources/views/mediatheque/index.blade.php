@@ -39,6 +39,8 @@
                                     <a href="{{ $media->visuel() }}" class="rj-media" data-fancybox="mediatheque" data-caption="{{ $media->tr('titre') }}">
                                         <img src="{{ $media->visuel() }}" alt="{{ $media->tr('titre') }}" loading="lazy">
                                     </a>
+                                @elseif ($media->estVideoProtegee())
+                                    @include('partials.lecteur-video', ['media' => $media, 'titre' => false])
                                 @elseif ($media->type === 'video')
                                     <a href="https://www.youtube.com/watch?v={{ $media->youtubeId() }}" class="rj-media" data-fancybox="mediatheque-videos" data-caption="{{ $media->tr('titre') }}">
                                         <img src="{{ $media->visuel() }}" alt="{{ $media->tr('titre') }}" loading="lazy">

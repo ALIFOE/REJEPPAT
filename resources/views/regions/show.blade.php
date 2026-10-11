@@ -2,9 +2,13 @@
 
 @section('title', __($region->nom))
 
+@section('body_class', 'body-bg-1 page-reseau')
+
 @php
     $presentation = $region->tr('presentation') ?? [];
     $filieres = $region->tr('filieres') ?? [];
+    $gouverneurs = $region->listeGouverneurs();
+    $activites = $region->tr('activites') ?? [];
 @endphp
 
 @section('content')
@@ -45,6 +49,42 @@
                                     <div class="rj-chiffre"><strong>{{ number_format($region->nb_membres, 0, ',', ' ') }}</strong><span>{{ __('producteurs membres') }}</span></div>
                                 @endif
                                 <div class="rj-chiffre"><strong>{{ $fermes->count() }}</strong><span>{{ __('fermes écoles') }}</span></div>
+                            </div>
+                        @endif
+
+                        @if ($gouverneurs)
+                            <div class="rj-bloc">
+                                <h2>{{ trans_choice('Gouverneur de la section|Gouverneurs de la section', count($gouverneurs)) }}</h2>
+                                <div class="rj-grille">
+                                    @foreach ($gouverneurs as $gouverneur)
+                                        <div class="rj-membre">
+                                            <span class="rj-avatar">
+                                                @if ($gouverneur['photo_url'])<img src="{{ $gouverneur['photo_url'] }}" alt="{{ $gouverneur['nom'] }}">@else{{ $gouverneur['initiales'] }}@endif
+                                            </span>
+                                            <div>
+                                                <h3>{{ $gouverneur['nom'] }}</h3>
+                                                <p>{{ $gouverneur['fonction'] ?: __('Gouverneur de la section') }}</p>
+                                                @if ($gouverneur['telephone'])<a href="tel:{{ preg_replace('/[^\d+]/', '', $gouverneur['telephone']) }}"><i class="icon-incoming-call"></i> {{ $gouverneur['telephone'] }}</a>@endif
+                                            </div>
+                                        </div>
+                                    @endforeach
+                                </div>
+                            </div>
+                        @endif
+
+                        @if ($evenements->isNotEmpty() || $activites)
+                            <div class="rj-bloc">
+                                <h2>{{ __('Activités et informations à venir') }}</h2>
+                                @foreach ($evenements as $evenement)
+                                    @include('agenda._evenement', ['evenement' => $evenement])
+                                @endforeach
+                                @if ($activites)
+                                    <ul class="rj-region-activites" @if ($evenements->isNotEmpty()) style="margin-top: 25px" @endif>
+                                        @foreach ($activites as $activite)
+                                            <li><span class="rj-region-activites__date"><i class="fas fa-bullhorn"></i></span><span>{{ $activite }}</span></li>
+                                        @endforeach
+                                    </ul>
+                                @endif
                             </div>
                         @endif
 

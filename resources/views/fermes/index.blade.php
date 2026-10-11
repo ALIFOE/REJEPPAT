@@ -58,7 +58,7 @@
                                             </div>
                                             @endif
                                             <div class="services-details__process-img">
-                                                <img src="{{ asset('assets/images/rejeppat/fermes/process-' . $numero . '.jpg') }}"
+                                                <img src="{{ \App\Support\Contenu::asset('assets/images/rejeppat/fermes/process-' . $numero . '.jpg') }}"
                                                     alt="{{ __('Ferme école du REJEPPAT') }}">
                                                 <div class="services-details__process-img-count">
                                                     <div class="services-details__process-img-count-inner">

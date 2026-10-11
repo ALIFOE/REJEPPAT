@@ -23,6 +23,9 @@ class Ressource extends Model
         'rapport' => 'Rapports & publications',
     ];
 
+    /** Présentation du réseau au colloque FAR (2014), reprise de l'ancien site et mise en avant sur « Axes stratégiques » */
+    public const PRESENTATION_REJEPPAT = 'ressources/presentation-rejeppat-colloque-far-2014.pdf';
+
     public const TRADUCTIONS = [
         'titre' => ['Titre', 'texte'],
         'description' => ['Description', 'textarea'],

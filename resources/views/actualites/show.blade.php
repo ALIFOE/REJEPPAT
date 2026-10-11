@@ -9,6 +9,11 @@
     $partage = urlencode(route('actualites.show', $actualite['slug']));
 @endphp
 
+{{-- Lien partagé : la photo et le début de l'article s'affichent dans l'aperçu au lieu du logo --}}
+@section('og_type', 'article')
+@section('og_image', $actualite->visuel('-detail'))
+@section('description', \Illuminate\Support\Str::limit(trim(strip_tags($paragraphes[0] ?? '')), 200))
+
 @section('content')
 
         @include('partials.breadcrumb', [

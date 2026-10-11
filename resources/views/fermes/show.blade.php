@@ -13,6 +13,10 @@
     $whatsapp = strlen($whatsapp) === 8 ? '228' . $whatsapp : $whatsapp;
 @endphp
 
+{{-- Lien partagé : une photo de la ferme (sinon son visuel) et sa présentation s'affichent dans l'aperçu --}}
+@section('og_image', $galerie[0] ?? $ferme->visuel('-top'))
+@section('description', \Illuminate\Support\Str::limit(trim(strip_tags($description[0] ?? __('Spécialité') . ' : ' . $ferme->tr('specialite'))), 200))
+
 @section('content')
 
         @include('partials.breadcrumb', [

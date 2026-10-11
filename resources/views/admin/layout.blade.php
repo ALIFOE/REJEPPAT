@@ -9,7 +9,8 @@
     <link rel="icon" type="image/png" sizes="32x32" href="{{ asset('assets/images/rejeppat/favicons/favicon-32x32.png?v=logo') }}" />
     <link rel="stylesheet" href="{{ asset('assets/vendors/fontawesome/css/all.min.css') }}" />
     <link rel="stylesheet" href="{{ asset('assets/vendors/thm-icons/style.css') }}" />
-    <link rel="stylesheet" href="{{ asset('assets/css/admin.css') }}" />
+    <link rel="stylesheet" href="{{ \App\Support\Contenu::asset('assets/css/admin.css') }}" />
+    <link rel="stylesheet" href="{{ \App\Support\Contenu::asset('assets/css/rejeppat-video.css') }}" />
 </head>
 
 @php
@@ -127,7 +128,8 @@
     </div>
 
     <script src="{{ asset('assets/vendors/chartjs/chart.umd.min.js') }}"></script>
-    <script src="{{ asset('assets/js/admin.js') }}"></script>
+    <script src="{{ \App\Support\Contenu::asset('assets/js/admin.js') }}"></script>
+    <script src="{{ \App\Support\Contenu::asset('assets/js/rejeppat-video.js') }}"></script>
     @stack('scripts')
 </body>
 

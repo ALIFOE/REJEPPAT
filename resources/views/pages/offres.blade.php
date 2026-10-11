@@ -2,6 +2,8 @@
 
 @section('title', __('Nos offres & services'))
 
+@section('body_class', 'body-bg-1 page-reseau')
+
 @section('content')
 
         @include('partials.breadcrumb', [
@@ -81,8 +83,8 @@
                     <!-- Start Single Grown with Care -->
                     <div class="col-xl-4">
                         <div class="single-grown-with-care">
-                            <div class="single-grown-with-care__icon">
-                                <img src="{{ asset('assets/images/icon/grown-with-care__icon-' . $loop->iteration . '.png') }}" alt="Icon">
+                            <div class="single-grown-with-care__icon single-grown-with-care__icon--police" aria-hidden="true">
+                                <i class="{{ $offre->icone ?: \App\Models\Offre::ICONE_PAR_DEFAUT }}"></i>
                             </div>
                             <div class="single-grown-with-care__content">
                                 <h3><a href="{{ route('demande') }}">{{ $offre->tr('titre') }}</a></h3>

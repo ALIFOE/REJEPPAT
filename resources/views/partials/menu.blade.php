@@ -3,11 +3,12 @@
     <li class="{{ request()->routeIs('home') ? 'current' : '' }}">
         <a href="{{ route('home') }}">{{ __('Accueil') }}</a>
     </li>
-    <li class="dropdown {{ request()->routeIs('offres', 'demande', 'regions.*', 'partenaires.*') ? 'current' : '' }}">
+    <li class="dropdown {{ request()->routeIs('offres', 'demande', 'axes', 'regions.*', 'partenaires.*') ? 'current' : '' }}">
         <a href="{{ route('offres') }}">{{ __('Le Réseau') }}</a>
         <ul>
             <li><a href="{{ route('offres') }}">{{ __('Nos offres & services') }}</a></li>
             <li><a href="{{ route('demande') }}">{{ __('Demande de service') }}</a></li>
+            <li><a href="{{ route('axes') }}">{{ __('Axes stratégiques') }}</a></li>
             <li><a href="{{ route('regions.index') }}">{{ __('Sections régionales') }}</a></li>
             <li><a href="{{ route('partenaires.index') }}">{{ __('Partenaires') }}</a></li>
         </ul>

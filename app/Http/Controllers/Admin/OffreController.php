@@ -6,6 +6,7 @@ use App\Models\DemandeService;
 use App\Models\Offre;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Illuminate\Validation\Rule;
 use Illuminate\View\View;
 
 class OffreController extends Controller
@@ -20,7 +21,7 @@ class OffreController extends Controller
 
     public function create(): View
     {
-        return view('admin.offres.form', ['offre' => new Offre(['ordre' => Offre::max('ordre') + 1, 'actif' => true])]);
+        return view('admin.offres.form', ['offre' => new Offre(['ordre' => Offre::max('ordre') + 1, 'icone' => Offre::ICONE_PAR_DEFAUT, 'actif' => true])]);
     }
 
     public function store(Request $request): RedirectResponse
@@ -54,12 +55,14 @@ class OffreController extends Controller
         $donnees = $request->validate([
             'titre' => ['required', 'string', 'max:160'],
             'texte' => ['required', 'string', 'max:1000'],
+            'icone' => ['nullable', Rule::in(array_keys(Offre::ICONES))],
             'ordre' => ['nullable', 'integer', 'min:0'],
         ] + $this->reglesTraductions(), self::MESSAGES);
 
         return [
             'titre' => $donnees['titre'],
             'texte' => $donnees['texte'],
+            'icone' => $donnees['icone'] ?? Offre::ICONE_PAR_DEFAUT,
             'ordre' => (int) ($donnees['ordre'] ?? 0),
             'actif' => $request->boolean('actif'),
             'traductions' => $this->traductions($request, Offre::class),

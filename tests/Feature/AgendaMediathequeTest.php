@@ -7,6 +7,8 @@ use App\Models\Media;
 use App\Models\User;
 use Database\Seeders\ContenuSeeder;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use Illuminate\Http\UploadedFile;
+use Illuminate\Support\Facades\Storage;
 use Tests\TestCase;
 
 class AgendaMediathequeTest extends TestCase
@@ -67,6 +69,51 @@ class AgendaMediathequeTest extends TestCase
             'titre' => 'Vidéo', 'type' => 'video', 'date' => '2026-10-10', 'url' => 'https://www.youtube.com/watch?v=0bCiARbU0R4', 'publie' => '1',
         ])->assertRedirect(route('admin.medias.index'));
         $this->assertSame('0bCiARbU0R4', Media::sole()->youtubeId());
+    }
+
+    public function test_la_video_de_l_accueil_est_lue_par_un_lien_signe_sans_adresse_publique(): void
+    {
+        Storage::disk(Media::DISQUE_VIDEOS)->put('videos/journal.mp4', str_repeat('0', 2048));
+        $video = Media::create(['titre' => 'Journal vidéo du REJEPPAT', 'type' => 'video', 'date' => today(), 'fichier' => 'videos/journal.mp4', 'accueil' => true]);
+
+        $accueil = $this->get(route('home'))->assertOk()
+            ->assertSeeInOrder(['Nos sections régionales', 'Le REJEPPAT en vidéo'])
+            ->assertSee('Journal vidéo du REJEPPAT')
+            ->assertSee('controlslist="nodownload', false)
+            ->assertDontSee('journal.mp4', false);
+
+        preg_match('/<video[^>]+src="([^"#]+)/', $accueil->getContent(), $lien);
+        $lien = html_entity_decode($lien[1]);
+
+        $this->get($lien, ['Range' => 'bytes=0-99'])->assertStatus(206)->assertHeader('Content-Length', '100');
+        $this->get($lien)->assertOk()->assertHeader('Content-Disposition', 'inline');
+
+        // Lien modifié ou ouvert directement dans un onglet : refusé
+        $this->get(route('video.lecture', $video))->assertForbidden();
+        $this->get($lien, ['Sec-Fetch-Dest' => 'document'])->assertForbidden();
+
+        // Vidéo masquée : plus lisible par les visiteurs
+        $video->update(['publie' => false]);
+        $this->get($lien)->assertNotFound();
+    }
+
+    public function test_une_video_envoyee_depuis_l_administration_est_stockee_hors_du_dossier_public(): void
+    {
+        Storage::fake('uploads');
+        $admin = User::factory()->admin()->create();
+
+        $this->actingAs($admin)->post(route('admin.medias.store'), [
+            'titre' => 'Reportage', 'type' => 'video', 'date' => '2026-10-10', 'accueil' => '1', 'publie' => '1',
+            'fichier' => UploadedFile::fake()->create('reportage.mp4', 500, 'video/mp4'),
+        ])->assertRedirect(route('admin.medias.index'));
+
+        $video = Media::sole();
+        $this->assertTrue($video->accueil);
+        Storage::disk(Media::DISQUE_VIDEOS)->assertExists($video->fichier);
+        $this->assertSame([], Storage::disk('uploads')->allFiles());
+
+        $this->delete(route('admin.medias.destroy', $video));
+        Storage::disk(Media::DISQUE_VIDEOS)->assertMissing($video->fichier);
     }
 
     public function test_la_fin_d_un_evenement_suit_son_debut(): void
