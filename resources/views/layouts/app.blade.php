@@ -156,6 +156,7 @@
     <script src="{{ \App\Support\Contenu::asset('assets/js/boutique.js') }}"></script>
     <script src="{{ \App\Support\Contenu::asset('assets/js/rejeppat-aide.js') }}"></script>
     <script src="{{ \App\Support\Contenu::asset('assets/js/rejeppat-video.js') }}"></script>
+    <script src="{{ \App\Support\Contenu::asset('assets/js/rejeppat-navigation.js') }}"></script>
 
     @stack('scripts')
 

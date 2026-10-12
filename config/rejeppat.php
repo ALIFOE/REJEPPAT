@@ -42,11 +42,16 @@ return [
     ],
 
     /*
+    | Vidéo « Notre réseau, notre histoire » de l'accueil (ouverte dans une fenêtre sur le site)
+    */
+    'video_presentation' => 'https://www.youtube.com/watch?v=JMFDra6FbWQ',
+
+    /*
     | Nos offres & services (https://rejeppat.org/nos-offres-services/)
     */
     'offres' => [
         ['titre' => 'Formation aux pratiques résilientes aux changements climatiques', 'icone' => 'fas fa-cloud-sun-rain', 'texte' => 'Organisation de formations, d’ateliers et de sessions pratiques pour permettre aux jeunes et aux acteurs ruraux d’adopter des pratiques agricoles résilientes face aux changements climatiques.'],
-        ['titre' => 'REJEPPAT-Fina', 'icone' => 'fas fa-tools', 'texte' => 'Un mécanisme interne d’appui en matériels et en équipements pour les jeunes porteurs de projets.'],
+        ['titre' => 'REJEPPAT-Fina', 'icone' => 'fas fa-hand-holding-usd', 'texte' => 'Un mécanisme interne d’appui en matériels et en équipements pour les jeunes porteurs de projets.'],
         ['titre' => 'Coaching sur le parcours entrepreneurial', 'icone' => 'fas fa-chalkboard-teacher', 'texte' => 'Accompagnement des producteurs dans l’amélioration des pratiques agricoles et de gestion de leurs exploitations, pour le développement d’entreprises agricoles durables adaptées aux réalités locales.'],
         ['titre' => 'Transformation agroalimentaire', 'icone' => 'fas fa-mortar-pestle', 'texte' => 'Promotion de la transformation et de la valorisation des produits agricoles locaux afin d’améliorer leur valeur ajoutée et de créer de nouvelles opportunités.'],
         ['titre' => 'Entrepreneuriat des jeunes', 'icone' => 'fas fa-briefcase', 'texte' => 'Soutien aux jeunes entrepreneurs dans le développement de leurs activités, le renforcement de leurs capacités et la consolidation de leurs initiatives économiques.'],
@@ -107,7 +112,7 @@ return [
     | puis importées dans la médiathèque et mises en avant sur l'accueil (ContenuSeeder).
     */
     'videos' => [
-        ['titre' => 'Journal vidéo du REJEPPAT', 'fichier' => 'videos/videojournal.mp4', 'description' => 'Les activités du réseau en images.'],
+        ['titre' => 'Présentation du REJEPPAT', 'fichier' => 'videos/presentation-rejeppat.mp4', 'description' => 'Le réseau, ses missions et ses jeunes producteurs en images.'],
     ],
 
     /*

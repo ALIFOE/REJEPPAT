@@ -165,16 +165,23 @@
         majSon();
     }
 
-    document.querySelectorAll('[data-lecteur-video]').forEach(initialiser);
+    function activer(racine) {
+        racine.querySelectorAll('[data-lecteur-video]').forEach(initialiser);
 
-    document.querySelectorAll('[data-liste-videos]').forEach(function (liste) {
-        var lecteur = document.getElementById(liste.dataset.listeVideos);
-        liste.querySelectorAll('[data-video-source]').forEach(function (element) {
-            element.addEventListener('click', function () {
-                liste.querySelectorAll('[data-video-source]').forEach(function (autre) { autre.classList.toggle('actif', autre === element); });
-                lecteur.changerVideo(element.dataset.videoSource, element.dataset.videoAffiche, element.dataset.videoTitre);
-                lecteur.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        racine.querySelectorAll('[data-liste-videos]').forEach(function (liste) {
+            var lecteur = document.getElementById(liste.dataset.listeVideos);
+            liste.querySelectorAll('[data-video-source]').forEach(function (element) {
+                element.addEventListener('click', function () {
+                    liste.querySelectorAll('[data-video-source]').forEach(function (autre) { autre.classList.toggle('actif', autre === element); });
+                    lecteur.changerVideo(element.dataset.videoSource, element.dataset.videoAffiche, element.dataset.videoTitre);
+                    lecteur.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                });
             });
         });
-    });
+    }
+
+    activer(document);
+
+    // Contenu chargé sans rechargement de la page (filtres, pagination : rejeppat-navigation.js)
+    document.addEventListener('rejeppat:contenu-charge', function (event) { activer(event.detail); });
 })();

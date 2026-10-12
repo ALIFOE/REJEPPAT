@@ -36,6 +36,27 @@
         });
     });
 
+    // Blocs affichés selon un choix (data-affiche-si="source=youtube") ; les champs masqués ne sont pas envoyés
+    var conditionnels = document.querySelectorAll('[data-affiche-si]');
+    var majConditionnels = function () {
+        conditionnels.forEach(function (bloc) {
+            var condition = bloc.getAttribute('data-affiche-si').split('=');
+            var choix = document.querySelector('input[name="' + condition[0] + '"]:checked');
+            bloc.hidden = !choix || choix.value !== condition[1];
+            bloc.querySelectorAll('input, select, textarea').forEach(function (champ) {
+                champ.disabled = bloc.hidden;
+            });
+        });
+    };
+    if (conditionnels.length) {
+        document.addEventListener('change', function (event) {
+            if (event.target.matches('input[type="radio"]')) {
+                majConditionnels();
+            }
+        });
+        majConditionnels();
+    }
+
     if (!window.Chart) {
         return;
     }

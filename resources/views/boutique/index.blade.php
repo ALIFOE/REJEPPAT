@@ -12,7 +12,7 @@
 
 
         <!--Start Product Page -->
-        <section class="product-page">
+        <section class="product-page" data-zone-ajax>
             <div class="container">
                 <div class="row">
                     <div class="col-xl-4 col-lg-5">
@@ -28,7 +28,7 @@
                                             <h4>{{ __('Rechercher') }}</h4>
                                         </div>
                                     </div>
-                                    <form class="search-form" action="{{ route('boutique.index') }}">
+                                    <form class="search-form" action="{{ route('boutique.index') }}" data-recherche-ajax>
                                         <input placeholder="{{ __('Rechercher un produit...') }}" type="text" name="q" value="{{ $recherche }}">
                                         <button type="submit">
                                             <i class="icon-search"></i>
@@ -48,7 +48,7 @@
                                         </div>
                                     </div>
                                     <div class="product-page__sidebar-categories-list-box">
-                                        <ul class="product-page__sidebar-categories-list">
+                                        <ul class="product-page__sidebar-categories-list" data-filtres-ajax>
                                             <li class="{{ $categorie ? '' : 'active' }}"><a href="{{ route('boutique.index') }}">{{ __('Tous les produits') }} <span>({{ $tous->count() }})</span> </a></li>
                                             @foreach (config('boutique.categories') as $cle => $nom)
                                                 @continue($tous->where('categorie', $cle)->isEmpty())

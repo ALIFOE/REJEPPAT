@@ -33,7 +33,7 @@
                     <div class="col-xl-4 col-lg-4">
                         <aside class="rj-encadre">
                             <h3>{{ __('Par type') }}</h3>
-                            <ul>
+                            <ul data-filtres-ajax>
                                 <li class="{{ ! $type && ! $archives ? 'actif' : '' }}"><i class="icon-arrow"></i> <a href="{{ route('espace-jeunes.opportunites') }}">{{ __('Toutes les opportunités ouvertes') }} ({{ $compteurs->sum() }})</a></li>
                                 @foreach (Opportunite::TYPES as $cle => $libelle)
                                     <li class="{{ $type === $cle && ! $archives ? 'actif' : '' }}"><i class="icon-arrow"></i> <a href="{{ route('espace-jeunes.opportunites', ['type' => $cle]) }}">{{ __($libelle) }} ({{ $compteurs[$cle] ?? 0 }})</a></li>

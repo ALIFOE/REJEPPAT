@@ -130,6 +130,7 @@
     <script src="{{ asset('assets/vendors/chartjs/chart.umd.min.js') }}"></script>
     <script src="{{ \App\Support\Contenu::asset('assets/js/admin.js') }}"></script>
     <script src="{{ \App\Support\Contenu::asset('assets/js/rejeppat-video.js') }}"></script>
+    <script src="{{ \App\Support\Contenu::asset('assets/js/rejeppat-navigation.js') }}"></script>
     @stack('scripts')
 </body>
 

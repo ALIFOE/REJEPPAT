@@ -40,7 +40,7 @@
         <form class="a-filtres" method="get">
             @if (request('etat'))<input type="hidden" name="etat" value="{{ request('etat') }}">@endif
             <input type="search" name="q" value="{{ request('q') }}" placeholder="Nom, e-mail ou contenu…">
-            <select name="objet" onchange="this.form.submit()">
+            <select name="objet" onchange="this.form.requestSubmit()">
                 <option value="">Tous les objets</option>
                 @foreach (config('rejeppat.objets_contact') as $objet)
                     <option value="{{ $objet }}" @selected(request('objet') === $objet)>{{ $objet }}</option>

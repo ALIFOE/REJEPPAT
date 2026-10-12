@@ -10,7 +10,7 @@
             </div>
             <div class="container">
                 <div class="inner-content">
-                    <div class="title">
+                    <div class="title" data-zone-ajax>
                         <h2>{{ $titre }}</h2>
                         <p>{{ $texte ?? __('Pour une agriculture durable portée par la jeunesse.') }}</p>
                     </div>

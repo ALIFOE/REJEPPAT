@@ -29,6 +29,12 @@ class Media extends Model
         'podcast' => 'Podcasts',
     ];
 
+    /** Provenance du contenu d'une vidéo ou d'un podcast : fichier envoyé sur le site ou lien en ligne */
+    public const SOURCES = [
+        'video' => ['fichier' => 'Fichier vidéo envoyé sur le site', 'youtube' => 'Lien YouTube'],
+        'podcast' => ['fichier' => 'Fichier audio envoyé sur le site', 'lien' => 'Lien d’écoute (SoundCloud, Spotify…)'],
+    ];
+
     public const TRADUCTIONS = [
         'titre' => ['Titre', 'texte'],
         'description' => ['Description', 'textarea'],
@@ -67,13 +73,28 @@ class Media extends Model
     /** Identifiant d'une vidéo YouTube (liens youtube.com/watch?v=…, youtu.be/…, /embed/…, /shorts/…). */
     public function youtubeId(): ?string
     {
-        if (! $this->url) {
+        return self::extraireYoutubeId($this->url);
+    }
+
+    public static function extraireYoutubeId(?string $url): ?string
+    {
+        if (! $url) {
             return null;
         }
 
-        preg_match('~(?:youtube\.com/(?:watch\?(?:.*&)?v=|embed/|shorts/)|youtu\.be/)([\w-]{11})~', $this->url, $correspondance);
+        preg_match('~(?:youtube\.com/(?:watch\?(?:.*&)?v=|embed/|shorts/)|youtu\.be/)([\w-]{11})~', $url, $correspondance);
 
         return $correspondance[1] ?? null;
+    }
+
+    /** Provenance actuelle d'une vidéo ou d'un podcast (voir SOURCES), null pour une photo. */
+    public function source(): ?string
+    {
+        return match ($this->type) {
+            'video' => $this->url && ! $this->fichier ? 'youtube' : 'fichier',
+            'podcast' => $this->url && ! $this->fichier ? 'lien' : 'fichier',
+            default => null,
+        };
     }
 
     /** Vidéo envoyée sur le site (et non lien YouTube) : lue avec le lecteur du site. */

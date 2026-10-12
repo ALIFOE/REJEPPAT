@@ -30,7 +30,7 @@
 
                             <div class="services-details__content-top">
                                 <div class="services-details__content-top-img">
-                                    <img src="{{ asset('assets/images/rejeppat/fermes/page-top.jpg') }}" alt="{{ __('Formation pratique dans une ferme école du REJEPPAT') }}">
+                                    <img src="{{ \App\Support\Contenu::asset('assets/images/rejeppat/fermes/page-top.jpg') }}" alt="{{ __('Formation pratique dans une ferme école du REJEPPAT') }}">
                                 </div>
                                 <div class="services-details__content-top-text">
                                     <h2>{{ __($presentation['titre']) }}</h2>

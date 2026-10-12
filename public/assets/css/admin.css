@@ -674,6 +674,7 @@ a.a-utilisateur__nom {
 .a-champ input[type="number"],
 .a-champ input[type="date"],
 .a-champ input[type="tel"],
+.a-champ input[type="url"],
 .a-champ input[type="file"],
 .a-champ select,
 .a-champ textarea {
@@ -1051,6 +1052,67 @@ a.a-utilisateur__nom {
     color: var(--a-blanc);
 }
 
+/* ---------- Médiathèque : ajout par type et aperçu YouTube ---------- */
+.a-ajouts-medias {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 16px;
+    margin-bottom: 20px;
+}
+
+.a-ajouts-medias a {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    padding: 16px 18px;
+    border: 1px solid var(--a-bordure);
+    border-radius: var(--a-rayon);
+    background: var(--a-blanc);
+    color: var(--a-noir);
+    transition: border-color .2s ease, box-shadow .2s ease;
+}
+
+.a-ajouts-medias a:hover {
+    border-color: var(--a-vert);
+    box-shadow: 0 6px 18px rgba(12, 34, 19, .08);
+}
+
+.a-ajouts-medias i {
+    display: grid;
+    flex: 0 0 44px;
+    place-items: center;
+    height: 44px;
+    border-radius: 50%;
+    background: var(--a-fond);
+    color: var(--a-vert);
+    font-size: 18px;
+}
+
+.a-ajouts-medias span {
+    display: flex;
+    flex-direction: column;
+}
+
+.a-ajouts-medias small {
+    color: var(--a-vert-doux);
+    font-size: 13px;
+}
+
+.a-video-youtube {
+    max-width: 520px;
+    margin-top: -6px;
+    aspect-ratio: 16 / 9;
+    overflow: hidden;
+    border-radius: var(--a-rayon);
+    background: #000;
+}
+
+.a-video-youtube iframe {
+    width: 100%;
+    height: 100%;
+    border: 0;
+}
+
 /* ---------- Écrans moyens et petits ---------- */
 @media (max-width: 1280px) {
     .a-grille--4 { grid-template-columns: repeat(2, minmax(0, 1fr)); }
@@ -1058,7 +1120,8 @@ a.a-utilisateur__nom {
 
 @media (max-width: 1100px) {
     .a-grille--3,
-    .a-grille--large { grid-template-columns: minmax(0, 1fr); }
+    .a-grille--large,
+    .a-ajouts-medias { grid-template-columns: minmax(0, 1fr); }
 }
 
 @media (max-width: 991px) {
@@ -1172,4 +1235,11 @@ a.a-utilisateur__nom {
     height: 90px;
     border-radius: 50%;
     object-fit: cover;
+}
+
+/* Filtres et pagination sans rechargement : zone en cours de chargement (rejeppat-navigation.js) */
+.rj-zone--chargement {
+    opacity: .5;
+    pointer-events: none;
+    transition: opacity .2s ease;
 }

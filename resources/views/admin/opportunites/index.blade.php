@@ -14,7 +14,7 @@
     <div class="a-carte">
         <form class="a-filtres" method="get">
             <input type="search" name="q" value="{{ request('q') }}" placeholder="Rechercher une opportunité…">
-            <select name="type" onchange="this.form.submit()">
+            <select name="type" onchange="this.form.requestSubmit()">
                 <option value="">Tous les types</option>
                 @foreach (Opportunite::TYPES as $cle => $libelle)
                     <option value="{{ $cle }}" @selected(request('type') === $cle)>{{ $libelle }}</option>

@@ -49,7 +49,7 @@
         <form class="a-filtres" method="get">
             @if (request('statut'))<input type="hidden" name="statut" value="{{ request('statut') }}">@endif
             <input type="search" name="q" value="{{ request('q') }}" placeholder="Numéro, nom ou téléphone…">
-            <select name="paiement" onchange="this.form.submit()">
+            <select name="paiement" onchange="this.form.requestSubmit()">
                 <option value="">Tous les paiements</option>
                 @foreach (Commande::STATUTS_PAIEMENT as $cle => [$libelle])
                     <option value="{{ $cle }}" @selected(request('paiement') === $cle)>{{ $libelle }}</option>

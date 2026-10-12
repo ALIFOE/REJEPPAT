@@ -5,11 +5,23 @@
 
 @php use App\Models\Media; @endphp
 
-@section('actions')
-    <a href="{{ route('admin.medias.create', ['type' => request('type')]) }}" class="a-btn"><i class="fas fa-plus"></i> Nouveau média</a>
-@endsection
-
 @section('content')
+
+    {{-- Un formulaire d'ajout par type de média --}}
+    <div class="a-ajouts-medias">
+        <a href="{{ route('admin.medias.create', ['type' => 'photo']) }}">
+            <i class="far fa-image"></i>
+            <span><strong>Ajouter une photo</strong><small>Image ouverte en grand dans la galerie</small></span>
+        </a>
+        <a href="{{ route('admin.medias.create', ['type' => 'video']) }}">
+            <i class="fas fa-video"></i>
+            <span><strong>Ajouter une vidéo</strong><small>Fichier MP4 ou lien YouTube</small></span>
+        </a>
+        <a href="{{ route('admin.medias.create', ['type' => 'podcast']) }}">
+            <i class="fas fa-podcast"></i>
+            <span><strong>Ajouter un podcast</strong><small>Fichier audio ou lien d’écoute</small></span>
+        </a>
+    </div>
 
     <div class="a-carte">
         <div class="a-filtres">
@@ -34,7 +46,10 @@
                                     <span><strong>{{ $media->titre }}</strong><small>{{ \Illuminate\Support\Str::limit($media->description, 70) }}</small></span>
                                 </div>
                             </td>
-                            <td>{{ Media::TYPES[$media->type] ?? $media->type }}</td>
+                            <td>
+                                {{ Media::TYPES[$media->type] ?? $media->type }}
+                                @if ($media->source())<br><small>{{ ['fichier' => 'Fichier', 'youtube' => 'YouTube', 'lien' => 'Lien d’écoute'][$media->source()] }}@if ($media->accueil) · Accueil @endif</small>@endif
+                            </td>
                             <td>{{ $media->date->format('d/m/Y') }}</td>
                             <td><span class="a-badge a-badge--{{ $media->publie ? 'vert' : 'gris' }}">{{ $media->publie ? 'Publié' : 'Masqué' }}</span></td>
                             <td>

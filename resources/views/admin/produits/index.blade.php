@@ -48,13 +48,13 @@
     <div class="a-carte">
         <form class="a-filtres" method="get">
             <input type="search" name="q" value="{{ request('q') }}" placeholder="Rechercher un produit…">
-            <select name="categorie" onchange="this.form.submit()">
+            <select name="categorie" onchange="this.form.requestSubmit()">
                 <option value="">Toutes les catégories</option>
                 @foreach (config('boutique.categories') as $cle => $nom)
                     <option value="{{ $cle }}" @selected(request('categorie') === $cle)>{{ $nom }}</option>
                 @endforeach
             </select>
-            <select name="stock" onchange="this.form.submit()">
+            <select name="stock" onchange="this.form.requestSubmit()">
                 <option value="">Tous les stocks</option>
                 <option value="rupture" @selected(request('stock') === 'rupture')>En rupture</option>
             </select>

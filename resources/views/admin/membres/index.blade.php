@@ -18,13 +18,13 @@
     <div class="a-carte">
         <form class="a-filtres" method="get">
             <input type="search" name="q" value="{{ request('q') }}" placeholder="Nom ou organisation…">
-            <select name="region" onchange="this.form.submit()">
+            <select name="region" onchange="this.form.requestSubmit()">
                 <option value="">Toutes les régions</option>
                 @foreach ($regions as $id => $nom)
                     <option value="{{ $id }}" @selected((string) request('region') === (string) $id)>{{ $nom }}</option>
                 @endforeach
             </select>
-            <select name="etat" onchange="this.form.submit()">
+            <select name="etat" onchange="this.form.requestSubmit()">
                 <option value="">Tous les profils</option>
                 <option value="attente" @selected(request('etat') === 'attente')>À valider</option>
             </select>

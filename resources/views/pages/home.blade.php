@@ -18,7 +18,7 @@
         [
             'image' => 'slide-2.jpg',
             'sub_title' => __('Achetez local et frais'),
-            'title' => __('Directement <br> chez les producteurs'),
+            'title' => __('Directement <br> chez les producteurs<wbr>(trices)'),
             'text' => __('Des produits biologiques et naturels issus des coopératives <br> et des fermes écoles du réseau.'),
             'button' => __('Accéder à la boutique'),
             'link' => route('boutique.index'),
@@ -38,13 +38,13 @@
             'image' => 'mission.jpg',
             'icon' => 'icon-seedling',
             'title' => __('Notre mission'),
-            'text' => __('Être un réseau crédible de jeunes agriculteurs, fortement ancré à la base, qui promeut une agriculture durable, faisant d’elle un métier viable et prospère.'),
+            'text' => __('Contribuer à l’épanouissement économique et social des organisations paysannes, des producteurs et professionnels agricoles membres pour un développement durable et inclusif au Togo.'),
         ],
         [
             'image' => 'vision.jpg',
             'icon' => 'icon-eco-friendly',
             'title' => __('Notre vision'),
-            'text' => __('Contribuer à l’épanouissement économique et social des organisations paysannes, des producteurs et professionnels agricoles membres pour un développement durable et inclusif au Togo.'),
+            'text' => __('Être un réseau crédible de jeunes agriculteurs, fortement ancré à la base, qui promeut une agriculture durable, faisant d’elle un métier viable et prospère.'),
         ],
         [
             'image' => 'valeurs.jpg',
@@ -238,7 +238,7 @@
                                 </div>
                                 <h2 class="title-animation">{{ __('À propos du REJEPPAT-Togo') }}</h2>
                             </div>
-                            <p class="about-style4__text">{{ __('Le Réseau des Jeunes Producteurs et Professionnels Agricoles du Togo est une faîtière des organisations paysannes de jeunes créée le 10 juillet 2010 et membre de la CTOP. Il rassemble 185 coopératives réparties sur tout le territoire national et représentées par 5 sections régionales.') }}
+                            <p class="about-style4__text">{!! __('Le Réseau des Jeunes Producteurs et Professionnels Agricoles du Togo est une faîtière des organisations paysannes de jeunes créée le 10 juillet 2010 et membre de la CTOP. Le réseau compte à ce jour plus de <strong>15 751</strong> membres et près de <strong>200</strong> coopératives réparties sur tout le territoire national et structuré en <strong>5</strong> sections régionales.') !!}
                                 <a href="{{ route('regions.index') }}" class="rj-lien-exergue">{{ __('Découvrir les sections régionales') }} <i class="icon-arrow"></i></a></p>
                             <div class="about-style4__points-box">
                                 <h5 class="about-style4__points-title">{{ __('Notre engagement') }}</h5>
@@ -297,7 +297,7 @@
                                 </div>
                                 <div class="about-style4__video-box">
                                     <a class="video-popup" title="{{ __('Vidéo REJEPPAT') }}"
-                                        href="{{ config('rejeppat.social.youtube') }}">
+                                        href="{{ config('rejeppat.video_presentation') }}">
                                         <span class="fas fa-play"></span>
                                     </a>
                                     <p class="about-style4__video-title">{!! __('Notre réseau, <br> notre histoire.') !!}</p>

@@ -129,7 +129,7 @@ class TraductionsSeeder extends Seeder
             $this->traduire(Offre::where('titre', $titre)->first(), $anglais);
         }
 
-        $this->traduire(Media::where('fichier', 'videos/videojournal.mp4')->first(), ['titre' => 'REJEPPAT video news', 'description' => 'The network’s activities in pictures.']);
+        $this->traduire(Media::where('fichier', 'videos/presentation-rejeppat.mp4')->first(), ['titre' => 'Introducing REJEPPAT', 'description' => 'The network, its missions and its young producers in pictures.']);
 
         $this->traduire(Region::where('slug', 'centrale')->first(), ['presentation' => [
             'The Central Region is home to REJEPPAT’s national headquarters in Sokodé and to most of the network’s farm schools.',

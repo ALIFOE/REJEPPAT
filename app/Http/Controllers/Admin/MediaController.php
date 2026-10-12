@@ -62,68 +62,80 @@ class MediaController extends Controller
         return redirect()->route('admin.medias.index')->with('succes', 'Média supprimé.');
     }
 
+    /**
+     * Chaque type a son formulaire : une photo, une vidéo (fichier envoyé ou lien YouTube)
+     * ou un podcast (fichier audio ou lien d'écoute).
+     */
     private function enregistrer(Request $request, Media $media): void
     {
+        $type = $request->input('type');
+
         $donnees = $request->validate([
             'titre' => ['required', 'string', 'max:255'],
             'type' => ['required', Rule::in(array_keys(Media::TYPES))],
+            'source' => [Rule::requiredIf(isset(Media::SOURCES[$type])), 'nullable', Rule::in(array_keys(Media::SOURCES[$type] ?? []))],
             'date' => ['required', 'date'],
             'description' => ['nullable', 'string', 'max:2000'],
             'url' => ['nullable', 'url:http,https', 'max:255'],
             'photo' => self::REGLE_IMAGE,
-            'fichier' => $request->input('type') === 'video'
+            'fichier' => $type === 'video'
                 ? ['nullable', 'file', 'mimetypes:video/mp4,video/webm', 'max:307200']
                 : ['nullable', 'file', 'mimes:mp3,m4a,ogg,wav', 'max:40960'],
             'ordre' => ['nullable', 'integer', 'min:0'],
         ] + $this->reglesTraductions(), self::MESSAGES + [
+            'source.required' => 'Choisissez la provenance du média.',
             'fichier.mimes' => 'Formats audio acceptés : MP3, M4A, OGG ou WAV.',
             'fichier.mimetypes' => 'Formats vidéo acceptés : MP4 ou WEBM.',
         ]);
 
-        $media->fill([
-            'titre' => $donnees['titre'],
-            'type' => $donnees['type'],
-            'date' => $donnees['date'],
-            'description' => $donnees['description'] ?? null,
-            'url' => $donnees['url'] ?? null,
-            'photo' => $this->photoDemandee($request, $media, 'medias'),
-            'fichier' => $this->fichierDemande($request, $media, $donnees['type']),
-            'accueil' => $donnees['type'] === 'video' && $request->boolean('accueil'),
-            'ordre' => (int) ($donnees['ordre'] ?? 0),
-            'publie' => $request->boolean('publie'),
-            'traductions' => $this->traductions($request, Media::class),
-        ]);
+        $source = $donnees['source'] ?? null;
+        $fichierConserve = $media->fichier && $media->type === $type;
 
-        // Chaque type a besoin de son contenu : une photo, une vidéo YouTube, un fichier ou un lien audio
-        $erreur = match ($media->type) {
-            'photo' => $media->photo ? null : ['photo' => 'Choisissez la photo à publier.'],
-            'video' => $media->youtubeId() || $media->fichier ? null : ['url' => 'Envoyez le fichier vidéo ou indiquez le lien d’une vidéo YouTube (ex. https://www.youtube.com/watch?v=…).'],
-            'podcast' => $media->fichier || $media->url ? null : ['fichier' => 'Envoyez le fichier audio ou indiquez le lien d’écoute.'],
+        // Vérifié avant de toucher aux fichiers : une erreur ne supprime rien
+        $erreur = match ($source ?? $type) {
+            'photo' => $request->hasFile('photo') || ($media->photo && ! $request->boolean('retirer_photo')) ? null : ['photo' => 'Choisissez la photo à publier.'],
+            'youtube' => Media::extraireYoutubeId($donnees['url'] ?? null) ? null : ['url' => 'Indiquez le lien d’une vidéo YouTube (ex. https://www.youtube.com/watch?v=…).'],
+            'lien' => filled($donnees['url'] ?? null) ? null : ['url' => 'Indiquez le lien d’écoute du podcast.'],
+            'fichier' => $request->hasFile('fichier') || $fichierConserve ? null : ['fichier' => $type === 'video' ? 'Choisissez le fichier vidéo à envoyer.' : 'Choisissez le fichier audio à envoyer.'],
         };
 
         if ($erreur) {
             throw ValidationException::withMessages($erreur);
         }
 
+        $media->fill([
+            'titre' => $donnees['titre'],
+            'type' => $type,
+            'date' => $donnees['date'],
+            'description' => $donnees['description'] ?? null,
+            'url' => in_array($source, ['youtube', 'lien'], true) ? $donnees['url'] : null,
+            'photo' => $this->photoDemandee($request, $media, 'medias'),
+            'fichier' => $this->fichierDemande($request, $media, $type, $source === 'fichier'),
+            'accueil' => $type === 'video' && $source === 'fichier' && $request->boolean('accueil'),
+            'ordre' => (int) ($donnees['ordre'] ?? 0),
+            'publie' => $request->boolean('publie'),
+            'traductions' => $this->traductions($request, Media::class),
+        ]);
+
         $media->save();
     }
 
     /**
      * Fichier du média : une vidéo est stockée hors du dossier public (diffusée par un lien signé),
-     * un podcast dans public/uploads. Changer de type ou de fichier supprime l'ancien.
+     * un podcast dans public/uploads. Un nouveau fichier, un lien à la place ou un changement de type
+     * supprime l'ancien.
      */
-    private function fichierDemande(Request $request, Media $media, string $type): ?string
+    private function fichierDemande(Request $request, Media $media, string $type, bool $avecFichier): ?string
     {
         $nouveau = $request->file('fichier');
-        $changeDeType = $media->exists && $media->fichier && $media->getOriginal('type') !== $type;
 
-        if (! $nouveau && ! $changeDeType && ! $request->boolean('retirer_fichier')) {
+        if ($avecFichier && ! $nouveau && $media->getOriginal('type') === $type) {
             return $media->fichier;
         }
 
         $this->supprimerFichierMedia($media);
 
-        if (! $nouveau) {
+        if (! $avecFichier || ! $nouveau) {
             return null;
         }
 

@@ -767,3 +767,10 @@
 .single-grown-with-care__icon--police i {
     position: relative;
 }
+
+/* Filtres et pagination sans rechargement : zone en cours de chargement (rejeppat-navigation.js) */
+.rj-zone--chargement {
+    opacity: .5;
+    pointer-events: none;
+    transition: opacity .2s ease;
+}

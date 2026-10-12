@@ -46,7 +46,7 @@
         <form class="a-filtres" method="get">
             @if (request('statut'))<input type="hidden" name="statut" value="{{ request('statut') }}">@endif
             <input type="search" name="q" value="{{ request('q') }}" placeholder="Nom, objet, organisation, téléphone…">
-            <select name="service" onchange="this.form.submit()">
+            <select name="service" onchange="this.form.requestSubmit()">
                 <option value="">Tous les services</option>
                 @foreach ($services as $service)
                     <option value="{{ $service }}" @selected(request('service') === $service)>{{ $service }}</option>
