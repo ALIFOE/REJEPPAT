@@ -64,7 +64,7 @@
                             </figure>
                         @endforeach
                     </div>
-                    <div class="rj-pagination">{{ $medias->links() }}</div>
+                    <div class="rj-pagination">{{ $medias->links('partials.pagination') }}</div>
                 @endif
             </div>
         </section>

@@ -15,7 +15,7 @@
 
 {{-- Lien partagé : une photo de la ferme (sinon son visuel) et sa présentation s'affichent dans l'aperçu --}}
 @section('og_image', $galerie[0] ?? $ferme->visuel('-top'))
-@section('description', \Illuminate\Support\Str::limit(trim(strip_tags($description[0] ?? __('Spécialité') . ' : ' . $ferme->tr('specialite'))), 200))
+@section('description', \Illuminate\Support\Str::limit(trim(strip_tags($description[0] ?? ($ferme->tr('specialite') ? __('Spécialité') . ' : ' . $ferme->tr('specialite') : __('Ferme école :nom', ['nom' => $ferme['nom']])))), 200))
 
 @section('content')
 
@@ -54,7 +54,9 @@
                                             {{ __('La ferme école :nom fait partie du réseau des fermes écoles du REJEPPAT : un espace de formation, d’innovation et d’expérimentation où les participants sont formés dans des conditions réelles de production.', ['nom' => $ferme['nom'] . ($ferme['localisation'] ? ' (' . $ferme['localisation'] . ')' : '')]) }}
                                         </p>
                                     @endforelse
-                                    <p>{{ __('Spécialité') }} : <strong>{{ $ferme->tr('specialite') }}</strong>.@if ($ferme->region) {{ __('Section régionale') }} : <a href="{{ route('regions.show', $ferme->region->slug) }}">{{ __($ferme->region->nom) }}</a>.@endif</p>
+                                    @if ($ferme->tr('specialite') || $ferme->region)
+                                        <p>@if ($ferme->tr('specialite')){{ __('Spécialité') }} : <strong>{{ $ferme->tr('specialite') }}</strong>.@endif @if ($ferme->region) {{ __('Section régionale') }} : <a href="{{ route('regions.show', $ferme->region->slug) }}">{{ __($ferme->region->nom) }}</a>.@endif</p>
+                                    @endif
                                 </div>
                             </div>
 

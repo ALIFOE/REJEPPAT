@@ -75,6 +75,7 @@ return [
             'nom' => 'Ma Joie',
             'localisation' => 'Kpété-Kpété, Région Centrale',
             'specialite' => 'Élevage & apiculture',
+            'telephone' => '+228 90 71 71 76',
             'carte' => ['lat' => 8.50413, 'lng' => 0.97139, 'adresse' => 'Sise à Kpétè-Kpétè, canton de Sotouboua, commune de Sotouboua 1, préfecture de Sotouboua.'],
             'modules' => [
                 'Élevage de petits ruminants',
@@ -92,6 +93,7 @@ return [
             'nom' => 'C.A.DE.T.E',
             'localisation' => 'Région des Plateaux',
             'specialite' => 'Agroécologie & maraîchage',
+            'telephone' => '+228 90 70 01 04',
             'carte' => ['lat' => 7.5207418, 'lng' => 1.0610079, 'adresse' => 'Sise à Wakpa, canton de Temedja, commune d’Amou 3, préfecture d’Amou.'],
             'modules' => [
                 'Agroécologie & production de céréales, légumineuses et tubercules (gestion durable des terres, compostage, association des cultures, fumure, cultures en couloirs, agroforesterie et arboriculture…)',
@@ -108,6 +110,7 @@ return [
             'nom' => 'Terre Bénie',
             'localisation' => 'Région des Plateaux',
             'specialite' => 'Agroécologie',
+            'telephone' => '+228 98 30 80 91',
             'carte' => ['lat' => 6.77658, 'lng' => 1.3312, 'adresse' => 'Sise à Agoto, canton d’Atchavé, commune de Haho 1, préfecture de Haho.'],
             'modules' => [
                 'Agroécologie & production de céréales, légumineuses et tubercules (gestion durable des terres, compostage, association des cultures, fumure, cultures…)',
@@ -146,6 +149,7 @@ return [
             'nom' => 'Togo Food',
             'localisation' => null,
             'specialite' => 'Riziculture intensive (SRI)',
+            'telephone' => '+228 93 26 45 02',
             'carte' => ['lat' => 8.343848, 'lng' => 1.010407, 'adresse' => 'Sise à Tchangaidè, canton de Blitta village, commune de Blitta 1, préfecture de Blitta.'],
             'modules' => [
                 'Agroécologie & production de céréales, légumineuses et tubercules (gestion durable des terres, compostage, association des cultures, fumure, cultures en couloirs, agroforesterie et arboriculture…)',
@@ -160,6 +164,7 @@ return [
             'nom' => 'N’Gnakpeboni',
             'localisation' => null,
             'specialite' => 'Anacarde & biointrants',
+            'telephone' => '+228 92 15 94 28',
             'carte' => ['lat' => 9.03333, 'lng' => 1.41667, 'adresse' => 'Sise à Nandjoubi, canton de Tchamba, commune de Tchamba 1, préfecture de Tchamba.'],
             'modules' => [
                 'Agroécologie & production de céréales, légumineuses et tubercules (gestion durable des terres, compostage, association des cultures, fumure, cultures en couloirs, agroforesterie et arboriculture…)',
@@ -177,6 +182,7 @@ return [
             'nom' => 'Sath Agro Business',
             'localisation' => null,
             'specialite' => 'Poules pondeuses',
+            'telephone' => '+228 93 28 11 76',
             'carte' => ['lat' => 9.033333, 'lng' => 1.416667, 'adresse' => 'Sise à Koutaboni, canton de Tchamba, commune de Tchamba 1, préfecture de Tchamba.'],
             'modules' => [
                 'Élevage de poules pondeuses',
@@ -195,6 +201,7 @@ return [
             'nom' => 'Albaraka',
             'localisation' => null,
             'specialite' => 'Transformation & agroforesterie',
+            'telephone' => '+228 90 95 02 55',
             'carte' => ['lat' => 8.995, 'lng' => 1.14, 'adresse' => 'Sise à Tchavadi, canton de Sokodé, commune de Tchaoudjo 1, préfecture de Tchaoudjo.'],
             'modules' => [
                 'Transformation agroalimentaire (fruits, légumes, tubercules et céréales)',
@@ -212,6 +219,7 @@ return [
             'nom' => 'Pirenadou',
             'localisation' => 'Kéletou - Tchamba',
             'specialite' => 'Maraîchage & élevage',
+            'telephone' => '+228 70 53 63 60',
             'carte' => ['lat' => 8.841417, 'lng' => 1.534483, 'adresse' => 'Sise à Kélétou, canton de Koussountou, commune de Tchamba 2, préfecture de Tchamba.'],
             'modules' => [
                 'Production de céréales et tubercules suivant les pratiques agroécologiques (compostage, bokashi)',
@@ -232,6 +240,7 @@ return [
             'nom' => 'Capable-Plus',
             'localisation' => null,
             'specialite' => 'Transformation & irrigation',
+            'telephone' => '+228 90 55 29 52',
             'carte' => ['lat' => 8.4308803, 'lng' => 0.9940179, 'adresse' => 'Sise à Tchébébé, canton de Tchébébé, commune de Sotouboua 3, préfecture de Sotouboua.'],
             'modules' => [
                 'Transformation agroalimentaire',
@@ -258,6 +267,22 @@ return [
                 'Entrepreneuriat agricole',
             ],
         ],
+
+        // Fermes écoles ajoutées d'après la liste du réseau (octobre 2026) : spécialité, adresse
+        // et domaines de formation à compléter depuis l'administration.
+        ['slug' => 'academie-paysanne-nenonene', 'nom' => 'Académie paysanne Nénonéné', 'localisation' => null, 'specialite' => '', 'telephone' => '+228 99 17 00 32', 'modules' => []],
+        ['slug' => 'groupe-avidja', 'nom' => 'Groupe AVIDJA', 'localisation' => null, 'specialite' => 'Agroécologie', 'telephone' => '+228 92 20 47 36', 'modules' => []],
+        ['slug' => 'crpm', 'nom' => 'CRPM', 'localisation' => null, 'specialite' => '', 'telephone' => '+228 90 82 47 43', 'modules' => []],
+        ['slug' => 'cata', 'nom' => 'CATA', 'localisation' => 'Adokpoé, Agbélouvé', 'specialite' => 'Agro-pastoralisme', 'telephone' => '+228 90 10 69 79', 'modules' => []],
+        ['slug' => 'shalom-agroeco-farm', 'nom' => 'Shalom AgroEco Farm', 'localisation' => null, 'specialite' => 'Agroécologie', 'telephone' => '+228 98 92 63 50', 'modules' => []],
+        ['slug' => 'yamefa', 'nom' => 'YAMEFA', 'localisation' => null, 'specialite' => '', 'telephone' => '+228 92 40 29 66', 'modules' => []],
+        ['slug' => 'tout-est-grace', 'nom' => 'Tout est Grâce', 'localisation' => null, 'specialite' => '', 'telephone' => '+228 92 80 53 57', 'modules' => []],
+        ['slug' => 'essouwerou', 'nom' => 'Essouwerou', 'localisation' => null, 'specialite' => '', 'telephone' => '+228 92 72 67 07', 'modules' => []],
+        ['slug' => 'cpda-togo', 'nom' => 'CPDA Togo', 'localisation' => null, 'specialite' => 'Agroécologie', 'telephone' => '+228 71 26 26 27', 'modules' => []],
+        ['slug' => 'fpapae-tg', 'nom' => 'FPAPAE-TG', 'localisation' => null, 'specialite' => '', 'telephone' => '+228 90 78 82 01', 'modules' => []],
+        ['slug' => 'trois-mages', 'nom' => '3 Mages', 'localisation' => null, 'specialite' => '', 'telephone' => '+228 91 61 71 96', 'modules' => []],
+        ['slug' => 'terre-fleurie', 'nom' => 'Terre Fleurie', 'localisation' => null, 'specialite' => 'Agroécologie', 'telephone' => '+228 93 02 74 69', 'modules' => []],
+        ['slug' => 'lampougue', 'nom' => 'Lampougue', 'localisation' => null, 'specialite' => '', 'telephone' => '+228 92 12 76 69', 'modules' => []],
     ],
 
 ];

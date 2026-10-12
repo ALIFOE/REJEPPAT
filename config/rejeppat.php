@@ -70,6 +70,16 @@ return [
     ],
 
     /*
+    | Axes stratégiques du réseau (page « Axes stratégiques ») : image reprise des domaines d'intervention
+    */
+    'axes' => [
+        ['image' => 'agriculture', 'titre' => 'Faciliter l’accès aux facteurs de production et aux financements adaptés'],
+        ['image' => 'formation', 'titre' => 'Améliorer la gouvernance, le fonctionnement global du réseau, le renforcement de capacités des jeunes et la communication interne et externe du REJEPPAT'],
+        ['image' => 'entrepreneuriat', 'titre' => 'Renforcer la mobilisation des ressources internes et externes'],
+        ['image' => 'agroalimentaire', 'titre' => 'Développer des stratégies de valorisation des produits agroécologiques et la résilience des jeunes agriculteurs'],
+    ],
+
+    /*
     | Formulaire de demande de services
     */
     'services_demande' => [
@@ -113,6 +123,37 @@ return [
     */
     'videos' => [
         ['titre' => 'Présentation du REJEPPAT', 'fichier' => 'videos/presentation-rejeppat.mp4', 'description' => 'Le réseau, ses missions et ses jeunes producteurs en images.'],
+    ],
+
+    /*
+    | Photos d'origine de la médiathèque (public/assets/images/rejeppat/mediatheque), importées
+    | par ContenuSeeder et la migration « ajouter_photos_mediatheque ». « en » : titre et légende en anglais.
+    */
+    'photos' => [
+        ['photo' => 'atelier-formateurs-photo-de-groupe.jpg', 'date' => '2026-10-02', 'titre' => 'Photo de groupe de l’atelier des maîtres formateurs', 'description' => 'Atelier de formation des maîtres formateurs sur l’entrepreneuriat forestier et l’installation d’un champ-école paysan (FAO), du 28 septembre au 2 octobre 2026 à Sotouboua et à la ferme école Ma Joie.', 'en' => ['titre' => 'Group photo of the master trainers’ workshop', 'description' => 'Training workshop for master trainers on forest entrepreneurship and setting up a farmer field school (FAO), from 28 September to 2 October 2026 in Sotouboua and at the Ma Joie farm school.']],
+        ['photo' => 'atelier-formateurs-visite-plantation.jpg', 'date' => '2026-10-02', 'titre' => 'Visite de plantation forestière avec les maîtres formateurs', 'description' => 'Atelier des maîtres formateurs sur l’entrepreneuriat forestier (FAO), septembre-octobre 2026.', 'en' => ['titre' => 'Forest plantation visit with the master trainers', 'description' => 'Master trainers’ workshop on forest entrepreneurship (FAO), September-October 2026.']],
+        ['photo' => 'atelier-formateurs-echanges-plantation.jpg', 'date' => '2026-10-02', 'titre' => 'Échanges en cercle dans la plantation', 'description' => 'Atelier des maîtres formateurs sur l’entrepreneuriat forestier (FAO), septembre-octobre 2026.', 'en' => ['titre' => 'Group discussion in the plantation', 'description' => 'Master trainers’ workshop on forest entrepreneurship (FAO), September-October 2026.']],
+        ['photo' => 'atelier-formateurs-seance-pratique.jpg', 'date' => '2026-10-02', 'titre' => 'Séance pratique en plantation forestière', 'description' => 'Atelier des maîtres formateurs sur l’entrepreneuriat forestier (FAO), septembre-octobre 2026.', 'en' => ['titre' => 'Practical session in a forest plantation', 'description' => 'Master trainers’ workshop on forest entrepreneurship (FAO), September-October 2026.']],
+        ['photo' => 'atelier-formateurs-explications.jpg', 'date' => '2026-10-02', 'titre' => 'Explications du formateur sur la plantation', 'description' => 'Atelier des maîtres formateurs sur l’entrepreneuriat forestier (FAO), septembre-octobre 2026.', 'en' => ['titre' => 'The trainer explains the plantation', 'description' => 'Master trainers’ workshop on forest entrepreneurship (FAO), September-October 2026.']],
+        ['photo' => 'atelier-formateurs-a-l-ecoute.jpg', 'date' => '2026-10-02', 'titre' => 'Maîtres formateurs à l’écoute', 'description' => 'Atelier des maîtres formateurs sur l’entrepreneuriat forestier (FAO), septembre-octobre 2026.', 'en' => ['titre' => 'Master trainers listening', 'description' => 'Master trainers’ workshop on forest entrepreneurship (FAO), September-October 2026.']],
+        ['photo' => 'atelier-formateurs-lecon-terrain.jpg', 'date' => '2026-10-02', 'titre' => 'Leçon sur le terrain', 'description' => 'Atelier des maîtres formateurs sur l’entrepreneuriat forestier (FAO), septembre-octobre 2026.', 'en' => ['titre' => 'Lesson in the field', 'description' => 'Master trainers’ workshop on forest entrepreneurship (FAO), September-October 2026.']],
+        ['photo' => 'atelier-formateurs-demonstration.jpg', 'date' => '2026-10-02', 'titre' => 'Démonstration en plantation forestière', 'description' => 'Atelier des maîtres formateurs sur l’entrepreneuriat forestier (FAO), septembre-octobre 2026.', 'en' => ['titre' => 'Demonstration in a forest plantation', 'description' => 'Master trainers’ workshop on forest entrepreneurship (FAO), September-October 2026.']],
+        ['photo' => 'plantation-forestiere.jpg', 'date' => '2026-10-02', 'titre' => 'Plantation forestière', 'description' => null, 'en' => ['titre' => 'Forest plantation', 'description' => null]],
+        ['photo' => 'equipe-rejeppat.jpg', 'date' => '2026-10-12', 'titre' => 'L’équipe du REJEPPAT sur le terrain', 'description' => null, 'en' => ['titre' => 'The REJEPPAT team in the field', 'description' => null]],
+        ['photo' => 'capable-plus-recoltes.jpg', 'date' => '2024-03-26', 'titre' => 'Récoltes de la ferme école Capable-Plus', 'description' => 'Papayes, choux, légumes feuilles et aubergines produits à Tchébébé.', 'en' => ['titre' => 'Harvests from the Capable-Plus farm school', 'description' => 'Papayas, cabbages, leafy vegetables and eggplants grown in Tchébébé.']],
+        ['photo' => 'capable-plus-papayes-legumes.jpg', 'date' => '2024-03-26', 'titre' => 'Papayes et légumes feuilles de Capable-Plus', 'description' => 'Ferme école Capable-Plus, Tchébébé.', 'en' => ['titre' => 'Papayas and leafy vegetables from Capable-Plus', 'description' => 'Capable-Plus farm school, Tchébébé.']],
+        ['photo' => 'capable-plus-legumes-feuilles.jpg', 'date' => '2024-03-26', 'titre' => 'Légumes feuilles de la ferme école Capable-Plus', 'description' => 'Ferme école Capable-Plus, Tchébébé.', 'en' => ['titre' => 'Leafy vegetables from the Capable-Plus farm school', 'description' => 'Capable-Plus farm school, Tchébébé.']],
+        ['photo' => 'mini-marche-sokode.jpg', 'date' => '2026-10-12', 'titre' => 'Mini-marché des produits agroécologiques et du terroir à Sokodé', 'description' => null, 'en' => ['titre' => 'Mini-market of agroecological and local products in Sokodé', 'description' => null]],
+        ['photo' => 'mini-marche-sokode-partenaires.jpg', 'date' => '2026-10-12', 'titre' => 'Le mini-marché de Sokodé avec nos partenaires', 'description' => null, 'en' => ['titre' => 'The Sokodé mini-market with our partners', 'description' => null]],
+        ['photo' => 'lancement-marche-produits-locaux.jpg', 'date' => '2026-10-12', 'titre' => 'Lancement du marché des produits locaux à Sokodé', 'description' => null, 'en' => ['titre' => 'Launch of the local products market in Sokodé', 'description' => null]],
+        ['photo' => 'lancement-marche-produits-locaux-clients.jpg', 'date' => '2026-10-12', 'titre' => 'Premiers clients du marché des produits locaux', 'description' => null, 'en' => ['titre' => 'First customers at the local products market', 'description' => null]],
+        ['photo' => 'point-de-vente-produits-locaux.jpg', 'date' => '2026-10-12', 'titre' => 'Point de vente des produits locaux', 'description' => null, 'en' => ['titre' => 'Local products shop', 'description' => null]],
+        ['photo' => 'point-de-vente-achats.jpg', 'date' => '2026-10-12', 'titre' => 'Achats au point de vente des produits locaux', 'description' => null, 'en' => ['titre' => 'Shopping at the local products shop', 'description' => null]],
+        ['photo' => 'recolte-carottes.jpg', 'date' => '2026-10-12', 'titre' => 'Récolte de carottes', 'description' => null, 'en' => ['titre' => 'Carrot harvest', 'description' => null]],
+        ['photo' => 'laitues.jpg', 'date' => '2026-10-12', 'titre' => 'Laitues en pleine croissance', 'description' => null, 'en' => ['titre' => 'Growing lettuces', 'description' => null]],
+        ['photo' => 'tomates-carottes-persil.jpg', 'date' => '2026-10-12', 'titre' => 'Tomates, carottes et persil', 'description' => null, 'en' => ['titre' => 'Tomatoes, carrots and parsley', 'description' => null]],
+        ['photo' => 'legumes-frais.jpg', 'date' => '2026-10-12', 'titre' => 'Légumes frais', 'description' => null, 'en' => ['titre' => 'Fresh vegetables', 'description' => null]],
+        ['photo' => 'oignons.jpg', 'date' => '2026-10-12', 'titre' => 'Oignons', 'description' => null, 'en' => ['titre' => 'Onions', 'description' => null]],
     ],
 
     /*

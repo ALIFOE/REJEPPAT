@@ -70,6 +70,17 @@ class ContenuSeeder extends Seeder
             }
         }
 
+        foreach (config('rejeppat.photos') as $photo) {
+            Media::firstOrCreate(['photo' => Media::DOSSIER_PHOTOS_ORIGINE.'/'.$photo['photo']], [
+                'titre' => $photo['titre'],
+                'type' => 'photo',
+                'date' => $photo['date'],
+                'description' => $photo['description'],
+                'publie' => true,
+                'traductions' => ['en' => array_filter($photo['en'])],
+            ]);
+        }
+
         if (Temoignage::doesntExist()) {
             foreach (config('rejeppat.temoignages') as $ordre => $temoignage) {
                 Temoignage::create($temoignage + ['type' => 'temoignage', 'accueil' => true, 'ordre' => $ordre]);

@@ -71,6 +71,27 @@ class SitePublicTest extends TestCase
         $this->assertSame('Advocacy', Offre::where('titre', 'Le plaidoyer')->sole()->traductions['en']['titre']);
     }
 
+    public function test_l_ajout_des_fermes_ecoles_complete_une_base_deja_remplie(): void
+    {
+        $migration = require database_path('migrations/2026_10_12_135010_ajouter_fermes_ecoles_et_telephones.php');
+        $migration->down();
+        Ferme::where('slug', 'ma-joie')->update(['telephone' => null]);
+        Ferme::where('slug', 'cadete')->update(['telephone' => '+228 91 00 00 00']);
+
+        $migration->up();
+
+        $this->assertSame('+228 90 71 71 76', Ferme::where('slug', 'ma-joie')->sole()->telephone);
+        $this->assertSame('+228 91 00 00 00', Ferme::where('slug', 'cadete')->sole()->telephone);
+        $this->assertSame('Agro-pastoralism', Ferme::where('slug', 'cata')->sole()->traductions['en']['specialite']);
+
+        // Ferme école sans spécialité renseignée : sa fiche s'affiche avec ses contacts
+        $this->get(route('fermes.show', 'lampougue'))->assertOk()
+            ->assertSee('Lampougue')
+            ->assertDontSee('Spécialité :')
+            ->assertSee('https://wa.me/22892127669', false);
+        $this->get(route('fermes.index'))->assertSee('Terre Fleurie')->assertSee('3 Mages');
+    }
+
     public function test_un_contenu_masque_n_est_plus_visible(): void
     {
         $actualite = Actualite::first();

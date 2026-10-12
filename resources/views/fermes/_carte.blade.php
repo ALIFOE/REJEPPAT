@@ -9,11 +9,13 @@
                                 <div class="single-team-style1__img-inner">
                                     <img src="{{ $ferme->visuel('') }}" alt="{{ __('Ferme école :nom', ['nom' => $ferme['nom']]) }}">
                                 </div>
-                                <div class="single-team-style1__img-designation">
-                                    <div class="single-team-style1__img-designation-inner">
-                                        <span>{{ $ferme->tr('specialite') }}</span>
+                                @if ($ferme->tr('specialite'))
+                                    <div class="single-team-style1__img-designation">
+                                        <div class="single-team-style1__img-designation-inner">
+                                            <span>{{ $ferme->tr('specialite') }}</span>
+                                        </div>
                                     </div>
-                                </div>
+                                @endif
                             </div>
                             <div class="single-team-style1__content">
                                 <div class="single-team-style1__content-top">

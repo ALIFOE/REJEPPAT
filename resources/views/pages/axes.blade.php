@@ -22,21 +22,20 @@
                         </div>
                         <h2>{{ __('Nos axes stratégiques') }}</h2>
                     </div>
-                    <p>{{ __('À travers ses différents domaines d’intervention, le REJEPPAT accompagne les jeunes et les acteurs ruraux dans le développement de leurs activités, le renforcement de leurs compétences et la création d’opportunités durables.') }}</p>
+                    <p>{{ __('L’action du REJEPPAT s’articule autour de quatre axes stratégiques pour accompagner les jeunes producteurs, renforcer le réseau et valoriser les produits agroécologiques.') }}</p>
                 </div>
 
-                <div class="rj-grille rj-grille--4">
+                <div class="rj-grille rj-grille--2">
                     @foreach ($axes as $axe)
                         <article class="rj-carte">
                             <div class="rj-carte__image">
-                                <img src="{{ asset('assets/images/rejeppat/offres/domaine-' . $axe['slug'] . '.jpg') }}" alt="{{ __($axe['titre']) }}" loading="lazy">
+                                <img src="{{ asset('assets/images/rejeppat/offres/domaine-' . $axe['image'] . '.jpg') }}" alt="" loading="lazy">
                             </div>
                             <div class="rj-carte__corps">
                                 <ul class="rj-meta">
-                                    <li>{{ __('Axe :numero', ['numero' => $loop->iteration]) }}</li>
+                                    <li>{{ __('Axe stratégique :numero', ['numero' => $loop->iteration]) }}</li>
                                 </ul>
                                 <h3>{{ __($axe['titre']) }}</h3>
-                                <p>{{ __($axe['texte']) }}</p>
                             </div>
                         </article>
                     @endforeach

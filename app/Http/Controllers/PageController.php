@@ -41,11 +41,11 @@ class PageController extends Controller
         ]);
     }
 
-    /** Axes stratégiques du réseau : ses domaines d'intervention. */
+    /** Axes stratégiques du réseau. */
     public function axes(): View
     {
         return view('pages.axes', [
-            'axes' => config('rejeppat.domaines'),
+            'axes' => config('rejeppat.axes'),
             'presentation' => Ressource::publie()->where('fichier', Ressource::PRESENTATION_REJEPPAT)->first(),
         ]);
     }

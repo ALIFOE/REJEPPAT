@@ -42,6 +42,11 @@ class TraductionsSeeder extends Seeder
         'pirenadou' => 'Market gardening & livestock',
         'capable-plus' => 'Processing & irrigation',
         'les-merveilles-de-dieu' => 'Agroecological market gardening',
+        'groupe-avidja' => 'Agroecology',
+        'cata' => 'Agro-pastoralism',
+        'shalom-agroeco-farm' => 'Agroecology',
+        'cpda-togo' => 'Agroecology',
+        'terre-fleurie' => 'Agroecology',
     ];
 
     private const PRODUITS = [

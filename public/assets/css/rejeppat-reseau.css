@@ -34,6 +34,10 @@
     gap: 30px;
 }
 
+.rj-grille--2 {
+    grid-template-columns: repeat(auto-fill, minmax(min(100%, 420px), 1fr));
+}
+
 .rj-grille--3 {
     grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
 }
@@ -595,6 +599,63 @@
 .rj-pagination nav {
     display: flex;
     justify-content: center;
+}
+
+/* Pastilles du template (styled-pagination) : page courante et flèches inactives sans lien */
+.rj-pages {
+    flex-wrap: wrap;
+    gap: 10px;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+
+.rj-pages li + li {
+    margin-left: 0;
+}
+
+.rj-pages li > span {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 56px;
+    height: 56px;
+    border: 1px solid var(--thm-border-color-1);
+    border-radius: 50%;
+    color: var(--thm-black);
+    font-family: var(--thm-font-2);
+    font-size: 16px;
+    font-weight: 600;
+}
+
+.rj-pages li.active > span {
+    border-color: transparent;
+    background: var(--thm-black-bg);
+    color: var(--thm-white);
+}
+
+.rj-pages li.desactive > span {
+    opacity: .35;
+}
+
+.rj-pages li.desactive:hover a,
+.rj-pages li.desactive span::before {
+    color: var(--thm-black);
+}
+
+@media (max-width: 575px) {
+    .rj-pages {
+        gap: 6px;
+    }
+
+    .rj-pages li a,
+    .rj-pages li > span,
+    .rj-pages li.prev a,
+    .rj-pages li.next a {
+        width: 42px;
+        height: 42px;
+        font-size: 15px;
+    }
 }
 
 /* ---------- Témoignages & success stories ---------- */

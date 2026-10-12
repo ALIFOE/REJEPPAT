@@ -28,7 +28,7 @@
                                 <p>{{ __('Aucune opportunité pour le moment. Abonnez-vous à la newsletter pour être informé des prochaines.') }}</p>
                             </div>
                         @endforelse
-                        <div class="rj-pagination">{{ $opportunites->links() }}</div>
+                        <div class="rj-pagination">{{ $opportunites->links('partials.pagination') }}</div>
                     </div>
                     <div class="col-xl-4 col-lg-4">
                         <aside class="rj-encadre">

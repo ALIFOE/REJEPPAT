@@ -77,7 +77,7 @@
                     <div class="swiper-slide">
                         <div class="main-slider-style4__inner">
                             <div class="image-layer"
-                                style="background-image: url({{ asset('assets/images/rejeppat/slides/' . $slide['image']) }});">
+                                style="background-image: url({{ \App\Support\Contenu::asset('assets/images/rejeppat/slides/' . $slide['image']) }});">
                             </div>
                             <div class="container">
                                 <div class="content-box">

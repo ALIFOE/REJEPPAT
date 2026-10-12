@@ -2,6 +2,7 @@
 
 namespace Tests\Feature;
 
+use App\Http\Middleware\DefinirLangue;
 use App\Models\Evenement;
 use App\Models\Media;
 use App\Models\User;
@@ -19,6 +20,9 @@ class AgendaMediathequeTest extends TestCase
     {
         parent::setUp();
         $this->seed(ContenuSeeder::class);
+
+        // Les tests partent d'une médiathèque vide (sans les vidéos YouTube ajoutées par migration)
+        Media::query()->delete();
     }
 
     public function test_l_agenda_separe_les_rendez_vous_a_venir_et_passes(): void
@@ -55,6 +59,23 @@ class AgendaMediathequeTest extends TestCase
             ->assertSee('Récolte à Ma Joie')
             ->assertSee('https://img.youtube.com/vi/0bCiARbU0R4/hqdefault.jpg', false);
         $this->get(route('mediatheque', ['type' => 'video']))->assertSee('Reportage vidéo')->assertDontSee('Récolte à Ma Joie');
+    }
+
+    public function test_les_photos_d_origine_de_la_mediatheque_sont_ajoutees_une_seule_fois(): void
+    {
+        $migration = require database_path('migrations/2026_10_12_143624_ajouter_photos_mediatheque.php');
+        $migration->down();
+        $this->assertSame(0, Media::where('type', 'photo')->count());
+
+        $migration->up();
+        $migration->up();
+
+        $this->assertSame(count(config('rejeppat.photos')), Media::where('type', 'photo')->count());
+        $this->get(route('mediatheque', ['type' => 'photo']))->assertOk()
+            ->assertSee('Récolte de carottes')
+            ->assertSee(asset('assets/images/rejeppat/mediatheque/recolte-carottes.jpg'), false);
+        $this->withSession([DefinirLangue::SESSION => 'en'])->get(route('mediatheque', ['type' => 'photo']))
+            ->assertSee('Carrot harvest');
     }
 
     public function test_une_video_doit_avoir_un_lien_youtube(): void

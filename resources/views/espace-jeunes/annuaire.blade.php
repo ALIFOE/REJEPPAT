@@ -44,7 +44,7 @@
                             @include('espace-jeunes._membre', ['membre' => $membre])
                         @endforeach
                     </div>
-                    <div class="rj-pagination">{{ $membres->links() }}</div>
+                    <div class="rj-pagination">{{ $membres->links('partials.pagination') }}</div>
                     <p class="text-center" style="margin-top: 40px">
                         <a href="{{ route('espace-jeunes.rejoindre') }}" class="btn-one"><i class="icon-arrow"></i><span class="txt">{{ __('Rejoindre l’annuaire') }}</span></a>
                     </p>

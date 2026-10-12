@@ -60,8 +60,11 @@ class ReseauTest extends TestCase
 
         $this->get(route('axes'))->assertOk()
             ->assertSee('Nos axes stratégiques')
-            ->assertSee('Agroalimentaire')
-            ->assertSee('Formation / santé');
+            ->assertSeeInOrder([
+                'Axe stratégique 1', 'Faciliter l’accès aux facteurs de production et aux financements adaptés',
+                'Axe stratégique 4', 'Développer des stratégies de valorisation des produits agroécologiques et la résilience des jeunes agriculteurs',
+            ]);
+        $this->get(route('axes', ['lang' => 'en']))->assertSee('Strategic focus area 2');
     }
 
     public function test_la_presentation_du_colloque_far_est_conservee_dans_les_ressources(): void

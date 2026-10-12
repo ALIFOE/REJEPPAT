@@ -45,6 +45,9 @@ class Media extends Model
 
     public const DOSSIER_VIDEOS = 'videos';
 
+    /** Photos d'origine du site (versionnées), les photos envoyées depuis l'administration étant dans public/uploads */
+    public const DOSSIER_PHOTOS_ORIGINE = 'assets/images/rejeppat/mediatheque';
+
     /** Durée de validité du lien de lecture d'une vidéo protégée */
     public const DUREE_LIEN_VIDEO = 180;
 
@@ -109,6 +112,15 @@ class Media extends Model
         return $this->estVideoProtegee()
             ? URL::temporarySignedRoute('video.lecture', now()->addMinutes(self::DUREE_LIEN_VIDEO), ['media' => $this->id])
             : null;
+    }
+
+    public function photoUrl(): ?string
+    {
+        if ($this->photo && str_starts_with($this->photo, self::DOSSIER_PHOTOS_ORIGINE.'/')) {
+            return asset($this->photo);
+        }
+
+        return $this->photo ? asset(self::DOSSIER_UPLOADS.'/'.$this->photo) : null;
     }
 
     public function visuel(): string
