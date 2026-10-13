@@ -114,7 +114,7 @@ class CommandeController extends Controller
         session()->push(Commande::SESSION_CLIENT, $commande->numero);
 
         rescue(fn () => Mail::raw($this->resumeCommande($commande), fn ($message) => $message
-            ->to(config('rejeppat.emails.0'))
+            ->to(config('rejeppat.emails.tresorerie.adresse'))
             ->subject("[Boutique REJEPPAT] Nouvelle commande {$commande->numero}")));
 
         if ($enLigne) {

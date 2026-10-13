@@ -83,7 +83,7 @@ class PageController extends Controller
                 .'Région : '.($demande->region ?: '-')."\n"
                 ."Objet : {$demande->objet}\n\n{$demande->besoin}\n\n"
                 .'Suivi : '.route('admin.demandes.show', $demande),
-            fn ($message) => $message->to(config('rejeppat.emails.0'))->subject('[Site REJEPPAT] Demande de service : '.$demande->objet)
+            fn ($message) => $message->to(config('rejeppat.emails.secretariat.adresse'))->subject('[Site REJEPPAT] Demande de service : '.$demande->objet)
         ));
 
         return redirect()->to(route('demande').'#formulaire')
@@ -116,7 +116,7 @@ class PageController extends Controller
             .$donnees['message'];
 
         rescue(fn () => Mail::raw($corps, function ($message) use ($donnees) {
-            $message->to(config('rejeppat.emails.0'))
+            $message->to(config('rejeppat.emails.info.adresse'))
                 ->replyTo($donnees['email'], $donnees['nom'])
                 ->subject('[Site REJEPPAT] '.$donnees['objet']);
         }));
@@ -142,7 +142,7 @@ class PageController extends Controller
                 ."Nom : {$message->nom}\nTéléphone : {$message->telephone}\n"
                 .'E-mail : '.($message->email ?: '-')."\n\n{$message->message}\n\n"
                 .'Répondre : '.route('admin.messages.show', $message),
-            fn ($mail) => $mail->to(config('rejeppat.emails.0'))->subject('[Site REJEPPAT] Contact rapide : '.$message->nom)
+            fn ($mail) => $mail->to(config('rejeppat.emails.info.adresse'))->subject('[Site REJEPPAT] Contact rapide : '.$message->nom)
         ));
 
         $merci = __('Merci ! Votre message a bien été envoyé. Nous vous recontactons très vite.');

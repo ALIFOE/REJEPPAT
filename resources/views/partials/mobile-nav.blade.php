@@ -29,7 +29,7 @@
                 </li>
                 <li>
                     <i class="fa fa-envelope"></i>
-                    <a href="mailto:{{ config('rejeppat.emails.0') }}">{{ config('rejeppat.emails.0') }}</a>
+                    <a href="mailto:{{ config('rejeppat.emails.info.adresse') }}">{{ config('rejeppat.emails.info.adresse') }}</a>
                 </li>
                 <li>
                     <i class="fa fa-phone-alt"></i>

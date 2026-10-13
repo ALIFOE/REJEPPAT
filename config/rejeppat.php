@@ -24,9 +24,16 @@ return [
 
     'whatsapp' => '22898926350',
 
+    /*
+    | Adresses e-mail professionnelles : affichées sur le site et destinataires des formulaires
+    | (contact → info, demandes de service et profils → secrétariat, partenariats → président,
+    | commandes de la boutique → trésorerie).
+    */
     'emails' => [
-        'info@rejeppat.org',
-        'rejeppatg@gmail.com',
+        'info' => ['adresse' => 'info@rejeppat.org', 'service' => 'Informations générales'],
+        'president' => ['adresse' => 'president@rejeppat.org', 'service' => 'Présidence'],
+        'secretariat' => ['adresse' => 'secretariat@rejeppat.org', 'service' => 'Secrétariat'],
+        'tresorerie' => ['adresse' => 'tresorerie@rejeppat.org', 'service' => 'Trésorerie'],
     ],
 
     'address' => 'Route Nationale N°1, 2ème von après l’hôpital Puits de Jacob, Quartier Ataworo, Sokodé',
@@ -35,10 +42,10 @@ return [
     'map_query' => 'Quartier Ataworo, Sokodé, Togo',
 
     'social' => [
-        'facebook' => 'https://www.facebook.com/profile.php?id=61591557034199',
+        'facebook' => 'https://www.facebook.com/profile.php?id=61595107210776',
         'twitter' => 'https://x.com/rejeppattogo',
         'linkedin' => 'https://www.linkedin.com/in/rajeppat-togo-bb7048420/',
-        'youtube' => 'https://www.youtube.com/watch?v=0bCiARbU0R4',
+        'youtube' => 'https://www.youtube.com/@RAJEPPAT',
     ],
 
     /*

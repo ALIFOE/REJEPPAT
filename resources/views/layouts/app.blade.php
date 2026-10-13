@@ -63,6 +63,7 @@
     <link rel="stylesheet" href="{{ \App\Support\Contenu::asset('assets/css/rejeppat-compte.css') }}" />
     <link rel="stylesheet" href="{{ \App\Support\Contenu::asset('assets/css/rejeppat-reseau.css') }}" />
     <link rel="stylesheet" href="{{ \App\Support\Contenu::asset('assets/css/rejeppat-video.css') }}" />
+    <link rel="stylesheet" href="{{ \App\Support\Contenu::asset('assets/css/rejeppat-angles.css') }}" />
     <link rel="alternate" hreflang="fr" href="{{ request()->fullUrlWithQuery(['lang' => 'fr']) }}" />
     <link rel="alternate" hreflang="en" href="{{ request()->fullUrlWithQuery(['lang' => 'en']) }}" />
 

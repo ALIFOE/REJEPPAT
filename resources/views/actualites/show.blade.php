@@ -82,7 +82,7 @@
                                         <div class="col-md-6 mb-4">
                                             <a class="lightbox-image" data-fancybox="galerie"
                                                 href="{{ $photo['full'] }}">
-                                                <img src="{{ $photo['mini'] }}" alt="{{ $actualite->tr('title') }}" style="border-radius: 10px;">
+                                                <img src="{{ $photo['mini'] }}" alt="{{ $actualite->tr('title') }}">
                                             </a>
                                         </div>
                                     @endforeach

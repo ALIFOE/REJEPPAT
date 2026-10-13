@@ -73,7 +73,7 @@
                                         @foreach (config('rejeppat.phones') as $phone)
                                             <li><a href="tel:{{ $phone['tel'] }}"><i class="icon-incoming-call"></i> {{ $phone['label'] }}</a></li>
                                         @endforeach
-                                        <li><a href="mailto:{{ config('rejeppat.emails.0') }}" style="text-transform: none;"><i class="icon-mail"></i> {{ config('rejeppat.emails.0') }}</a></li>
+                                        <li><a href="mailto:{{ config('rejeppat.emails.info.adresse') }}" style="text-transform: none;"><i class="icon-mail"></i> {{ config('rejeppat.emails.info.adresse') }}</a></li>
                                         <li><a href="https://wa.me/{{ config('rejeppat.whatsapp') }}" target="_blank" rel="noopener"><i class="icon-corn"></i> WhatsApp</a></li>
                                         <li><a href="{{ route('contact') }}"><i class="icon-map-point"></i> {{ config('rejeppat.address_short') }}</a></li>
                                         <li><a href="{{ route('contact') }}"><i class="icon-map-point"></i> {{ config('rejeppat.po_box') }}</a></li>

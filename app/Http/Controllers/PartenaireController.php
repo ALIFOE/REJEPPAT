@@ -46,7 +46,7 @@ class PartenaireController extends Controller
                 .'Forme de partenariat : '.$demande->typeLibelle()."\n\n"
                 .$demande->message."\n\n"
                 .'Suivi : '.route('admin.partenariats.show', $demande),
-            fn ($message) => $message->to(config('rejeppat.emails.0'))
+            fn ($message) => $message->to(config('rejeppat.emails.president.adresse'))
                 ->replyTo($demande->email, $demande->nom)
                 ->subject('[Site REJEPPAT] Proposition de partenariat : '.$demande->organisation)
         ));

@@ -106,7 +106,7 @@ class EspaceJeunesController extends Controller
                 ."Nom : {$membre->nom}\nOrganisation : ".($membre->organisation ?: '-')."\n"
                 .'Filière : '.Membre::FILIERES[$membre->filiere]."\n\n"
                 .'Valider ou modifier le profil : '.route('admin.membres.edit', $membre),
-            fn ($message) => $message->to(config('rejeppat.emails.0'))->subject('[Site REJEPPAT] Profil à valider : '.$membre->nom)
+            fn ($message) => $message->to(config('rejeppat.emails.secretariat.adresse'))->subject('[Site REJEPPAT] Profil à valider : '.$membre->nom)
         ));
 
         return redirect()->route('espace-jeunes.rejoindre')

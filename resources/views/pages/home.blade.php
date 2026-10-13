@@ -6,33 +6,6 @@
     // Contenu repris de https://rejeppat.org (pages Accueil, Qui sommes-nous, Nos offres & services,
     // Les Fermes Écoles, Nos programmes et projets, Boutique, Actualités & Événements).
 
-    $slides = [
-        [
-            'image' => 'slide-1.jpg',
-            'sub_title' => __('Plateforme des producteurs agricoles du Togo'),
-            'title' => __('Produits locaux <br> et coopératives connectées'),
-            'text' => __('Un réseau national de jeunes producteurs regroupés en coopératives <br> sur toute l’étendue du territoire togolais.'),
-            'button' => __('Découvrir le réseau'),
-            'link' => '#qui-sommes-nous',
-        ],
-        [
-            'image' => 'slide-2.jpg',
-            'sub_title' => __('Achetez local et frais'),
-            'title' => __('Directement <br> chez les producteurs<wbr>(trices)'),
-            'text' => __('Des produits biologiques et naturels issus des coopératives <br> et des fermes écoles du réseau.'),
-            'button' => __('Accéder à la boutique'),
-            'link' => route('boutique.index'),
-        ],
-        [
-            'image' => 'slide-3.jpg',
-            'sub_title' => __('Jeunes producteurs engagés'),
-            'title' => __('Formation <br> et opportunités agricoles'),
-            'text' => __('Former les jeunes à l’agroécologie et à l’entrepreneuriat agricole <br> pour une agriculture durable et prospère.'),
-            'button' => __('Découvrir les fermes écoles'),
-            'link' => route('fermes.index'),
-        ],
-    ];
-
     $identite = [
         [
             'image' => 'mission.jpg',
@@ -65,61 +38,54 @@
 
 @section('content')
 
-        <!-- Main Slider Style4 -->
-        <section class="main-slider-style4">
-            <div class="main-slider-style4__shape-bg"
-                style="background-image: url({{ asset('assets/images/shapes/section-bottom-shape.png') }});"></div>
-            <div class="swiper-container banner-slider">
-                <div class="swiper-wrapper">
-
-                    @foreach ($slides as $slide)
-                    <!-- Start Slide Item -->
-                    <div class="swiper-slide">
-                        <div class="main-slider-style4__inner">
-                            <div class="image-layer"
-                                style="background-image: url({{ \App\Support\Contenu::asset('assets/images/rejeppat/slides/' . $slide['image']) }});">
-                            </div>
-                            <div class="container">
-                                <div class="content-box">
-                                    <div class="sub-title">
-                                        <h5>{{ $slide['sub_title'] }}</h5>
-                                    </div>
-                                    <div class="big-title">
-                                        <h2>{!! $slide['title'] !!}</h2>
-                                    </div>
-                                    <div class="shape-box">
-                                        <img src="{{ asset('assets/images/shapes/main-slider-style4-shape-1.png') }}" alt="">
-                                    </div>
-                                    <div class="text-box">
-                                        <p>{!! $slide['text'] !!}</p>
-                                    </div>
-                                    <div class="btn-box">
-                                        <a class="btn-one" href="{{ $slide['link'] }}">
-                                            <i class="icon-arrow"></i>
-                                            <span class="txt">{{ $slide['button'] }}</span>
-                                        </a>
-                                    </div>
-                                </div>
-                            </div>
+        {{--
+            Héros « Achetez local » (rejeppat.css, .rj-hero) : en arrière-plan, trois vidéos
+            de travaux des champs qui se succèdent (rejeppat-hero.js).
+            Vidéos libres de droits de Pexels : 9576676, 11623320 et 4684285.
+        --}}
+        <section class="banner-style1 rj-hero">
+            <div class="banner-style1__bg" style="background-image: url({{ asset('assets/videos/accueil/champ-desherbage.jpg') }});">
+                <div class="rj-hero__videos" data-hero-videos aria-hidden="true">
+                    @foreach (['champ-desherbage', 'champ-binage', 'champ-labour'] as $video)
+                        <video class="rj-hero__video {{ $loop->first ? 'actif' : '' }}" muted playsinline preload="none"
+                            poster="{{ asset('assets/videos/accueil/' . $video . '.jpg') }}"
+                            data-src="{{ asset('assets/videos/accueil/' . $video . '.mp4') }}"></video>
+                    @endforeach
+                </div>
+                <div class="rj-hero__voile"></div>
+                <div class="section-bottom-shape"
+                    style="background-image: url({{ asset('assets/images/shapes/section-bottom-shape.png') }});"></div>
+            </div>
+            <div class="container">
+                <div class="banner-style1__content">
+                    <div class="banner-style1__content-inner">
+                        <div class="banner-style1__curved-top">
+                            {{ __('Produits locaux, biologiques et naturels') }}
+                        </div>
+                        <div class="banner-style1__curved-bottom">
+                            {{ __('Produits locaux, biologiques et naturels') }}
+                        </div>
+                        <div class="banner-style1__sub-title rj-hero__texte">
+                            <h5>{{ __('Achetez local et frais') }}</h5>
+                        </div>
+                        <div class="banner-style1__big-title rj-hero__texte">
+                            <h2>{!! __('Directement <br> chez les producteurs<wbr>(trices)') !!}</h2>
+                        </div>
+                        <div class="banner-style1__title rj-hero__texte">
+                            <h3>{!! __('Des produits biologiques et naturels issus des coopératives <br> et des fermes écoles du réseau.') !!}</h3>
+                        </div>
+                        <div class="banner-style1__btn rj-hero__texte">
+                            <a class="btn-one" href="{{ route('boutique.index') }}">
+                                <i class="icon-arrow"></i>
+                                <span class="txt">{{ __('Accéder à la boutique') }}</span>
+                            </a>
                         </div>
                     </div>
-                    <!-- End Slide Item -->
-                    @endforeach
 
                 </div>
             </div>
-
-            <div class="main-slider-nav">
-                <div class="main-slider-nav__control banner-slider-button-prev">
-                    <span><i class="icon-arrow-right" aria-hidden="true"></i></span>
-                </div>
-                <div class="main-slider-nav__control banner-slider-button-next">
-                    <span><i class="icon-arrow" aria-hidden="true"></i></span>
-                </div>
-            </div>
-
         </section>
-        <!-- End Main Slider Style4 -->
+        <!-- Fin du héros -->
 
         @include('regions._accueil', ['regions' => $regions])
 
@@ -678,60 +644,6 @@
         <!-- End Testimonials Style3 -->
 
 
-        <!-- Start Banner Style1 -->
-        <section class="banner-style1">
-            <div class="banner-style1__bg" style="background-image: url({{ asset('assets/images/backgrounds/banner-v1__bg.jpg') }}?v=vert);">
-                <div class="section-bottom-shape"
-                    style="background-image: url({{ asset('assets/images/shapes/section-bottom-shape.png') }});"></div>
-            </div>
-            <div class="container">
-                <div class="banner-style1__content">
-                    <div class="banner-style1__shape1">
-                        <img src="{{ asset('assets/images/shapes/banner-v1__shape1.png') }}" alt="Shape">
-                    </div>
-                    <div class="banner-style1__shape2">
-                        <img src="{{ asset('assets/images/shapes/banner-v1__shape5.png') }}" alt="Shape">
-                    </div>
-                    <div class="banner-style1__shape3">
-                        <img src="{{ asset('assets/images/shapes/banner-v1__shape2.png') }}" alt="Shape">
-                    </div>
-                    <div class="banner-style1__shape4">
-                        <img src="{{ asset('assets/images/shapes/banner-v1__shape4.png') }}" alt="Shape">
-                    </div>
-                    <div class="banner-style1__shape5">
-                        <img src="{{ asset('assets/images/shapes/banner-v1__shape3.png') }}" alt="Shape">
-                    </div>
-
-                    <div class="banner-style1__content-inner">
-                        <div class="banner-style1__curved-top">
-                            {{ __('Produits locaux, biologiques et naturels') }}
-                        </div>
-                        <div class="banner-style1__curved-bottom">
-                            {{ __('Produits locaux, biologiques et naturels') }}
-                        </div>
-                        <div class="banner-style1__sub-title">
-                            <h5>{{ __('Bienvenue au REJEPPAT') }}</h5>
-                        </div>
-                        <div class="banner-style1__big-title">
-                            <h2>{{ __('Achetez local') }}</h2>
-                        </div>
-                        <div class="banner-style1__title">
-                            <h3>{{ __('Directement chez les producteurs...') }}</h3>
-                        </div>
-                        <div class="banner-style1__btn">
-                            <a class="btn-one" href="{{ route('boutique.index') }}">
-                                <i class="icon-arrow"></i>
-                                <span class="txt">{{ __('Accéder à la boutique') }}</span>
-                            </a>
-                        </div>
-                    </div>
-
-                </div>
-            </div>
-        </section>
-        <!-- End Banner Style1 -->
-
-
         <!-- Start Blog Style4 -->
         @if ($actualites->isNotEmpty())
         <section class="blog-style4" id="actualites">
@@ -892,3 +804,7 @@
         @endif
 
 @endsection
+
+@push('scripts')
+    <script src="{{ \App\Support\Contenu::asset('assets/js/rejeppat-hero.js') }}"></script>
+@endpush

@@ -143,16 +143,7 @@
     color: var(--thm-primary-color);
 }
 
-/* Couche noire transparente uniforme (45 %) sur les photos du slider */
-.main-slider-style4 .image-layer::after {
-    content: "";
-    position: absolute;
-    inset: 0;
-    background-color: rgba(0, 0, 0, 0.45);
-    pointer-events: none;
-}
-
-/* Menu et flèches du slider en blanc pur, comme les autres textes de l'en-tête */
+/* Menu de l'en-tête de l'accueil en blanc pur, comme les autres textes de l'en-tête */
 .main-menu.main-menu-style4 .main-menu__list > li > a {
     color: #ffffff;
     border-color: rgba(255, 255, 255, 0.5);
@@ -163,26 +154,97 @@
     border-color: var(--thm-primary-color);
 }
 
-.main-slider-style4 .main-slider-nav__control {
-    color: #ffffff;
-    border-color: rgba(255, 255, 255, 0.5);
+/*
+ * Héros de l'accueil « Achetez local » (bannière du template) : l'en-tête transparent aux textes
+ * blancs repose directement sur les vidéos assombries, et les textes du héros apparaissent en fondu.
+ */
+.rj-hero {
+    position: relative;
+    overflow: hidden;
+    isolation: isolate;
+    padding: 305px 0 130px;
 }
 
-/* Grand titre du slider en blanc plein avec une ombre portée : le vert sombre détouré
-   de blanc transparent se perdait sur les photos assombries */
-.main-slider-style4 .content-box .big-title h2 {
-    background: none;
-    -webkit-background-clip: border-box;
-    -webkit-text-fill-color: #ffffff;
-    color: #ffffff;
-    -webkit-text-stroke: 0;
-    text-shadow: 0 4px 18px rgba(0, 0, 0, 0.55), 0 2px 4px rgba(0, 0, 0, 0.4);
+/* En-tête réduit (logo et menu mobile) sous 1200px */
+@media (max-width: 1199px) {
+    .rj-hero {
+        padding-top: 170px;
+    }
 }
 
-.main-slider-style4 .content-box .sub-title h5,
-.main-slider-style4 .content-box .text-box p {
+/* Arrière-plan : vidéos des champs en fondu (rejeppat-hero.js) sous un voile vert foncé */
+.rj-hero__videos,
+.rj-hero__video,
+.rj-hero__voile {
+    position: absolute;
+    inset: 0;
+}
+
+.rj-hero__video {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    opacity: 0;
+    transition: opacity 1.2s ease;
+}
+
+.rj-hero__video.actif {
+    opacity: 1;
+}
+
+.rj-hero__voile {
+    background: linear-gradient(180deg, rgba(12, 34, 19, .62) 0%, rgba(12, 34, 19, .48) 50%, rgba(12, 34, 19, .7) 100%);
+}
+
+.rj-hero .section-bottom-shape {
+    z-index: 2;
+}
+
+.rj-hero .banner-style1__sub-title h5,
+.rj-hero .banner-style1__big-title h2,
+.rj-hero .banner-style1__curved-top,
+.rj-hero .banner-style1__curved-bottom {
     color: #ffffff;
-    font-weight: 600;
+    text-shadow: 0 2px 12px rgba(0, 0, 0, .35);
+}
+
+.rj-hero .banner-style1__title h3 {
+    color: var(--thm-primary-color);
+    text-shadow: 0 2px 10px rgba(0, 0, 0, .4);
+}
+
+.rj-hero__texte {
+    animation: rj-hero-monter .9s ease-out both;
+}
+
+.banner-style1__sub-title.rj-hero__texte { animation-delay: .1s; }
+.banner-style1__big-title.rj-hero__texte { animation-delay: .25s; }
+.banner-style1__title.rj-hero__texte { animation-delay: .45s; }
+.banner-style1__btn.rj-hero__texte { animation-delay: .65s; }
+
+@keyframes rj-hero-monter {
+    from { opacity: 0; transform: translateY(30px); }
+    to { opacity: 1; transform: none; }
+}
+
+/* Titre du héros plus long que « Achetez local » : taille réduite pour tenir sur deux lignes,
+   sans majuscule forcée à chaque mot */
+.rj-hero .banner-style1__big-title h2 {
+    font-size: clamp(36px, 4.4vw, 66px);
+    line-height: 1.1em;
+    text-transform: none;
+}
+
+.rj-hero .banner-style1__title h3 {
+    font-size: clamp(20px, 2vw, 26px);
+    line-height: 1.45em;
+    text-align: center;
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .rj-hero__texte {
+        animation: none;
+    }
 }
 
 /* En-tête des pages internes : 7 entrées de menu au lieu de 6, le logo ne doit pas être écrasé */

@@ -23,7 +23,7 @@
                 <div class="row">
                     <div class="col-xl-8 col-lg-7">
                         @if ($evenement->photo)
-                            <img src="{{ $evenement->visuel() }}" alt="{{ $evenement->tr('titre') }}" style="width: 100%; border-radius: 10px; margin-bottom: 30px; max-height: 440px; object-fit: cover">
+                            <img src="{{ $evenement->visuel() }}" alt="{{ $evenement->tr('titre') }}" style="width: 100%; margin-bottom: 30px; max-height: 440px; object-fit: cover">
                         @endif
                         <span class="rj-pastille {{ $estPasse ? 'rj-pastille--gris' : '' }}">{{ $estPasse ? __('Événement passé') : $evenement->typeLibelle() }}</span>
                         <h2 style="margin: 14px 0 18px">{{ $evenement->tr('titre') }}</h2>

@@ -10,7 +10,7 @@
         </div>
         <div class="sidebar-style1__contact-info-text">
             <p class="font"><a href="tel:{{ config('rejeppat.phones.0.tel') }}">{{ config('rejeppat.phones.0.label') }}</a></p>
-            <p><a href="mailto:{{ config('rejeppat.emails.0') }}">{{ config('rejeppat.emails.0') }}</a></p>
+            <p><a href="mailto:{{ config('rejeppat.emails.info.adresse') }}">{{ config('rejeppat.emails.info.adresse') }}</a></p>
         </div>
         <div class="sidebar-style1__contact-info-btn">
             <a class="btn-one" href="{{ route('contact') }}">

@@ -45,11 +45,11 @@
                                 </div>
                                 <div class="location-info__single-content-text">
                                     @foreach (config('rejeppat.emails') as $email)
-                                        <p><a href="mailto:{{ $email }}">{{ $email }}</a></p>
+                                        <p>{{ __($email['service']) }} : <a href="mailto:{{ $email['adresse'] }}">{{ $email['adresse'] }}</a></p>
                                     @endforeach
                                 </div>
                                 <div class="location-info__single-content-btn">
-                                    <a href="mailto:{{ config('rejeppat.emails.0') }}">{{ __('Nous écrire') }} <span class="icon-arrow"></span></a>
+                                    <a href="mailto:{{ config('rejeppat.emails.info.adresse') }}">{{ __('Nous écrire') }} <span class="icon-arrow"></span></a>
                                 </div>
                             </div>
                         </div>

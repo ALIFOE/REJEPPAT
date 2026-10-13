@@ -120,7 +120,7 @@
                                     </div>
                                     <div class="content">
                                         <h4>{{ __('Email') }}</h4>
-                                        <p><a href="mailto:{{ config('rejeppat.emails.0') }}">{{ config('rejeppat.emails.0') }}</a></p>
+                                        <p><a href="mailto:{{ config('rejeppat.emails.info.adresse') }}">{{ config('rejeppat.emails.info.adresse') }}</a></p>
                                     </div>
                                 </li>
                                 <li>

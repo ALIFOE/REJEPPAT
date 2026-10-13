@@ -57,7 +57,7 @@
                                 </li>
                                 <li>
                                     <span>{{ __('Contact :') }}</span>
-                                    <p><a href="mailto:{{ config('rejeppat.emails.0') }}">{{ config('rejeppat.emails.0') }}</a></p>
+                                    <p><a href="mailto:{{ config('rejeppat.emails.info.adresse') }}">{{ config('rejeppat.emails.info.adresse') }}</a></p>
                                 </li>
                             </ul>
                             <div class="project-details-style1__social">

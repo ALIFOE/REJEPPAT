@@ -179,7 +179,8 @@ class AgendaMediathequeTest extends TestCase
             ->assertSee('controlslist="nodownload', false)
             ->assertDontSee('journal.mp4', false);
 
-        preg_match('/<video[^>]+src="([^"#]+)/', $accueil->getContent(), $lien);
+        // Lecteur de la section vidéo (les vidéos de fond du héros n'ont qu'un data-src)
+        preg_match('/<video[^>]+\ssrc="([^"#]+)/', $accueil->getContent(), $lien);
         $lien = html_entity_decode($lien[1]);
 
         $this->get($lien, ['Range' => 'bytes=0-99'])->assertStatus(206)->assertHeader('Content-Length', '100');

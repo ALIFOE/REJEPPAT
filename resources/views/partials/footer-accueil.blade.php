@@ -94,9 +94,9 @@
                                         @endforeach
                                         @foreach (config('rejeppat.emails') as $email)
                                             <li>
-                                                <a href="mailto:{{ $email }}" style="text-transform: none;">
+                                                <a href="mailto:{{ $email['adresse'] }}" title="{{ __($email['service']) }}" style="text-transform: none;">
                                                     <i class="icon-mail"></i>
-                                                    {{ $email }}
+                                                    {{ $email['adresse'] }}
                                                 </a>
                                             </li>
                                         @endforeach

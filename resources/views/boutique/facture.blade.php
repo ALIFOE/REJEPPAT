@@ -14,7 +14,7 @@
     <style>
         * { box-sizing: border-box; }
         body { margin: 0; padding: 32px 16px; background: #f1f8ec; font-family: Arial, Helvetica, sans-serif; color: #24352a; font-size: 14px; line-height: 1.5; }
-        .facture { max-width: 820px; margin: 0 auto; background: #fff; border-radius: 12px; padding: 40px; box-shadow: 0 6px 24px rgba(31, 74, 44, .08); }
+        .facture { max-width: 820px; margin: 0 auto; background: #fff; padding: 40px; box-shadow: 0 6px 24px rgba(31, 74, 44, .08); }
         .entete { display: flex; justify-content: space-between; gap: 24px; flex-wrap: wrap; border-bottom: 3px solid #2e6b3a; padding-bottom: 20px; }
         .entete img { height: 64px; }
         .entete h1 { margin: 0 0 4px; font-size: 26px; color: #0c2213; text-align: right; }
@@ -73,7 +73,7 @@
                 <p><strong>{{ config('rejeppat.name') }}</strong><br>
                     {{ config('rejeppat.full_name') }}<br>
                     {{ config('rejeppat.address_short') }} – {{ config('rejeppat.po_box') }}<br>
-                    {{ config('rejeppat.phones.0.label') }} · {{ config('rejeppat.emails.0') }}</p>
+                    {{ config('rejeppat.phones.0.label') }} · {{ config('rejeppat.emails.tresorerie.adresse') }}</p>
             </div>
             <div>
                 <h2>{{ __('Client') }}</h2>

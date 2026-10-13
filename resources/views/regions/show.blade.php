@@ -24,7 +24,7 @@
             <div class="container">
                 <div class="row">
                     <div class="col-xl-8 col-lg-7">
-                        <img src="{{ $region->visuel() }}" alt="{{ $region->nom }}" style="width: 100%; border-radius: 10px; margin-bottom: 35px; max-height: 420px; object-fit: cover">
+                        <img src="{{ $region->visuel() }}" alt="{{ $region->nom }}" style="width: 100%; margin-bottom: 35px; max-height: 420px; object-fit: cover">
 
                         <h2 class="rj-titre-bloc">{{ __('Présentation de la section') }}</h2>
                         @if ($presentation)
@@ -137,7 +137,7 @@
                                 @if ($region->email)<li><i class="icon-mail"></i> <a href="mailto:{{ $region->email }}">{{ $region->email }}</a></li>@endif
                                 @unless ($region->telephone || $region->email)
                                     <li><i class="icon-incoming-call"></i> <a href="tel:{{ config('rejeppat.phones.0.tel') }}">{{ config('rejeppat.phones.0.label') }}</a></li>
-                                    <li><i class="icon-mail"></i> <a href="mailto:{{ config('rejeppat.emails.0') }}">{{ config('rejeppat.emails.0') }}</a></li>
+                                    <li><i class="icon-mail"></i> <a href="mailto:{{ config('rejeppat.emails.info.adresse') }}">{{ config('rejeppat.emails.info.adresse') }}</a></li>
                                 @endunless
                             </ul>
                         </aside>
