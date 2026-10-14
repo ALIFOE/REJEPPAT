@@ -30,6 +30,11 @@ class ReseauTest extends TestCase
     {
         $this->assertSame('plateaux', Ferme::where('slug', 'cadete')->sole()->region->slug);
         $this->assertSame('centrale', Ferme::where('slug', 'ma-joie')->sole()->region->slug);
+        // « préfecture des Lacs », « préfecture d’Avé », « préfecture de Tône »
+        $this->assertSame('maritime', Ferme::where('slug', 'groupe-avidja')->sole()->region->slug);
+        $this->assertSame('maritime', Ferme::where('slug', 'academie-paysanne-nenonene')->sole()->region->slug);
+        $this->assertSame('savanes', Ferme::where('slug', 'lampougue')->sole()->region->slug);
+        $this->assertSame(0, Ferme::whereNull('region_id')->count());
     }
 
     public function test_pages_des_sections_regionales(): void
@@ -38,7 +43,7 @@ class ReseauTest extends TestCase
 
         $this->get(route('regions.index'))->assertOk()->assertSee('Région Centrale')->assertSee('Région des Savanes')
             // Pluriel en français (sans clé française, trans_choice() utiliserait la traduction anglaise)
-            ->assertSee('10 fermes écoles');
+            ->assertSee('12 fermes écoles');
         $this->get(route('regions.show', 'centrale'))->assertOk()
             ->assertSee($centrale->presentation[0])
             ->assertSee('Ma Joie');
@@ -46,7 +51,7 @@ class ReseauTest extends TestCase
         // Région sans présentation : la page invite la section à transmettre ses informations
         $this->get(route('regions.show', 'savanes'))->assertOk()->assertSee('en cours de rédaction');
 
-        $this->get(route('regions.index', ['lang' => 'en']))->assertSee('10 farm schools');
+        $this->get(route('regions.index', ['lang' => 'en']))->assertSee('12 farm schools');
     }
 
     public function test_les_sections_regionales_et_les_axes_strategiques_sont_dans_le_menu_le_reseau(): void
@@ -80,6 +85,9 @@ class ReseauTest extends TestCase
 
     public function test_les_sections_regionales_sont_mises_en_avant_sur_l_accueil(): void
     {
+        // Section sans ferme école rattachée
+        Ferme::where('region_id', Region::where('slug', 'savanes')->value('id'))->update(['region_id' => null]);
+
         $kara = Region::where('slug', 'kara')->sole();
         $kara->update([
             'gouverneurs' => [['nom' => 'Essozimna Pali', 'fonction' => 'Gouverneur de la section Kara', 'telephone' => null, 'photo' => null]],

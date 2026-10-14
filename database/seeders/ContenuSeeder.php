@@ -100,7 +100,7 @@ class ContenuSeeder extends Seeder
                 'ordre' => $ordre,
             ]);
 
-            $motif = '/préfecture d(e |’|\')('.implode('|', array_map('preg_quote', $donnees['prefectures'])).')\b/u';
+            $motif = '/préfecture d(e |es |’|\')('.implode('|', array_map('preg_quote', $donnees['prefectures'])).')(?![\p{L}\d])/u';
 
             Ferme::whereNull('region_id')->get()
                 ->filter(fn (Ferme $ferme) => $donnees['prefectures'] && preg_match($motif, $ferme->carte['adresse'] ?? ''))

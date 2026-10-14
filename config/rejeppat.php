@@ -168,14 +168,14 @@ return [
     | « prefectures » : rattachement des fermes écoles d'après leur adresse.
     */
     'regions' => [
-        ['slug' => 'maritime', 'nom' => 'Région Maritime', 'chef_lieu' => 'Lomé', 'prefectures' => []],
+        ['slug' => 'maritime', 'nom' => 'Région Maritime', 'chef_lieu' => 'Lomé', 'prefectures' => ['Zio', 'Lacs', 'Avé']],
         ['slug' => 'plateaux', 'nom' => 'Région des Plateaux', 'chef_lieu' => 'Atakpamé', 'prefectures' => ['Amou', 'Haho']],
         ['slug' => 'centrale', 'nom' => 'Région Centrale', 'chef_lieu' => 'Sokodé', 'prefectures' => ['Sotouboua', 'Tchaoudjo', 'Blitta', 'Tchamba'], 'presentation' => [
             'La Région Centrale accueille le siège national du REJEPPAT, à Sokodé, et la plupart des fermes écoles du réseau.',
             'La section accompagne les coopératives de jeunes des préfectures de Tchaoudjo, Sotouboua, Blitta et Tchamba dans la production agroécologique, la transformation et l’accès aux marchés.',
         ]],
-        ['slug' => 'kara', 'nom' => 'Région de la Kara', 'chef_lieu' => 'Kara', 'prefectures' => []],
-        ['slug' => 'savanes', 'nom' => 'Région des Savanes', 'chef_lieu' => 'Dapaong', 'prefectures' => []],
+        ['slug' => 'kara', 'nom' => 'Région de la Kara', 'chef_lieu' => 'Kara', 'prefectures' => ['Dankpen', 'Kéran', 'Kozah']],
+        ['slug' => 'savanes', 'nom' => 'Région des Savanes', 'chef_lieu' => 'Dapaong', 'prefectures' => ['Tandjouaré', 'Tône']],
     ],
 
 ];
